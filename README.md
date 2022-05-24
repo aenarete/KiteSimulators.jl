@@ -1,6 +1,6 @@
 # KiteSimulators
 
-This is a meta-package to provide "Julia Kite Power Tools", which consist of the following packages:
+Meta-package, providing "Julia Kite Power Tools", consisting of the following packages:
 <p align="center"><img src="./docs/kite_power_tools.png" width="500" /></p>
 
 ## Installation
@@ -17,7 +17,7 @@ pkg"add https://github.com/aenarete/KiteSimulators.jl"
 copy_bin()
 exit()
 ```
-It is suggested that you now compile a Julia image that contains a compiled version off all the packages.
+It is suggested that you now create a Julia image that contains a compiled version off all the packages.
 
 On the command line, enter:
 ```bash
@@ -25,6 +25,4 @@ cd bin
 ./create_sys_image
 ```
 This will take 10 to 20 minutes but is only required once.
-
-
 
