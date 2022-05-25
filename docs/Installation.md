@@ -4,9 +4,6 @@
 Please download and install Julia as explained at https://julialang.org/downloads/ .
 Choose the 64-bit (installer). Make sure to check the option "Add julia to path" when running the installer.
 
-Alternatively you can try https://github.com/PetrKryslUCSD/VSCode_Julia_portable , which comes with the IDE VSCode
-and git included.
-
 ### Linux
 
 Copy and past the following line to install the latest stable version of Julia:
@@ -26,3 +23,15 @@ Please download and install Julia as explained at https://julialang.org/download
 The jill installers will most likely also work on Mac and allow eays switching of different Julia versions (see Linux section).
 
 Continue with [README](../README.md)
+
+## Installation of the IDE VSCode
+It is useful to install the integrated development environment VSCode, even though it is not
+required. You can also use any editor of your choice. 
+
+VSCode provides syntax highlighting, but also the feature "goto definition" which can help to understand
+and explore the code. 
+
+You can download and install VSCode for all operating systems from this location: https://code.visualstudio.com/
+
+In addition you will need the Julia plugin as documented here: 
+https://github.com/julia-vscode/julia-vscode#installing-juliavs-codevs-code-julia-extension
