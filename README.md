@@ -69,3 +69,11 @@ To view and modify the example, you can use the command:
 ```julia
 @edit examples/joystick.jl
 ```
+The x axis of the Joystick controls steering, y-axis depowering and z-axis the
+reel-in and reel-out of the winch. With button one you can start the simulation,
+with button two you can stop it.
+
+## See also
+- [Research Fechner](https://research.tudelft.nl/en/publications/?search=wind+Fechner&pageSize=50&ordering=rating&descending=true) for the scientic background of this code
+- The packages [KiteModels](https://github.com/ufechner7/KiteModels.jl) and [WinchModels](https://github.com/aenarete/WinchModels.jl) and [KitePodModels](https://github.com/aenarete/KitePodModels.jl) and [AtmosphericModels](https://github.com/aenarete/AtmosphericModels.jl)
+- the package [KiteUtils](https://github.com/ufechner7/KiteUtils.jl) and [KiteControllers](https://github.com/aenarete/KiteControllers.jl)
