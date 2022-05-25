@@ -7,6 +7,7 @@ using Reexport
 @reexport using AtmosphericModels
 @reexport using KiteModels
 @reexport using KiteViewers
+@reexport using Plots
 
 export cp_examples, cp_bin
 

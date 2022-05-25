@@ -1,5 +1,5 @@
 let
-    using KiteViewers, KiteModels, KitePodModels, Timers, Plots
+    using KiteSimulators
 
     # change this to KPS3 or KPS4
     Model = KPS4
