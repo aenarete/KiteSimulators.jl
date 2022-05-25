@@ -10,6 +10,7 @@ using Reexport
 @reexport using Timers
 @reexport using Joysticks
 @reexport using Plots
+@reexport using PackageCompiler
 
 export cp_examples, cp_bin
 
