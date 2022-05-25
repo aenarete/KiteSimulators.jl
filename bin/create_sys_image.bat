@@ -22,10 +22,10 @@ IF EXIST "bin/%image%" (
 
 echo Updating packages...
 if EXIST "Manifest.toml" (
-    move Manifest.toml Manifest.toml.bak
+    REM move Manifest.toml Manifest.toml.bak
 )
 
-julia --project -e "include(\"./test/update_packages.jl\");"
+REM julia --project -e "include(\"./test/update_packages.jl\");"
 julia --project -e "using Pkg; Pkg.precompile()"
 julia --project -e "include(\"./test/create_sys_image.jl\");"
 move kps-image_tmp.so bin/kps-image-%julia_major%.dll
