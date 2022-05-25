@@ -40,17 +40,27 @@ The commands above create the following directory structure:
 ```
 It is suggested that you now create a Julia image that contains a compiled version off all the packages.
 
-On the command line, enter:
+On the command line, enter for Linux
 ```bash
 cd bin
 ./create_sys_image
 ```
+and for Windows:
+```bash
+cd bin
+create_sys_image
+```
 This will take 6 to 20 minutes but is only required once.
 
-You can now execute Julia with the commands:
+You can now execute Julia on Linux with the commands:
 ```bash
 cd ..
 ./bin/run_julia
+```
+and on Windows:
+```bash
+cd ..
+bin\run_julia
 ```
 
 ## Copy and run an example
@@ -61,15 +71,16 @@ cp_examples()
 ```
 If you have a Joystick connected, you can run the simulator with joystick control
 ```julia
-./bin/run_julia
+./bin/run_julia or bin\run_julia
 
 using KiteSimulators
-include("examples/joystick.jl)
+include("examples\\joystick.jl)
 ```
 
 To view and modify the example, you can use the command:
 ```julia
-@edit examples/joystick.jl
+@edit examples/joystick.jl  # Linux
+@edit examples\\joystick.jl # Windows
 ```
 The x axis of the Joystick controls steering, y-axis depowering and z-axis the
 reel-in and reel-out of the winch. With button one you can start the simulation,
