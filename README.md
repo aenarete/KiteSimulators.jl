@@ -16,7 +16,7 @@ On the Julia prompt install the package:
 ```julia
 using Pkg
 pkg"add https://github.com/aenarete/KiteSimulators.jl"
-copy_bin()
+cp_bin()
 exit()
 ```
 It is suggested that you now create a Julia image that contains a compiled version off all the packages.
