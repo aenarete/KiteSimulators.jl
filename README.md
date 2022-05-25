@@ -19,7 +19,8 @@ If you have a Joystick connected, you can run the simulator with joystick contro
 ./bin/run_julia or bin\run_julia
 
 using KiteSimulators
-include("examples\\joystick.jl)
+include("examples/joystick.jl")  # Linux
+include("examples\\joystick.jl") # Windows
 ```
 You should now see the kite attached to the tether:
 <p align="center"><img src="docs/kite_4p.png" width="500" /></p>
