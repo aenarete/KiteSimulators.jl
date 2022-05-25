@@ -4,6 +4,8 @@ Meta-package, providing "Julia Kite Power Tools", consisting of the following pa
 <p align="center"><img src="./docs/kite_power_tools.png" width="500" /></p>
 
 ## Installation
+If you do not have Julia installed yet, please read [Installation](docs/Installation.md).
+
 It is suggested that you create your own folder for your kite simulators.
 ```bash
 mkdir kitesims
