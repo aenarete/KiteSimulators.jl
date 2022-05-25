@@ -37,10 +37,13 @@ cd ..
 ## Copy and run an example
 From the Julia prompt execute:
 ```julia
+using KiteSimulators
 cp_examples()
 ```
 If you have a Joystick connected, you can run the simulator with joystick control
 ```julia
+./bin/run_julia
+
+using KiteSimulators
 include("examples/joystick.jl)
 ```
-
