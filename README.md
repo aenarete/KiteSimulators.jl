@@ -47,3 +47,8 @@ If you have a Joystick connected, you can run the simulator with joystick contro
 using KiteSimulators
 include("examples/joystick.jl)
 ```
+
+To view and modify the example, you can use the command:
+```julia
+@edit examples/joystick.jl
+```

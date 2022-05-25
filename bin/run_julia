@@ -5,7 +5,9 @@ if [[ $(basename $(pwd)) == "bin" ]]; then
 fi
 
 julia_version=$(julia --version | awk '{print($3)}')
-julia_major=${julia_version:0:3} 
+julia_major=${julia_version:0:3}
+
+export EDITOR="gedit"
 
 if test -f "bin/kps-image-${julia_major}.so"; then
     echo "Found system image!"
