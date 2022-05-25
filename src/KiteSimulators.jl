@@ -7,6 +7,8 @@ using Reexport
 @reexport using AtmosphericModels
 @reexport using KiteModels
 @reexport using KiteViewers
+@reexport using Timers
+@reexport using Joysticks
 @reexport using Plots
 
 export cp_examples, cp_bin
@@ -58,6 +60,7 @@ function cp_bin()
     chmod(joinpath(PATH, "create_sys_image.jl"), 0o664)
     chmod(joinpath(PATH, "test_for_precompile.jl"), 0o664)
     chmod(joinpath(PATH, "update_packages.jl"), 0o664)
+    copy_settings()
 end
 
 end
