@@ -16,6 +16,8 @@ On the Julia prompt install the package:
 ```julia
 using Pkg
 pkg"add https://github.com/aenarete/KiteSimulators.jl"
+
+using KiteSimulators
 cp_bin()
 exit()
 ```
