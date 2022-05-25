@@ -1,10 +1,10 @@
+@echo off
 REM This script launches julia and loads a version specific
 REM system image from the folder bin if it exists.
 REM The name of the system image must be similar to
 REM kps-image-1.7.dll
 REM It launches julia with one thread.
 
-@echo off
 REM determine basename of current directory
 for /F "delims=" %%i in ("%cd%") do set basename=%%~ni
 
@@ -19,5 +19,5 @@ set EDITOR="code"
 
 IF EXIST "bin/%image%" (
     echo Found system image!
-    julia -J  bin/kps-image-${julia_major}.so -t 1 --project
+    julia -J  bin/kps-image-%julia_major%.so -t 1 --project
 ) else julia --project
