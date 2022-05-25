@@ -13,3 +13,5 @@ bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/maste
 
 ### Mac
 Please download and install Julia as explained at https://julialang.org/downloads/
+
+Continue with [README](../README.md)
