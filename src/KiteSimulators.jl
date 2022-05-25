@@ -66,6 +66,9 @@ function cp_bin()
     cp(joinpath(src_path, "README.md"), joinpath(PATH, "README.md"), force=true)
     chmod(joinpath(PATH, "README.md"), 0o664)
     PATH = "docs"
+    if ! isdir(PATH) 
+        mkdir(PATH)
+    end
     src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
     cp(joinpath(src_path, "Installation.md"), joinpath(PATH, "Installation.md"), force=true)
     cp(joinpath(src_path, "kite_power_tools.png"), joinpath(PATH, "kite_power_tools.png"), force=true)
