@@ -44,9 +44,11 @@ function cp_bin()
     cp(joinpath(src_path, "create_sys_image"), joinpath(PATH, "create_sys_image"), force=true)
     cp(joinpath(src_path, "create_sys_image.bat"), joinpath(PATH, "create_sys_image.bat"), force=true)
     cp(joinpath(src_path, "run_julia"), joinpath(PATH, "run_julia"), force=true)
+    cp(joinpath(src_path, "run_julia.bat"), joinpath(PATH, "run_julia.bat"), force=true)
     chmod(joinpath(PATH, "create_sys_image"), 0o774)
     chmod(joinpath(PATH, "create_sys_image.bat"), 0o774)
     chmod(joinpath(PATH, "run_julia"), 0o774)
+    chmod(joinpath(PATH, "run_julia.bat"), 0o774)
     PATH = "test"
     if ! isdir(PATH) 
         mkdir(PATH)
@@ -59,6 +61,16 @@ function cp_bin()
     chmod(joinpath(PATH, "test_for_precompile.jl"), 0o664)
     chmod(joinpath(PATH, "update_packages.jl"), 0o664)
     copy_settings()
+    PATH = ""
+    src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
+    cp(joinpath(src_path, "README.md"), joinpath(PATH, "README.md"), force=true)
+    chmod(joinpath(PATH, "README.md"), 0o664)
+    PATH = "docs"
+    src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
+    cp(joinpath(src_path, "Installation.md"), joinpath(PATH, "Installation.md"), force=true)
+    cp(joinpath(src_path, "kite_power_tools.png"), joinpath(PATH, "kite_power_tools.png"), force=true)
+    chmod(joinpath(PATH, "Installation.md"), 0o664)
+    chmod(joinpath(PATH, "kite_power_tools.png"), 0o664)
 end
 
 end
