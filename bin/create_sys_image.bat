@@ -1,3 +1,4 @@
+@echo off
 REM This script creates a julia system image with a name that
 REM contains the Julia version, e.g. kps-image-1.7.dll
 REM It should be placed in the bin folder of the project.
@@ -5,7 +6,6 @@ REM It assumes that the following files exist:
 REM test/update_packages.jl
 REM test/create_sys_image.jl
 
-@echo off
 REM determine basename of current directory
 for /F "delims=" %%i in ("%cd%") do set basename=%%~ni
 
