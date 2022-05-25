@@ -4,6 +4,9 @@
 Please download and install Julia as explained at https://julialang.org/downloads/ .
 Choose the 64-bit (installer). Make sure to check the option "Add julia to path" when running the installer.
 
+Alternatively you can try https://github.com/PetrKryslUCSD/VSCode_Julia_portable , which comes with the IDE VSCode
+and git included.
+
 ### Linux
 
 Copy and past the following line to install the latest stable version of Julia:
