@@ -20,7 +20,7 @@ Timers = "21f18d07-b854-4dab-86f0-c15a3821819a"
 
 [compat]
 AtmosphericModels = "0.1"
-GLMakie = "0.4.7"
+GLMakie = "0.4.7, 0.6"
 Joysticks = "0.1"
 KiteModels = "0.4"
 KitePodModels = "0.2"
@@ -34,8 +34,8 @@ Timers = "0.1"
 julia = "1"
 
 [extras]
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 PackageCompiler = "9b87118b-4619-50d2-8e1e-99f35a4d4d9d"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Test","PackageCompiler"]
+test = ["Test", "PackageCompiler"]
