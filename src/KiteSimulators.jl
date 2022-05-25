@@ -12,7 +12,7 @@ using Reexport
 @reexport using Plots
 @reexport using PackageCompiler
 
-export cp_examples, cp_bin
+export cp_examples, init_project
 
 """
     copy_examples()
@@ -31,12 +31,14 @@ function cp_examples()
 end
 
 """
-    cp_bin()
+    init_project()
 
 Copy the scripts create_sys_image and run_julia to the folder "bin"
 (it will be created if it doesn't exist).
+In addition it copies the README.md file, the default settings in
+the folder data  and helper scripts in the folder test.
 """
-function cp_bin()
+function init_project()
     PATH = "bin"
     if ! isdir(PATH) 
         mkdir(PATH)

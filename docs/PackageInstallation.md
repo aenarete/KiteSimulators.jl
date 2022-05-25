@@ -12,7 +12,7 @@ using Pkg
 pkg"add https://github.com/aenarete/KiteSimulators.jl"
 
 using KiteSimulators
-cp_bin()
+init_project()
 exit()
 ```
 The commands above create the following directory structure:
