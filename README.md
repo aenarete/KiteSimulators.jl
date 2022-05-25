@@ -25,17 +25,23 @@ The commands above create the following directory structure:
 ```
 ├── bin
 │   ├── create_sys_image
-│   ├── kps-image-1.7.so
-│   └── run_julia
+│   ├── create_sys_image.bat
+│   ├── run_julia
+│   └── run_julia.bat
 ├── data
 │   ├── settings.yaml
 │   └── system.yaml
-├── examples
-│   └── joystick.jl
+├── docs
+│   ├── Installation.md
+│   └── kite_power_tools.png
+├── Manifest.toml
+├── Project.toml
+├── README.md
 └── test
     ├── create_sys_image.jl
     ├── test_for_precompile.jl
     └── update_packages.jl
+
 
 ```
 It is suggested that you now create a Julia image that contains a compiled version off all the packages.
