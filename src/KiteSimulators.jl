@@ -25,12 +25,8 @@ function cp_examples()
         mkdir(PATH)
     end
     src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
-    cp(joinpath(src_path, "compare_kps3_kps4.jl"), joinpath(PATH, "compare_kps3_kps4.jl"), force=true)
-    cp(joinpath(src_path, "plot2d.jl"), joinpath(PATH, "plot2d.jl"), force=true)
-    cp(joinpath(src_path, "simulate.jl"), joinpath(PATH, "simulate.jl"), force=true)
-    chmod(joinpath(PATH, "compare_kps3_kps4.jl"), 0o664)
-    chmod(joinpath(PATH, "plot2d.jl"), 0o664)
-    chmod(joinpath(PATH, "simulate.jl"), 0o664)
+    cp(joinpath(src_path, "joystick.jl"), joinpath(PATH, "joystick.jl"), force=true)
+    chmod(joinpath(PATH, "joystick.jl"), 0o664)
 end
 
 """

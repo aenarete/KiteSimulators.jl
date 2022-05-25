@@ -26,5 +26,21 @@ On the command line, enter:
 cd bin
 ./create_sys_image
 ```
-This will take 10 to 20 minutes but is only required once.
+This will take 6 to 20 minutes but is only required once.
+
+You can now execute Julia with the commands:
+```bash
+cd ..
+./bin/run_julia
+```
+
+## Copy and run an example
+From the Julia prompt execute:
+```julia
+cp_examples()
+```
+If you have a Joystick connected, you can run the simulator with joystick control
+```julia
+include("examples/joystick.jl)
+```
 
