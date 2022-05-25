@@ -14,9 +14,8 @@ fi
 
 julia_version=$(julia --version | awk '{print($3)}')
 julia_major=${julia_version:0:3} 
-branch=$(git rev-parse --abbrev-ref HEAD)
-if test -f "kps-image-${julia_major}-${branch}.so"; then
-    mv bin/kps-image-${julia_major}-${branch}.so kps-image-${julia_major}-${branch}.so.bak
+if test -f "kps-image-${julia_major}.so"; then
+    mv bin/kps-image-${julia_major}.so kps-image-${julia_major}.so.bak
 fi
 
 echo "Updating packages..."
@@ -27,5 +26,5 @@ julia --project -e "include(\"./test/update_packages.jl\");"
 
 julia --project -e "using Pkg; Pkg.precompile()"
 julia --project -e "include(\"./test/create_sys_image.jl\");"
-mv kps-image_tmp.so bin/kps-image-${julia_major}-${branch}.so
+mv kps-image_tmp.so bin/kps-image-${julia_major}.so
 julia --project -e "using Pkg; Pkg.precompile()"
