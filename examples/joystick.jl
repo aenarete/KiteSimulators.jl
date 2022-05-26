@@ -17,7 +17,7 @@ dt = 0.05
 MAX_TIME=3600
 TIME_LAPSE_RATIO = 1
 SHOW_KITE = true
-PLOT_PERFORMANCE = false
+PLOT_PERFORMANCE = true
 # end of user parameter section #
 
 if ! @isdefined viewer; const viewer = Viewer3D(SHOW_KITE); end
@@ -94,6 +94,11 @@ function async_play()
         @async begin
             play()
             stop(viewer)
+            if PLOT_PERFORMANCE
+                plt = plot(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_tot[5:steps],  xlabel="Simulation time [s]", ylabel="time per frame [ms]", label="time_tot")
+                plt = plot!(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_gc[5:steps], label="time_gc")
+                display(plt)
+            end
         end
     end
 end
@@ -104,10 +109,6 @@ on(jsbuttons.btn1) do val; if val async_play() end; end
 on(viewer.btn_STOP.clicks) do c; stop(viewer); end
 on(jsbuttons.btn2) do val; if val stop(viewer) end; end
 
-play()
 stop(viewer)
-
-if PLOT_PERFORMANCE
-    plot(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_tot[5:steps],  xlabel="Simulation time [s]", ylabel="time per frame [ms]", label="time_tot")
-    plot!(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_gc[5:steps], label="time_gc")
-end
+async_play()
+wait(display(viewer.scene))
