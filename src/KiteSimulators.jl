@@ -9,6 +9,7 @@ using Reexport
 @reexport using KiteViewers
 @reexport using Timers
 @reexport using Joysticks
+@reexport using Printf
 @reexport using Plots
 @reexport using PackageCompiler
 
