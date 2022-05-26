@@ -47,7 +47,7 @@ In addition it copies the README.md file, the default settings in
 the folder data  and helper scripts in the folder test.
 """
 function init_project()
-    bin_files = ["create_sys_image", "create_sys_image.bat", "run_julia", "run_julia.bat", "joystick"]
+    bin_files = ["create_sys_image", "create_sys_image.bat", "run_julia", "run_julia.bat", "joystick", "joystick.bat"]
     test_files = ["create_sys_image.jl", "test_for_precompile.jl", "update_packages.jl"]
     docs_files = ["Installation.md", "PackageInstallation.md", "kite_power_tools.png", "kite_4p.png"]
     copy_files("bin", bin_files)
