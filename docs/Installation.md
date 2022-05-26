@@ -16,6 +16,11 @@ the Python version of jill, see https://github.com/johnnychen94/jill.py
 pip install jill
 jill install
 ```
+It is suggested to add the following line to your ```.bashrc``` file:
+```
+alias jl='./bin/run_julia'
+```
+This makes it possible to run julia with the shortcut `jl` later.
 
 ### Mac
 Please download and install Julia as explained at https://julialang.org/downloads/
