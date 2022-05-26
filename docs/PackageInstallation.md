@@ -16,26 +16,8 @@ init_project()
 exit()
 ```
 The commands above create the following directory structure:
-```
-├── bin
-│   ├── create_sys_image
-│   ├── create_sys_image.bat
-│   ├── run_julia
-│   └── run_julia.bat
-├── data
-│   ├── settings.yaml
-│   └── system.yaml
-├── docs
-│   ├── Installation.md
-│   └── kite_power_tools.png
-├── Manifest.toml
-├── Project.toml
-├── README.md
-└── test
-    ├── create_sys_image.jl
-    ├── test_for_precompile.jl
-    └── update_packages.jl
 
+<p align="center"><img src="dir_structure.png" width="300" /></p>
 
 ```
 It is suggested that you now create a Julia image that contains a compiled version off all the packages.
