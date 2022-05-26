@@ -22,13 +22,19 @@ Copy the example scripts to the folder "examples"
 (it will be created if it doesn't exist).
 """
 function cp_examples()
-    PATH = "examples"
-    if ! isdir(PATH) 
-        mkdir(PATH)
+    examples = ["joystick.jl", "plot2d.jl", "reel_out.jl"]
+    copy_files("examples", examples)
+end
+
+function copy_files(relpath, files)
+    if ! isdir(relpath) 
+        mkdir(relpath)
     end
-    src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
-    cp(joinpath(src_path, "joystick.jl"), joinpath(PATH, "joystick.jl"), force=true)
-    chmod(joinpath(PATH, "joystick.jl"), 0o664)
+    src_path = joinpath(dirname(pathof(@__MODULE__)), "..", relpath)
+    for file in files
+        cp(joinpath(src_path, file), joinpath(PATH, file), force=true)
+        chmod(joinpath(PATH, file), 0o774)
+    end
 end
 
 """
@@ -40,44 +46,17 @@ In addition it copies the README.md file, the default settings in
 the folder data  and helper scripts in the folder test.
 """
 function init_project()
-    PATH = "bin"
-    if ! isdir(PATH) 
-        mkdir(PATH)
-    end
-    src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
-    cp(joinpath(src_path, "create_sys_image"), joinpath(PATH, "create_sys_image"), force=true)
-    cp(joinpath(src_path, "create_sys_image.bat"), joinpath(PATH, "create_sys_image.bat"), force=true)
-    cp(joinpath(src_path, "run_julia"), joinpath(PATH, "run_julia"), force=true)
-    cp(joinpath(src_path, "run_julia.bat"), joinpath(PATH, "run_julia.bat"), force=true)
-    chmod(joinpath(PATH, "create_sys_image"), 0o774)
-    chmod(joinpath(PATH, "create_sys_image.bat"), 0o774)
-    chmod(joinpath(PATH, "run_julia"), 0o774)
-    chmod(joinpath(PATH, "run_julia.bat"), 0o774)
-    PATH = "test"
-    if ! isdir(PATH) 
-        mkdir(PATH)
-    end
-    src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
-    cp(joinpath(src_path, "create_sys_image.jl"), joinpath(PATH, "create_sys_image.jl"), force=true)
-    cp(joinpath(src_path, "test_for_precompile.jl"), joinpath(PATH, "test_for_precompile.jl"), force=true)
-    cp(joinpath(src_path, "update_packages.jl"), joinpath(PATH, "update_packages.jl"), force=true)
-    chmod(joinpath(PATH, "create_sys_image.jl"), 0o664)
-    chmod(joinpath(PATH, "test_for_precompile.jl"), 0o664)
-    chmod(joinpath(PATH, "update_packages.jl"), 0o664)
-    copy_settings()
+    bin_files = ["create_sys_image", "create_sys_image.bat", "run_julia", "run_julia.bat", "joystick"]
+    test_files = ["create_sys_image.jl", "test_for_precompile.jl", "update_packages.jl"]
+    docs_files = ["Installation.md", "PackageInstallation.md", "kite_power_tools.png", "kite_4p.png"]
+    copy_files("bin", bin_files)
+    copy_files("test", test_files)
+    copy_files("docs", docs_files)
     PATH = ""
     src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
     cp(joinpath(src_path, "README.md"), joinpath(PATH, "README.md"), force=true)
     chmod(joinpath(PATH, "README.md"), 0o664)
-    PATH = "docs"
-    if ! isdir(PATH) 
-        mkdir(PATH)
-    end
-    src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
-    cp(joinpath(src_path, "Installation.md"), joinpath(PATH, "Installation.md"), force=true)
-    cp(joinpath(src_path, "kite_power_tools.png"), joinpath(PATH, "kite_power_tools.png"), force=true)
-    chmod(joinpath(PATH, "Installation.md"), 0o664)
-    chmod(joinpath(PATH, "kite_power_tools.png"), 0o664)
+    copy_settings()
 end
 
 end
