@@ -37,7 +37,7 @@ with button two you can stop it.
 
 ## Documentation
 Most of the packages have their own documentation. See for example:
-- [KiteModels](https://ufechner7.github.io/KiteModels.jl/stable/)
+- [KiteModels](https://ufechner7.github.io/KiteModels.jl/dev/)
 - [KiteUtils](https://ufechner7.github.io/KiteUtils.jl/stable/)
 
 and the README files of the other packages, listed below.
