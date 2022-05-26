@@ -36,7 +36,13 @@ required. You can also use any editor of your choice.
 VSCode provides syntax highlighting, but also the feature "goto definition" which can help to understand
 and explore the code. 
 
+<p align="center"><img src="vscode.png" width="600" /></p>
+
 You can download and install VSCode for all operating systems from this location: https://code.visualstudio.com/
 
-In addition you will need the Julia plugin as documented here: 
-https://github.com/julia-vscode/julia-vscode#installing-juliavs-codevs-code-julia-extension
+
+Julia development with VSCode is well documented here: https://www.julia-vscode.org/docs/stable/
+
+I would NOT use all the advanced features of julia-vscode, I prefer to just use the vscode terminal and launch julia
+from the terminal. This makes it easy to launch Julia with any command line options and also to start
+and restart Julia quickly.
