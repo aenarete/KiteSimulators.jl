@@ -1,5 +1,5 @@
-tic()
 using KiteSimulators
+tic()
 
 const Model = KPS4
 

@@ -17,6 +17,7 @@ dt = 0.05
 MAX_TIME=3600
 TIME_LAPSE_RATIO = 1
 SHOW_KITE = true
+PLOT_PERFORMANCE = false
 # end of user parameter section #
 
 if ! @isdefined viewer; const viewer = Viewer3D(SHOW_KITE); end
@@ -86,7 +87,6 @@ function play()
     global steps
     integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04)
     steps = simulate(integrator)
-    GC.enable(true)
 end
 
 function async_play()
@@ -106,6 +106,8 @@ on(jsbuttons.btn2) do val; if val stop(viewer) end; end
 
 play()
 stop(viewer)
-using Plots
-plot(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_tot[5:steps],  xlabel="Simulation time [s]", ylabel="time per frame [ms]", label="time_tot")
-plot!(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_gc[5:steps], label="time_gc")
+
+if PLOT_PERFORMANCE
+    plot(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_tot[5:steps],  xlabel="Simulation time [s]", ylabel="time per frame [ms]", label="time_tot")
+    plot!(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_gc[5:steps], label="time_gc")
+end
