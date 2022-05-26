@@ -25,7 +25,6 @@ function cp_examples()
     PATH = "examples"
     src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
     copy_files("examples", readdir(src_path))
-    files
 end
 
 function copy_files(relpath, files)
