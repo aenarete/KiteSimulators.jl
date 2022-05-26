@@ -28,5 +28,5 @@ if EXIST "Manifest.toml" (
 REM julia --project -e "include(\"./test/update_packages.jl\");"
 julia --project -e "using Pkg; Pkg.precompile()"
 julia --project -e "include(\"./test/create_sys_image.jl\");"
-move kps-image_tmp.so bin/kps-image-%julia_major%.dll
+move kps-image_tmp.so bin\kps-image-%julia_major%.dll
 julia --project -e "using Pkg; Pkg.precompile()"
