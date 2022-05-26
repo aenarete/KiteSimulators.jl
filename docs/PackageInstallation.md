@@ -19,10 +19,9 @@ The commands above create the following directory structure:
 
 <p align="center"><img src="dir_structure.png" width="300" /></p>
 
-```
 It is suggested that you now create a Julia image that contains a compiled version off all the packages.
 
-On the command line, enter for Linux
+On the command line, enter for Linux:
 ```bash
 cd bin
 ./create_sys_image
