@@ -28,8 +28,8 @@ You should now see the kite attached to the tether:
 
 To view and modify the example, you can use the command:
 ```julia
-@edit examples/joystick.jl  # Linux
-@edit examples\\joystick.jl # Windows
+edit("examples/joystick.jl")  # Linux
+edit("examples\\joystick.jl") # Windows
 ```
 The x axis of the Joystick controls steering, y-axis depowering and z-axis the
 reel-in and reel-out of the winch. With button one you can start the simulation,
