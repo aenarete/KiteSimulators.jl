@@ -16,8 +16,8 @@ for /f "tokens=3 delims= " %%a in ("%version_string%") do set version=%%a
 set julia_major=%version:~0,3%
 set image=kps-image-%julia_major%.dll
 
-IF EXIST "bin/%image%" (
-  move bin/kps-image-%julia_major%.dll bin/kps-image-%julia_major%.so.bak
+IF EXIST "bin\%image%" (
+  move bin\kps-image-%julia_major%.dll bin\kps-image-%julia_major%.so.bak
 )
 
 echo Updating packages...

@@ -19,5 +19,5 @@ set EDITOR="code"
 
 IF EXIST "bin/%image%" (
     echo Found system image!
-    julia -J  bin/kps-image-%julia_major%.so -t 1 --project
+    julia -J  bin/kps-image-%julia_major%.dll -t 1 --project
 ) else julia --project
