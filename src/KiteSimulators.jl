@@ -18,12 +18,13 @@ export cp_examples, init_project
 """
     copy_examples()
 
-Copy the example scripts to the folder "examples"
+Copy all example scripts to the folder "examples"
 (it will be created if it doesn't exist).
 """
 function cp_examples()
-    examples = ["joystick.jl", "plot2d.jl", "reel_out.jl"]
-    copy_files("examples", examples)
+    PATH = "examples"
+    src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
+    copy_files("examples", readdir(src_path))
 end
 
 function copy_files(relpath, files)
@@ -32,8 +33,8 @@ function copy_files(relpath, files)
     end
     src_path = joinpath(dirname(pathof(@__MODULE__)), "..", relpath)
     for file in files
-        cp(joinpath(src_path, file), joinpath(PATH, file), force=true)
-        chmod(joinpath(PATH, file), 0o774)
+        cp(joinpath(src_path, file), joinpath(relpath, file), force=true)
+        chmod(joinpath(relpath, file), 0o774)
     end
 end
 
