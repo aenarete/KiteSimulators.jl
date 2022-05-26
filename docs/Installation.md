@@ -13,9 +13,11 @@ bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/maste
 If you want to be able to easily switch between different versions of Julia consider to install
 the Python version of jill, see https://github.com/johnnychen94/jill.py
 ```bash
-pip install jill
-jill install
+pip install jill --user -U
+jill install 1.7
 ```
+If you should latter install version 1.8 with `jill install 1.8` you can then switch between the versions with `jill switch 1.7` etc.
+
 It is suggested to add the following line to your ```.bashrc``` file:
 ```
 alias jl='./bin/run_julia'
