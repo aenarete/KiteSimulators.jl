@@ -27,8 +27,6 @@ Please download and install Julia as explained at https://julialang.org/download
 
 The jill installers will most likely also work on Mac and allow eays switching of different Julia versions (see Linux section).
 
-Continue with [README](../README.md)
-
 ## Installation of the IDE VSCode
 It is useful to install the integrated development environment VSCode, even though it is not
 required. You can also use any editor of your choice. 
@@ -46,3 +44,5 @@ Julia development with VSCode is well documented here: https://www.julia-vscode.
 I would NOT use all the advanced features of julia-vscode, I prefer to just use the vscode terminal and launch julia
 from the terminal. This makes it easy to launch Julia with any command line options and also to start
 and restart Julia quickly.
+
+Continue with [README](../README.md)
