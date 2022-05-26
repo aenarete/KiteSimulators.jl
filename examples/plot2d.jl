@@ -1,4 +1,4 @@
-# is included from simulate.jl
+# is included from reel_out.jl
 function plot2d(pos, reltime=0.0; zoom=true, front=false, segments=6)
     x = Float64[] 
     z = Float64[]
