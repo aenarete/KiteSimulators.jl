@@ -25,6 +25,7 @@ function cp_examples()
     PATH = "examples"
     src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
     copy_files("examples", readdir(src_path))
+    files
 end
 
 function copy_files(relpath, files)
@@ -36,6 +37,7 @@ function copy_files(relpath, files)
         cp(joinpath(src_path, file), joinpath(relpath, file), force=true)
         chmod(joinpath(relpath, file), 0o774)
     end
+    files
 end
 
 """
