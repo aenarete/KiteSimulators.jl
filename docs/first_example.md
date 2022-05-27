@@ -52,7 +52,7 @@ end
 ```
 The variable `start_time` stores the start time of the last set of simulation steps. If we have a TIME_LAPSE_FACTOR of five we run 5 simulation steps before updating the screen, and we update the screen every 50ms. We use the function `wait_until` to achieve a precise timing.
 
-In the simulation loop we first determine the control parameters. In this example that is very simple: After 300 seconds we set the depower value to 30% and after 640 seconds to 35% (the inital value is 25%).
+In the simulation loop we first determine the control parameters. In this example that is very simple: After 300 steps (15s simulation time) we set the depower value to 30% and after 640 steps to 35% (the inital value is 25%).
 
 Then we let the model simulate the next step.
 
