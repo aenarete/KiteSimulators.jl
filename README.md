@@ -35,6 +35,15 @@ The x axis of the Joystick controls steering, y-axis depowering and z-axis the
 reel-in and reel-out of the winch. With button one you can start the simulation,
 with button two you can stop it.
 
+If you don't have a Joystick, try the following example:
+
+```julia
+./bin/run_julia or bin\run_julia
+
+using KiteSimulators
+include("examples/depower.jl")  # Linux
+include("examples\\depower.jl") # Windows
+```
 ## Documentation
 Most of the packages have their own documentation. See for example:
 - [KiteModels](https://ufechner7.github.io/KiteModels.jl/dev/)
