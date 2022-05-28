@@ -3,6 +3,13 @@
 Meta-package, providing "Julia Kite Power Tools", consisting of the following packages:
 <p align="center"><img src="./docs/kite_power_tools.png" width="500" /></p>
 
+## Hardware requirements
+A fast computer helps to reduce the installation time, otherwise it works well even on dual core computers
+with 4G RAM, even 2G RAM might be sufficient. OpenGL is a hard requirement. A dedicated graphics card is useful, 
+but not always required. If you have a Windows laptop please enable the dedicated graphics card in the settings.
+The program was tested with a Logitech Extreme 3D pro Joystick, but most likely any Joystick will do. If not, please create an issue on Github. The installation was tested on Windows 10 and Ubuntu 18.04 and 20.04, but should also work
+on Mac.
+
 ## Installation
 If you do not have Julia installed yet, please read [Installation](docs/Installation.md).
 
