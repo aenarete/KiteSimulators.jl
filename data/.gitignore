@@ -1,1 +1,3 @@
 *.yaml
+/sim_log.arrow
+/kite.obj
