@@ -25,7 +25,7 @@ save_log(logger)
 Open the file `examples/play_log.jl` and change the following lines according to your needs:
 
 ```julia
-TIME_LAPSE_RATIO = 5      # 1 = realtime, 2..8 faster
+TIME_LAPSE_RATIO = 5      # 1 = realtime, 2..10 faster
 LOG_FILE_NAME = "sim_log" # without extension!
 PARTICLES = 7 + 4         # 7 for tether and KCU, 4 for the kite
 ```
@@ -48,7 +48,7 @@ This script loads the log file with the name `sim_log.arrow` and exports it to .
 
 ### Reading .arrow files in Python
 It is very easy to read .arrow files and convert them to Pandas dataframes which is a kind of standard data format
-in Python.
+for tabular data in Python.
 
 Example:
 ```Python
