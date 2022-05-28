@@ -1,11 +1,11 @@
 ## Logging
 
 ### Creating a log file
-If you run the following command:
+If you run the following command with `LOGGING = true` in line 21
 ```julia
  include("examples/depower.jl")
 ```
-A log file with the name `sim_log.arrow` will be created in the data folder. It uses an .xz compressed [arrow](https://arrow.apache.org/) format which is fast to load and small.
+A log file with the name `sim_log.arrow` will be created in the data folder. It uses an .xz compressed [arrow](https://arrow.apache.org/) format which is fast to load and small. This actually the same as the "Feather V2" file format.
 
 ### Add logging to your own scripts
 The following functions are needed to add logging to your script:
