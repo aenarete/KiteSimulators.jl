@@ -45,7 +45,8 @@ include("examples/depower.jl")  # Linux
 include("examples\\depower.jl") # Windows
 ```
 ## Documentation
-First example, explained: [First Example](docs/first_example.md).
+- First example, explained: [First Example](docs/first_example.md).  
+- Reading and writing log files: [Logging](docs/logging.md)
 
 Most of the packages have their own documentation. See for example:
 - [KiteModels](https://ufechner7.github.io/KiteModels.jl/dev/)

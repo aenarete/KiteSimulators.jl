@@ -5,10 +5,12 @@ if ! @isdefined kps4; const kps4 = KPS4(kcu); end
 
 # the following values can be changed to match your interest
 const dt = 0.05
-TIME_LAPSE_RATIO = 5
+TIME_LAPSE_RATIO = 5      # 1 = realtime, 2..8 faster
+LOG_FILE_NAME = "sim_log" # without extension!
+PARTICLES = 7 + 4         # 7 for tether and KCU, 4 for the kite
 # end of user parameter section #
 
-log=load_log(7+4, "sim_log")
+log=load_log(PARTICLES, LOG_FILE_NAME)
 
 if ! @isdefined viewer; const viewer = Viewer3D(true); end
 
@@ -25,7 +27,5 @@ function play(syslog)
     end
 end
 
-integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04)
 play(log.syslog)
-
 stop(viewer)

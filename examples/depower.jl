@@ -28,7 +28,7 @@ if ! @isdefined time_vec_sim; const time_vec_sim = zeros(STEPS); end
 if ! @isdefined time_vec_tot; const time_vec_tot = zeros(div(STEPS, TIME_LAPSE_RATIO)); end
 if ! @isdefined viewer; const viewer = Viewer3D(SHOW_KITE); end
 
-logger=Logger(se().segments + 5)
+if LOGGING logger = Logger(se().segments + 5) end
 
 function simulate(integrator, steps)
     global logger
