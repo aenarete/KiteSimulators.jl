@@ -19,11 +19,7 @@ let
     # end of user parameter section #
 
     viewer = Viewer3D(SHOW_KITE)
-
-   function update_system2(kps)
-        sys_state = SysState(kps)
-        KiteViewers.update_system(viewer, sys_state; scale = 0.08, kite_scale=3)
-    end 
+    logger=Logger(se().segments + 5)
 
     function simulate(integrator, steps)
         start = integrator.p.iter
@@ -37,10 +33,13 @@ let
                 set_depower_steering(kps4.kcu, 0.25, 0.0)
             end
             KiteModels.next_step!(kps4, integrator, dt=dt)
-            update_system2(kps4)
+            state = SysState(kps4)
+            log!(logger, state)
+            update_system(viewer, state; scale = 0.08, kite_scale=3)
             wait_until(start_time_ns+dt*1e9, always_sleep=true)
             start_time_ns = time_ns()
         end
+        save_log(logger)
         (integrator.p.iter - start) / steps
     end
 

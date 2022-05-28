@@ -1,19 +1,24 @@
 using KiteSimulators
+
+set_data_path(joinpath(@__DIR__, "..", "data"))
 tic()
 
 const Model = KPS4
 
-if ! @isdefined kcu;  const kcu = KCU(se());   end
+set = se()
+
+if ! @isdefined kcu;  const kcu = KCU(set);   end
 if ! @isdefined kps4; const kps4 = Model(kcu); end
 
 # the following values can be changed to match your interest
 const dt = 0.05
-const TIME = 50
-const TIME_LAPSE_RATIO = 5
-const STEPS = Int64(round(TIME/dt))
+TIME = 50
+TIME_LAPSE_RATIO = 5
+STEPS = Int64(round(TIME/dt))
 STATISTIC = false
 SHOW_KITE = true
-PLOT_PERFORMANCE = true
+PLOT_PERFORMANCE = false
+LOGGING = true
 # end of user parameter section #
 
 if Model==KPS3 SHOW_KITE = true end
@@ -23,7 +28,10 @@ if ! @isdefined time_vec_sim; const time_vec_sim = zeros(STEPS); end
 if ! @isdefined time_vec_tot; const time_vec_tot = zeros(div(STEPS, TIME_LAPSE_RATIO)); end
 if ! @isdefined viewer; const viewer = Viewer3D(SHOW_KITE); end
 
+logger=Logger(se().segments + 5)
+
 function simulate(integrator, steps)
+    global logger
     start = integrator.p.iter
     start_time_ns = time_ns()
     j=0; k=0
@@ -42,8 +50,10 @@ function simulate(integrator, steps)
             t_gc = @elapsed GC.gc(false)
         end
         t_show = 0.0
+        state = SysState(kps4)
+        if LOGGING log!(logger, state) end
         if mod(i, TIME_LAPSE_RATIO) == 0 || i == steps
-            t_show = @elapsed update_system(viewer, SysState(kps4); scale = 0.08, kite_scale=3.0)
+            t_show = @elapsed update_system(viewer, state; scale = 0.08, kite_scale=3.0)
             end_time_ns = time_ns()
             wait_until(start_time_ns + dt*1e9, always_sleep=true)
             mtime = 0
@@ -69,6 +79,7 @@ function simulate(integrator, steps)
         time_vec_gc[i]=t_gc/dt*100.0
         time_vec_sim[i]=t_sim/dt*100.0
         if viewer.stop break end
+        if LOGGING save_log(logger) end
     end
     misses=j/k * 100
     println("\nMissed the deadline for $(round(misses, digits=2)) %. Max time: $(round((max_time*1e-6), digits=1)) ms")
