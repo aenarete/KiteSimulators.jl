@@ -19,7 +19,7 @@ let
     # end of user parameter section #
 
     viewer = Viewer3D(SHOW_KITE)
-    logger=Logger(se().segments + 5)
+    logger=Logger(se().segments + 5, STEPS)
 
     function simulate(integrator, steps)
         start = integrator.p.iter

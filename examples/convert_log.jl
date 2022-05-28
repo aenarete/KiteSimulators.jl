@@ -13,4 +13,4 @@ PARTICLES = 7 + 4         # 7 for tether and KCU, 4 for the kite
 log_file = load_log(PARTICLES, LOG_FILE_NAME)
 export_log(log_file)
 # log_file.name="sim_log_uncompressed"
-# save_log(log_file, compress=false)
+# save_log(log_file, false)

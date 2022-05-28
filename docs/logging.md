@@ -10,8 +10,8 @@ A log file with the name `sim_log.arrow` will be created in the data folder. It 
 ### Add logging to your own scripts
 The following functions are needed to add logging to your script:
 ```julia
-logger = Logger(se().segments + 5)   # create a logger when using the 4 point model
-# logger = Logger(se().segments + 1) # create a logger when using the 1 point model
+logger = Logger(se().segments + 5, steps)   # create a logger when using the 4 point model
+# logger = Logger(se().segments + 1, steps) # create a logger when using the 1 point model
 
 # each time step
 state = SysState(kps4)
@@ -45,5 +45,24 @@ Example:
 include("examples/convert.log.jl")
 ```
 This script loads the log file with the name `sim_log.arrow` and exports it to .csv format under the name `sim_log.csv`.
+
+### Reading .arrow files in Python
+It is very easy to read .arrow files and convert them to Pandas dataframes which is a kind of standard data format
+in Python.
+
+Example:
+```Python
+import pandas as pd
+import pyarrow as pa
+
+print("Reading arrow file...")
+mmap = pa.memory_map('../data/sim_log.arrow')
+
+with mmap as source:
+    array = pa.ipc.open_file(source).read_all()
+
+table = array.to_pandas()
+print(table)
+```
 
 Continue with [README](../README.md)
