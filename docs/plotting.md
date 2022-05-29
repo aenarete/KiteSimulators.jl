@@ -15,6 +15,6 @@ savefig("data/2d_plot.png")
 
 To modify the plot, create a copy of plot_log.jl and modify this file according to your needs.
 
-Read more about plotting in Julia at https://docs.juliaplots.org/latest/tutorial/
+Read more about plotting in Julia at https://docs.juliaplots.org/latest/
 
 Continue with [README](../README.md)
