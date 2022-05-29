@@ -13,7 +13,7 @@ if ! @isdefined kps4; const kps4 = Model(kcu); end
 # the following values can be changed to match your interest
 const dt = 0.05
 TIME = 50
-TIME_LAPSE_RATIO = 4
+TIME_LAPSE_RATIO = 5
 STEPS = Int64(round(TIME/dt))
 STATISTIC = false
 SHOW_KITE = true
@@ -43,7 +43,7 @@ function simulate(integrator, steps)
             set_depower_steering(kps4.kcu, 0.35, 0.0)    
         end
         t_sim = @elapsed KiteModels.next_step!(kps4, integrator, dt=dt)
-        t_gc  = @elapsed GC.gc(false)
+        t_gc = @elapsed GC.gc(false)
         t_show = 0.0
         state = SysState(kps4)
 
@@ -54,9 +54,9 @@ function simulate(integrator, steps)
             wait_until(start_time_ns + dt*1e9, always_sleep=false)
             mtime = 0
             if i > 10/dt 
-                # if we missed the deadline by more than 5 ms
+                # if we missed the deadline by more than 2 ms
                 mtime = time_ns() - start_time_ns
-                if mtime > dt*1e9 + 5e6
+                if mtime > dt*1e9 + 2e6
                     print(".")
                     j += 1
                 end
@@ -75,11 +75,10 @@ function simulate(integrator, steps)
         time_vec_gc[i]=t_gc/dt*100.0
         time_vec_sim[i]=t_sim/dt*100.0
         if viewer.stop break end
-        if LOGGING save_log(logger) end
     end
-    # GC.enable(true)
     misses=j/k * 100
     println("\nMissed the deadline for $(round(misses, digits=2)) %. Max time: $(round((max_time*1e-6), digits=1)) ms")
+    if LOGGING save_log(logger) end
     (integrator.p.iter - start) / steps
 end
 

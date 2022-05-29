@@ -14,29 +14,25 @@ end
 
 # the following values can be changed to match your interest
 dt = 0.05
-MAX_TIME=3600
+MAX_TIME = 600
+STEPS = Int64(round(MAX_TIME/dt))
 TIME_LAPSE_RATIO = 1
 SHOW_KITE = true
-PLOT_PERFORMANCE = true
+PLOT_PERFORMANCE = false
+LOGGING = true
 # end of user parameter section #
 
 if ! @isdefined viewer; const viewer = Viewer3D(SHOW_KITE); end
 if ! @isdefined time_vec_tot; const time_vec_tot = zeros(Int(MAX_TIME/dt)); end
 if ! @isdefined time_vec_gc; const time_vec_gc = zeros(Int(MAX_TIME/dt)); end
 
-steps=0
-
-function update_system2(kps)
-    sys_state = SysState(kps)
-    KiteViewers.update_system(viewer, sys_state; scale = 0.08, kite_scale=3)
-end 
+steps = 0
 
 function simulate(integrator)
-    start = integrator.p.iter
+    if LOGGING logger = Logger(se().segments + 5, STEPS) end
     start_time_ns = time_ns()
     clear_viewer(viewer)
-    i=1
-    j=0; k=0
+    i = 1; j = 0; k = 0
     GC.gc()
     max_time = 0
     t_gc_tot = 0
@@ -52,8 +48,11 @@ function simulate(integrator)
         if t_sim < 0.3*dt
             t_gc_tot += @elapsed GC.gc(false)
         end
+        state = SysState(kps4)
+        if LOGGING log!(logger, state) end
+
         if mod(i, TIME_LAPSE_RATIO) == 0 
-            update_system2(kps4) 
+            update_system(viewer, state; scale = 0.08, kite_scale=3.0)
             end_time_ns = time_ns()
             wait_until(start_time_ns + 1e9*dt, always_sleep=true) 
             mtime = 0
@@ -78,6 +77,7 @@ function simulate(integrator)
         if viewer.stop break end
         i += 1
     end
+    if LOGGING save_log(logger) end
     misses = j/k * 100
     println("\nMissed the deadline for $(round(misses, digits=2)) %. Max time: $(round((max_time*1e-6), digits=1)) ms")
     return div(i, TIME_LAPSE_RATIO)
@@ -95,6 +95,7 @@ function async_play()
             play()
             stop(viewer)
             if PLOT_PERFORMANCE
+                @eval using Plots
                 plt = plot(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_tot[5:steps],  xlabel="Simulation time [s]", ylabel="time per frame [ms]", label="time_tot")
                 plt = plot!(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_gc[5:steps], label="time_gc")
                 display(plt)
