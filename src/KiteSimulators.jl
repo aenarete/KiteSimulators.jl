@@ -50,7 +50,7 @@ function init_project()
     bin_files = ["create_sys_image", "create_sys_image.bat", "run_julia", "run_julia.bat", "joystick", "joystick.bat"]
     test_files = ["create_sys_image.jl", "test_for_precompile.jl", "update_packages.jl"]
     docs_files = ["Installation.md", "PackageInstallation.md", "kite_power_tools.png", "kite_4p.png", "dir_structure.png",
-                  "vscode.png", "logging.md", "plotting.md"]
+                  "vscode.png", "logging.md", "plotting.md", "2d_plot.png"]
     copy_files("bin", bin_files)
     copy_files("test", test_files)
     copy_files("docs", docs_files)
