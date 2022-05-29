@@ -10,13 +10,12 @@ using Reexport
 @reexport using Timers
 @reexport using Joysticks
 @reexport using Printf
-@reexport using Plots
 @reexport using PackageCompiler
 
 export cp_examples, init_project
 
 """
-    copy_examples()
+    cp_examples()
 
 Copy all example scripts to the folder "examples"
 (it will be created if it doesn't exist).
@@ -51,7 +50,7 @@ function init_project()
     bin_files = ["create_sys_image", "create_sys_image.bat", "run_julia", "run_julia.bat", "joystick", "joystick.bat"]
     test_files = ["create_sys_image.jl", "test_for_precompile.jl", "update_packages.jl"]
     docs_files = ["Installation.md", "PackageInstallation.md", "kite_power_tools.png", "kite_4p.png", "dir_structure.png",
-                  "vscode.png", "logging.md"]
+                  "vscode.png", "logging.md", "plotting.md"]
     copy_files("bin", bin_files)
     copy_files("test", test_files)
     copy_files("docs", docs_files)

@@ -54,6 +54,7 @@ include("examples\\depower.jl") # Windows
 ## Documentation
 - First example, explained: [First Example](docs/first_example.md).  
 - Reading and writing log files: [Logging](docs/logging.md)
+- Plotting results in 2D:  [Logging](docs/plotting.md)
 
 Most of the packages have their own documentation. See for example:
 - [KiteModels](https://ufechner7.github.io/KiteModels.jl/dev/)

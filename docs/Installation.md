@@ -40,6 +40,7 @@ and explore the code.
 
 You can download and install VSCode for all operating systems from this location: https://code.visualstudio.com/
 
+For Ubuntu Linux the following ppa can be used to install vscode and to keep it up-to-date: [https://www.ubuntuupdates.org/ppa/vscode](https://www.ubuntuupdates.org/ppa/vscode) .
 
 Julia development with VSCode is well documented here: https://www.julia-vscode.org/docs/stable/
 
