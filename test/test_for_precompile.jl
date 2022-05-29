@@ -1,5 +1,5 @@
 let
-    using KiteSimulators
+    using KiteSimulators, Plots
 
     # change this to KPS3 or KPS4
     Model = KPS4
