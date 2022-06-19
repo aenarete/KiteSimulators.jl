@@ -10,6 +10,7 @@ On the Julia prompt install the package:
 ```julia
 using Pkg
 pkg"add KiteSimulators"
+pkg"add Plots"
 
 using KiteSimulators
 init_project()
