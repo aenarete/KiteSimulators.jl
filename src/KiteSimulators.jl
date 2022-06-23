@@ -7,6 +7,7 @@ using Reexport
 @reexport using AtmosphericModels
 @reexport using KiteModels
 @reexport using KiteViewers
+@reexport using KiteControllers
 @reexport using Timers
 @reexport using Joysticks
 @reexport using Printf

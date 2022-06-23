@@ -1,4 +1,11 @@
-using KiteSimulators
+# activate the test environment if needed
+using Pkg
+if ! ("Plots" ∈ keys(Pkg.project().dependencies))
+    using TestEnv; TestEnv.activate()
+end
+using Timers; tic()
+
+using KiteControllers, KiteViewers, KiteModels, Joysticks
 
 # change this to KPS3 or KPS4
 const Model = KPS4
@@ -11,49 +18,51 @@ if ! @isdefined js;
     const jsbuttons = JSButtonState()
     async_read!(js, jsaxes, jsbuttons)
 end
+const wcs = WCSettings(); wcs.dt = 1/se().sample_freq
+const fcs = FPCSettings(); fcs.dt = wcs.dt
+const fpps = FPPSettings()
+const ssc = SystemStateControl(wcs, fcs, fpps)
+dt = wcs.dt
 
 # the following values can be changed to match your interest
-dt = 0.05
-MAX_TIME = 600
-STEPS = Int64(round(MAX_TIME/dt))
+if ! @isdefined MAX_TIME; MAX_TIME=3600; end
 TIME_LAPSE_RATIO = 1
 SHOW_KITE = true
-PLOT_PERFORMANCE = false
-LOGGING = true
 # end of user parameter section #
 
 if ! @isdefined viewer; const viewer = Viewer3D(SHOW_KITE); end
-if ! @isdefined time_vec_tot; const time_vec_tot = zeros(Int(MAX_TIME/dt)); end
-if ! @isdefined time_vec_gc; const time_vec_gc = zeros(Int(MAX_TIME/dt)); end
 
 steps = 0
 
 function simulate(integrator)
-    if LOGGING logger = Logger(se().segments + 5, STEPS) end
     start_time_ns = time_ns()
     clear_viewer(viewer)
-    i = 1; j = 0; k = 0
+    i=1
+    j=0; k=0
     GC.gc()
     max_time = 0
     t_gc_tot = 0
+    sys_state = SysState(kps4)
+    on_new_systate(ssc, sys_state)
     while true
-        v_ro = 0.0
         if i > 100
             depower = 0.25 - jsaxes.y*0.4
             if depower < 0.25; depower = 0.25; end
-            set_depower_steering(kps4.kcu, depower, jsaxes.x)
-            v_ro = jsaxes.u * 8.0 
-        end   
+            steering = calc_steering(ssc)
+            set_depower_steering(kps4.kcu, depower, steering+jsaxes.x)
+            # set_depower_steering(kps4.kcu, depower, jsaxes.x)
+            # v_ro = jsaxes.u * 8.0 
+        end  
+        # execute winch controller
+        v_ro = calc_v_set(ssc)
         t_sim = @elapsed KiteModels.next_step!(kps4, integrator, v_ro=v_ro, dt=dt)
         if t_sim < 0.3*dt
             t_gc_tot += @elapsed GC.gc(false)
         end
-        state = SysState(kps4)
-        if LOGGING log!(logger, state) end
-
+        sys_state = SysState(kps4)
+        on_new_systate(ssc, sys_state)
         if mod(i, TIME_LAPSE_RATIO) == 0 
-            update_system(viewer, state; scale = 0.08, kite_scale=3.0)
-            end_time_ns = time_ns()
+            KiteViewers.update_system(viewer, sys_state; scale = 0.08, kite_scale=3)
             wait_until(start_time_ns + 1e9*dt, always_sleep=true) 
             mtime = 0
             if i > 10/dt 
@@ -68,16 +77,13 @@ function simulate(integrator)
             if mtime > max_time
                 max_time = mtime
             end            
-            time_tot = end_time_ns - start_time_ns
             start_time_ns = time_ns()
-            time_vec_tot[div(i, TIME_LAPSE_RATIO)] = time_tot/1e9/dt*1000*dt
-            time_vec_gc[div(i, TIME_LAPSE_RATIO)] = t_gc_tot/dt*1000*dt
             t_gc_tot = 0
         end
         if viewer.stop break end
+        if i*dt > MAX_TIME break end
         i += 1
     end
-    if LOGGING save_log(logger) end
     misses = j/k * 100
     println("\nMissed the deadline for $(round(misses, digits=2)) %. Max time: $(round((max_time*1e-6), digits=1)) ms")
     return div(i, TIME_LAPSE_RATIO)
@@ -86,7 +92,9 @@ end
 function play()
     global steps
     integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04)
+    toc()
     steps = simulate(integrator)
+    GC.enable(true)
 end
 
 function async_play()
@@ -94,22 +102,28 @@ function async_play()
         @async begin
             play()
             stop(viewer)
-            if PLOT_PERFORMANCE
-                @eval using Plots
-                plt = plot(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_tot[5:steps],  xlabel="Simulation time [s]", ylabel="time per frame [ms]", label="time_tot")
-                plt = plot!(range(5*TIME_LAPSE_RATIO*dt,steps*dt,step=dt*TIME_LAPSE_RATIO), time_vec_gc[5:steps], label="time_gc")
-                display(plt)
-            end
         end
     end
 end
 
+function parking()
+    on_parking(ssc)
+end
+
+function autopilot()
+    on_autopilot(ssc)
+end
+
 on(viewer.btn_PLAY.clicks) do c; async_play(); end
+on(viewer.btn_STOP.clicks) do c; stop(viewer); on_stop(ssc) end
+on(viewer.btn_PARKING.clicks) do c; parking(); end
+on(viewer.btn_AUTO.clicks) do c; autopilot(); end
+
 on(jsbuttons.btn1) do val; if val async_play() end; end
-
-on(viewer.btn_STOP.clicks) do c; stop(viewer); end
 on(jsbuttons.btn2) do val; if val stop(viewer) end; end
+on(jsbuttons.btn3) do val; if val autopilot() end; end
+on(jsbuttons.btn4) do val; if val on_reelin(ssc) end; end
+on(jsbuttons.btn5) do val; if val on_parking(ssc) end; end
 
+play()
 stop(viewer)
-async_play()
-wait(display(viewer.scene))
