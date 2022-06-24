@@ -1,11 +1,6 @@
-# activate the test environment if needed
-using Pkg
-if ! ("Plots" ∈ keys(Pkg.project().dependencies))
-    using TestEnv; TestEnv.activate()
-end
 using Timers; tic()
 
-using KiteControllers, KiteViewers, KiteModels, Joysticks
+using KiteSimulators
 
 # change this to KPS3 or KPS4
 const Model = KPS4
