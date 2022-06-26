@@ -1,4 +1,3 @@
-# activate the test environment if needed
 using Timers; tic()
 
 using KiteSimulators
