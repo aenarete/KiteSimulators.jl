@@ -48,9 +48,11 @@ If you don't have a Joystick, try the following example:
 ./bin/run_julia or bin\run_julia
 
 using KiteSimulators
-include("examples/depower.jl")  # Linux
-include("examples\\depower.jl") # Windows
+include("examples/autopilot.jl")  # Linux
+include("examples\\autopilot.jl") # Windows
 ```
+You should see that the autopilot starts at 10s and that it is controlling the full power cycle, kite and winch. 
+
 ## Documentation
 - First example, explained: [First Example](docs/first_example.md).  
 - Reading and writing log files: [Logging](docs/logging.md)
