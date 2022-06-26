@@ -1,4 +1,3 @@
-# activate the test environment if needed
 using Timers; tic()
 
 using KiteSimulators
@@ -8,13 +7,8 @@ const Model = KPS4
 
 if ! @isdefined kcu;    const kcu = KCU(se());   end
 if ! @isdefined kps4;   const kps4 = Model(kcu); end
-if ! @isdefined js;
-    const js = open_joystick();
-    const jsaxes = JSState(); 
-    const jsbuttons = JSButtonState()
-    async_read!(js, jsaxes, jsbuttons)
-end
-const wcs = WCSettings(); wcs.dt = 1/se().sample_freq
+
+wcs = WCSettings(); wcs.dt = 1/se().sample_freq
 const fcs = FPCSettings(); fcs.dt = wcs.dt
 const fpps = FPPSettings()
 const ssc = SystemStateControl(wcs, fcs, fpps)
@@ -25,6 +19,10 @@ if ! @isdefined MAX_TIME; MAX_TIME=3600; end
 TIME_LAPSE_RATIO = 1
 SHOW_KITE = true
 # end of user parameter section #
+
+phi_set = 21.48
+# on_control_command(ssc.fpp.fpca.fpc, attractor=[deg2rad(phi_set), deg2rad(51.88)])
+# on_control_command(ssc.fpp.fpca.fpc, psi_dot_set=-23.763, radius=-4.35)
 
 if ! @isdefined viewer; const viewer = Viewer3D(SHOW_KITE); end
 
@@ -42,15 +40,17 @@ function simulate(integrator)
     on_new_systate(ssc, sys_state)
     while true
         if i > 100
-            depower = 0.25 - jsaxes.y*0.4
-            if depower < 0.25; depower = 0.25; end
+            dp = KiteControllers.get_depower(ssc)
+            if dp < 0.22 dp = 0.22 end
             steering = calc_steering(ssc)
-            set_depower_steering(kps4.kcu, depower, steering+jsaxes.x)
-            # set_depower_steering(kps4.kcu, depower, jsaxes.x)
-            # v_ro = jsaxes.u * 8.0 
-        end  
+            set_depower_steering(kps4.kcu, dp, steering)
+        end
+        if i == 200 # turn on the autopilot after 10s of simulation time
+            on_autopilot(ssc)
+        end 
         # execute winch controller
         v_ro = calc_v_set(ssc)
+        #
         t_sim = @elapsed KiteModels.next_step!(kps4, integrator, v_ro=v_ro, dt=dt)
         if t_sim < 0.3*dt
             t_gc_tot += @elapsed GC.gc(false)
@@ -58,7 +58,7 @@ function simulate(integrator)
         sys_state = SysState(kps4)
         on_new_systate(ssc, sys_state)
         if mod(i, TIME_LAPSE_RATIO) == 0 
-            KiteViewers.update_system(viewer, sys_state; scale = 0.08, kite_scale=3)
+            KiteViewers.update_system(viewer, sys_state; scale = 0.04, kite_scale=6.0)
             wait_until(start_time_ns + 1e9*dt, always_sleep=true) 
             mtime = 0
             if i > 10/dt 
@@ -114,12 +114,6 @@ on(viewer.btn_PLAY.clicks) do c; async_play(); end
 on(viewer.btn_STOP.clicks) do c; stop(viewer); on_stop(ssc) end
 on(viewer.btn_PARKING.clicks) do c; parking(); end
 on(viewer.btn_AUTO.clicks) do c; autopilot(); end
-
-on(jsbuttons.btn1) do val; if val async_play() end; end
-on(jsbuttons.btn2) do val; if val stop(viewer) end; end
-on(jsbuttons.btn3) do val; if val autopilot() end; end
-on(jsbuttons.btn4) do val; if val on_reelin(ssc) end; end
-on(jsbuttons.btn5) do val; if val on_parking(ssc) end; end
 
 play()
 stop(viewer)
