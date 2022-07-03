@@ -38,9 +38,7 @@ To view and modify the example, you can use the command:
 edit("examples/joystick.jl")  # Linux
 edit("examples\\joystick.jl") # Windows
 ```
-The x axis of the Joystick controls steering, y-axis depowering and z-axis the
-reel-in and reel-out of the winch. With button one you can start the simulation,
-with button two you can stop it.
+The x axis of the Joystick controls steering. Button 3 starts the reel-out, button 4 the reelin, and button 5 switches to parking mode. With button one you can start the simulation, with button two you can stop it.
 
 If you don't have a Joystick, try the following example:
 
