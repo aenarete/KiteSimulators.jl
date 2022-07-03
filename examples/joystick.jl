@@ -1,3 +1,4 @@
+# activate the test environment if needed
 using Timers; tic()
 
 using KiteSimulators
@@ -25,15 +26,14 @@ TIME_LAPSE_RATIO = 1
 SHOW_KITE = true
 # end of user parameter section #
 
-if ! @isdefined viewer; const viewer = Viewer3D(SHOW_KITE); end
+if ! @isdefined viewer; const viewer = Viewer3D(SHOW_KITE, "WinchON"); end
 
 steps = 0
 
 function simulate(integrator)
     start_time_ns = time_ns()
     clear_viewer(viewer)
-    i=1
-    j=0; k=0
+    i=1; j=0; k=0
     GC.gc()
     max_time = 0
     t_gc_tot = 0
@@ -41,10 +41,12 @@ function simulate(integrator)
     on_new_systate(ssc, sys_state)
     while true
         if i > 100
-            depower = 0.25 - jsaxes.y*0.4
-            if depower < 0.25; depower = 0.25; end
-            steering = calc_steering(ssc)
-            set_depower_steering(kps4.kcu, depower, steering+jsaxes.x)
+            # depower = 0.22 - jsaxes.y*0.4
+            depower = KiteControllers.get_depower(ssc)
+            # println("dp: ", dp)
+            if depower < 0.22; depower = 0.22; end
+            steering = calc_steering(ssc, jsaxes.x)
+            set_depower_steering(kps4.kcu, depower, steering)
             # set_depower_steering(kps4.kcu, depower, jsaxes.x)
             # v_ro = jsaxes.u * 8.0 
         end  
@@ -56,8 +58,9 @@ function simulate(integrator)
         end
         sys_state = SysState(kps4)
         on_new_systate(ssc, sys_state)
-        if mod(i, TIME_LAPSE_RATIO) == 0 
+        if mod(i, TIME_LAPSE_RATIO) == 0
             KiteViewers.update_system(viewer, sys_state; scale = 0.08, kite_scale=3)
+            set_status(viewer, String(Symbol(ssc.state)))
             wait_until(start_time_ns + 1e9*dt, always_sleep=true) 
             mtime = 0
             if i > 10/dt 
@@ -88,7 +91,15 @@ function play()
     global steps
     integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04)
     toc()
-    steps = simulate(integrator)
+    try
+        steps = simulate(integrator)
+    catch e
+        if isa(e, AssertionError)
+            println("AssertionError! Halting simulation.")
+        else
+            println("Exception! Halting simulation.")
+        end
+    end
     GC.enable(true)
 end
 
@@ -106,7 +117,7 @@ function parking()
 end
 
 function autopilot()
-    on_autopilot(ssc)
+    on_winchcontrol(ssc)
 end
 
 on(viewer.btn_PLAY.clicks) do c; async_play(); end
