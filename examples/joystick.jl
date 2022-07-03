@@ -41,9 +41,8 @@ function simulate(integrator)
     on_new_systate(ssc, sys_state)
     while true
         if i > 100
-            # depower = 0.22 - jsaxes.y*0.4
-            depower = KiteControllers.get_depower(ssc)
-            # println("dp: ", dp)
+            manual_depower = -jsaxes.y*0.4
+            depower = manual_depower + KiteControllers.get_depower(ssc)
             if depower < 0.22; depower = 0.22; end
             steering = calc_steering(ssc, jsaxes.x)
             set_depower_steering(kps4.kcu, depower, steering)
