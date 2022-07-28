@@ -11,6 +11,7 @@ On the Julia prompt install the package:
 using Pkg
 pkg"add KiteSimulators"
 pkg"add Plots"
+pkg"add Timers"
 
 using KiteSimulators
 init_project()
