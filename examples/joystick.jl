@@ -1,6 +1,4 @@
-# activate the test environment if needed
 using Timers; tic()
-
 using KiteSimulators
 
 # change this to KPS3 or KPS4
