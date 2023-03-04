@@ -1,7 +1,7 @@
 # KiteSimulators
 
 Meta-package, providing "Julia Kite Power Tools", consisting of the following packages:
-<p align="center"><img src="./docs/kite_power_tools.png" width="500" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/ufechner7/KiteUtils.jl/main/docs/src/kite_power_tools.png" width="500" /></p>
 
 ## Hardware requirements
 A fast computer helps to reduce the installation time, otherwise it works well even on dual core computers
@@ -31,7 +31,7 @@ include("examples/joystick.jl")  # Linux
 include("examples\\joystick.jl") # Windows
 ```
 You should now see the kite attached to the tether:
-<p align="center"><img src="docs/kite_4p.png" width="500" /></p>
+<p align="center"><img src="https://github.com/aenarete/KiteSimulators.jl/blob/main/docs/kite_4p.png?raw=true" width="500" /></p>
 
 
 To view and modify the example, you can use the command:
