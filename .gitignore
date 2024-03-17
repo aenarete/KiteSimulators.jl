@@ -1,3 +1,4 @@
 /Manifest.toml
 bin/kps-image-1.8.so
 bin/kps-image-1.9.so
+.vscode/settings.json
