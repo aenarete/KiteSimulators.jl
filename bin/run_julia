@@ -4,14 +4,29 @@ if [[ $(basename $(pwd)) == "bin" ]]; then
     cd ..
 fi
 
-julia_version=$(julia --version | awk '{print($3)}')
-julia_major=${julia_version:0:3}
+export MPLBACKEND=qt5agg
 
-export EDITOR="gedit"
-
-if test -f "bin/kps-image-${julia_major}.so"; then
-    echo "Found system image!"
-    julia -J  bin/kps-image-${julia_major}.so -t 1 --project
+if command -v nproc &> /dev/null; then
+    FAST_CORES=$(($(nproc) / 2 - 1))
 else
-    julia --project
+    FAST_CORES=3 # default value
+fi
+
+GCT="--gcthreads=$FAST_CORES,1"
+
+julia_version=$(julia --version | awk '{print($3)}')
+julia_major=${julia_version:0:3} 
+if [[ $julia_major == "1.1" ]]; then
+    julia_major=${julia_version:0:4}
+else
+    GCT=""
+fi
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+if test -f "bin/kps-image-${julia_major}-${branch}.so"; then
+    echo "Found system image!"
+    julia -J  bin/kps-image-${julia_major}-${branch}.so -t $FAST_CORES,1 $GCT --project
+else
+    julia --project -t $FAST_CORES,1 $GCT
+    # julia --project
 fi
