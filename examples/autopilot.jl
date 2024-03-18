@@ -52,9 +52,9 @@ function simulate(integrator)
         v_ro = calc_v_set(ssc)
         #
         t_sim = @elapsed KiteModels.next_step!(kps4, integrator, v_ro=v_ro, dt=dt)
-        if t_sim < 0.3*dt
-            t_gc_tot += @elapsed GC.gc(false)
-        end
+        # if t_sim < 0.3*dt
+            # t_gc_tot += @elapsed GC.gc(false)
+        # end
         sys_state = SysState(kps4)
         on_new_systate(ssc, sys_state)
         if mod(i, TIME_LAPSE_RATIO) == 0 
