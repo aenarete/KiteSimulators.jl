@@ -21,12 +21,12 @@ if [[ $julia_major == "1.1" ]]; then
 else
     GCT=""
 fi
-branch=$(git rev-parse --abbrev-ref HEAD)
 
-if test -f "bin/kps-image-${julia_major}-${branch}.so"; then
+if test -f "bin/kps-image-${julia_major}.so"; then
     echo "Found system image!"
-    julia -J  bin/kps-image-${julia_major}-${branch}.so -t $FAST_CORES,1 $GCT --project
+    julia -J  bin/kps-image-${julia_major}.so -t $FAST_CORES,1 $GCT --project
 else
     julia --project -t $FAST_CORES,1 $GCT
     # julia --project
 fi
+
