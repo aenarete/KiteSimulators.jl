@@ -3,30 +3,26 @@ using KiteSimulators
 set_data_path(joinpath(@__DIR__, "..", "data"))
 tic()
 
-const Model = KPS4
-
 set = se()
 
-if ! @isdefined kcu;  const kcu = KCU(set);   end
-if ! @isdefined kps4; const kps4 = Model(kcu); end
+kcu::KCU   = KCU(se())
+kps4::KPS4 = KPS4(kcu)
 
 # the following values can be changed to match your interest
-const dt = 0.05
+dt::Float64 = 0.05
 TIME = 50
 TIME_LAPSE_RATIO = 5
-STEPS = Int64(round(TIME/dt))
+STEPS::Int64 = Int64(round(TIME/dt))
 STATISTIC = false
 SHOW_KITE = true
 PLOT_PERFORMANCE = true
 LOGGING = true
 # end of user parameter section #
 
-if Model==KPS3 SHOW_KITE = true end
-
 if ! @isdefined time_vec_gc; const time_vec_gc = zeros(STEPS); end
 if ! @isdefined time_vec_sim; const time_vec_sim = zeros(STEPS); end
 if ! @isdefined time_vec_tot; const time_vec_tot = zeros(div(STEPS, TIME_LAPSE_RATIO)); end
-if ! @isdefined viewer; const viewer = Viewer3D(SHOW_KITE); end
+viewer::Viewer3D = Viewer3D(true)
 
 function simulate(integrator, steps)
     if LOGGING logger = Logger(se().segments + 5, STEPS) end
@@ -74,7 +70,7 @@ function simulate(integrator, steps)
       
         time_vec_gc[i]=t_gc/dt*100.0
         time_vec_sim[i]=t_sim/dt*100.0
-        if viewer.stop break end
+        # if viewer.stop break end
     end
     misses=j/k * 100
     println("\nMissed the deadline for $(round(misses, digits=2)) %. Max time: $(round((max_time*1e-6), digits=1)) ms")
@@ -83,6 +79,7 @@ function simulate(integrator, steps)
 end
 
 function play()
+    GC.gc(true)
     integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04, prn=STATISTIC)
     simulate(integrator, STEPS)
 end
@@ -103,12 +100,12 @@ toc()
 play()
 stop(viewer)
 if PLOT_PERFORMANCE
-    using ControlPlots
+    import Plots as plots
     if true
-        plt=plot(range(dt,TIME,step=dt), time_vec_gc, ylabel="time [%]", xlabel="Simulation time [s]", label="GC time")
-        plt=plot!(range(dt,TIME,step=dt), time_vec_sim, label="sim_time")
-        plt=plot!(range(dt,TIME,step=dt), time_vec_sim.+time_vec_gc, label="total_time")
+        plt=plots.plot(range(dt,TIME,step=dt), time_vec_gc, ylabel="time [%]", xlabel="Simulation time [s]", label="GC time")
+        plt=plots.plot!(range(dt,TIME,step=dt), time_vec_sim, label="sim_time")
+        plt=plots.plot!(range(dt,TIME,step=dt), time_vec_sim.+time_vec_gc, label="total_time")
     else
-        plt2=plot(range(3*TIME_LAPSE_RATIO*dt,TIME,step=dt*TIME_LAPSE_RATIO), time_vec_tot[4:end],  xlabel="Simulation time [s]", ylabel="time per frame [ms]", legend=false)
+        plt2=plots.plot(range(3*TIME_LAPSE_RATIO*dt,TIME,step=dt*TIME_LAPSE_RATIO), time_vec_tot[4:end],  xlabel="Simulation time [s]", ylabel="time per frame [ms]", legend=false)
     end
 end
