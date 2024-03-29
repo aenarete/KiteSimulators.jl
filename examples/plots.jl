@@ -13,8 +13,10 @@ function plot_timing()
     nothing
 end
 
-function plot_main()
-    log = load_log(basename(KiteViewers.plot_file[]))
+function plot_main(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]))
+    end
     sl  = log.syslog
     display(plotx(log.syslog.time, log.z, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), sl.l_tether, sl.force, sl.v_reelout;
             ylabels=["height [m]", "elevation [°]", "azimuth [°]", "length [m]", "force [N]", "v_ro [m/s]"],
