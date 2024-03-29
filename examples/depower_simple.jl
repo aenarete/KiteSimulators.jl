@@ -5,12 +5,12 @@ kps4::KPS4 = KPS4(kcu)
 
 # the following values can be changed to match your interest
 dt::Float64 = 0.05
-TIME = 60
+TIME = 55
 TIME_LAPSE_RATIO = 5
 STEPS::Int64 = Int64(round(TIME/dt))
 # end of user parameter section #
 
-if ! @isdefined viewer; const viewer = Viewer3D(true); end
+viewer::Viewer3D = Viewer3D(true)
 
 function simulate(integrator, steps)
     start_time_ns = time_ns()
