@@ -11,6 +11,8 @@ FRONT_VIEW = false
 ZOOM = false
 PRINT = false
 STATISTIC = false
+se().abs_tol=0.00006
+se().rel_tol=0.000001
 # end of user parameter section #
 
 if PLOT
