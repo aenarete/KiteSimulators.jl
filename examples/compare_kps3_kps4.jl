@@ -18,7 +18,7 @@ STATISTIC = false
 se().version = 2
 
 if PLOT
-    using Plots
+    import Plots as plots
     include("plot2d.jl")
 end
 
