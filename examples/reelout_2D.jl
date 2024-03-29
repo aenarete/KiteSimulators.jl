@@ -1,14 +1,11 @@
 using KiteSimulators
 
-# change this to KPS3 or KPS4
-const Model = KPS4
-
-if ! @isdefined kcu;  const kcu = KCU(se());   end
-if ! @isdefined kps4; const kps4 = Model(kcu); end
+kcu::KCU   = KCU(se())
+kps4::KPS4 = KPS4(kcu)
 
 # the following values can be changed to match your interest
-dt = 0.05
-STEPS = 600
+dt::Float64 = 0.05
+STEPS::Int64 = 600
 PLOT = true
 FRONT_VIEW = false
 ZOOM = false
@@ -17,7 +14,7 @@ STATISTIC = false
 # end of user parameter section #
 
 if PLOT
-    using ControlPlots
+    import Plots as plots
     include("plot2d.jl")
 end
 
@@ -71,6 +68,6 @@ lift, drag = KiteModels.lift_drag(kps4)
 println("lift, drag  [N]: $(round(lift, digits=2)), $(round(drag, digits=2))")
 println("Average number of callbacks per time step: $av_steps")
 
-p1 = plot(v_time, v_speed, ylabel="v_reelout  [m/s]", legend=false)
-p2 = plot(v_time, v_force, ylabel="tether_force [N]", legend=false)
-plot(p1, p2, layout = (2, 1), legend = false)
+p1 = plots.plot(v_time, v_speed, ylabel="v_reelout  [m/s]", legend=false)
+p2 = plots.plot(v_time, v_force, ylabel="tether_force [N]", legend=false)
+plots.plot(p1, p2, layout = (2, 1), legend = false)
