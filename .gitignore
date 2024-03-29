@@ -6,3 +6,4 @@ Manifest.toml.bak
 bin/kps-image-1.10.so
 data/full_log.arrow
 data/last_sim_log.arrow
+data/*.arrow
