@@ -1,13 +1,13 @@
 using KiteSimulators
 
-if ! @isdefined kcu;  const kcu = KCU(se());   end
-if ! @isdefined kps4; const kps4 = KPS4(kcu); end
+kcu::KCU   = KCU(se())
+kps4::KPS4 = KPS4(kcu)
 
 # the following values can be changed to match your interest
-const dt = 0.05
+dt::Float64 = 0.05
 TIME = 60
 TIME_LAPSE_RATIO = 5
-STEPS = Int64(round(TIME/dt))
+STEPS::Int64 = Int64(round(TIME/dt))
 # end of user parameter section #
 
 if ! @isdefined viewer; const viewer = Viewer3D(true); end
