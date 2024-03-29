@@ -1,9 +1,8 @@
 using KiteSimulators
 
-if ! @isdefined kcu;  const kcu  = KCU(se()) end
-if ! @isdefined kps4; const kps4 = KPS4(kcu) end
-if ! @isdefined kps3; const kps3 = KPS3(kcu) end
-
+kcu::KCU  = KCU(se())
+kps4::KPS4 = KPS4(kcu)
+kps3::KPS3 = KPS3(kcu)
 
 # the following values can be changed to match your interest
 dt = 0.05
@@ -19,7 +18,7 @@ STATISTIC = false
 se().version = 2
 
 if PLOT
-    using ControlPlots
+    using Plots
     include("plot2d.jl")
 end
 
