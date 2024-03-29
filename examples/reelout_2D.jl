@@ -17,7 +17,7 @@ STATISTIC = false
 # end of user parameter section #
 
 if PLOT
-    using Plots
+    using ControlPlots
     include("plot2d.jl")
 end
 

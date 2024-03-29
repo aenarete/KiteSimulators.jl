@@ -64,7 +64,7 @@ integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04, prn=STATISTIC)
 
 av_steps = simulate(integrator, STEPS, log=SAVE_PNG)
 if PLOT_PERFORMANCE
-    using Plots
+    using ControlPlots
     plot(range(0.5,TIME,step=0.5), time_vec, ylabel="CPU time [%]", xlabel="Simulation time [s]", legend=false)
     savefig("performance.png")
 end

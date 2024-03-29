@@ -19,7 +19,7 @@ STATISTIC = false
 se().version = 2
 
 if PLOT
-    using Plots
+    using ControlPlots
     include("plot2d.jl")
 end
 

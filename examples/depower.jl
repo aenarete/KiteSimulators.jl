@@ -103,7 +103,7 @@ toc()
 play()
 stop(viewer)
 if PLOT_PERFORMANCE
-    using Plots
+    using ControlPlots
     if true
         plt=plot(range(dt,TIME,step=dt), time_vec_gc, ylabel="time [%]", xlabel="Simulation time [s]", label="GC time")
         plt=plot!(range(dt,TIME,step=dt), time_vec_sim, label="sim_time")

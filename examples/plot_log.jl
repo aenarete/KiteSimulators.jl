@@ -1,5 +1,5 @@
-using KiteSimulators, Plots.PlotMeasures, Plots
-import Plots.plot
+using KiteSimulators, ControlPlots.PlotMeasures, ControlPlots
+import ControlPlots.plot
 
 # the following values can be changed to match your interest
 LOG_FILE_NAME = "sim_log" # without extension!
