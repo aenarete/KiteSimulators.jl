@@ -2,3 +2,5 @@
 bin/kps-image-1.8.so
 bin/kps-image-1.9.so
 .vscode/settings.json
+Manifest.toml.bak
+bin/kps-image-1.10.so
