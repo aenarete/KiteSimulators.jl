@@ -1,5 +1,6 @@
 # activate the test environment if needed
 using Pkg
+Pkg.rm("Plots")
 
 @info "Loading packages ..."
 using KiteSimulators, ControlPlots
@@ -12,3 +13,4 @@ PackageCompiler.create_sysimage(
     sysimage_path="kps-image_tmp.so",
     precompile_execution_file=joinpath("test", "test_for_precompile.jl")
 )
+Pkg.add("Plots")
