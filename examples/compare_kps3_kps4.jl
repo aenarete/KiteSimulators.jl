@@ -5,9 +5,9 @@ kps4::KPS4 = KPS4(kcu)
 kps3::KPS3 = KPS3(kcu)
 
 # the following values can be changed to match your interest
-dt = 0.05
+dt::Float64 = 0.05
 ALPHA_ZERO = 8.8 
-STEPS = round(600/dt*0.05)
+STEPS::Int64 = round(600/dt*0.05)
 PLOT = true
 FRONT_VIEW = false
 ZOOM = true
