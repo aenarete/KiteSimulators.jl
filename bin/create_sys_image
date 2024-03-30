@@ -35,3 +35,4 @@ julia --project -e "using Pkg; Pkg.precompile()"
 julia --project -e "include(\"./test/create_sys_image.jl\");"
 mv kps-image_tmp.so bin/kps-image-${julia_major}.so
 julia --project -e "using Pkg; Pkg.precompile()"
+julia --project -J bin/kps-image-${julia_major}-${branch}.so -e "using TestEnv; TestEnv.activate(); using ControlPlots, NativeFileDialog; import Plots"
