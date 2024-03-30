@@ -1,9 +1,5 @@
 using KiteSimulators
 
-kcu::KCU  = KCU(se())
-kps4::KPS4 = KPS4(kcu)
-kps3::KPS3 = KPS3(kcu)
-
 # the following values can be changed to match your interest
 dt::Float64 = 0.05
 ALPHA_ZERO = 8.8 
@@ -15,7 +11,12 @@ PRINT = false
 STATISTIC = false
 # end of user parameter section #
 
-se().version = 2
+set = deepcopy(se())
+set.version = 2
+
+kcu::KCU  = KCU(set)
+kps4::KPS4 = KPS4(kcu)
+kps3::KPS3 = KPS3(kcu)
 
 if PLOT
     import Plots as plots
