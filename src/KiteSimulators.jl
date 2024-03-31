@@ -12,6 +12,7 @@ using Reexport
 @reexport using Joysticks
 @reexport using Printf
 @reexport using PackageCompiler
+@reexport using LaTeXStrings 
 
 export cp_examples, init_project
 
