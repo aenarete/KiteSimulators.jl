@@ -10,7 +10,7 @@ On the Julia prompt install the package:
 ```julia
 using Pkg
 pkg"add KiteSimulators"
-pkg"add ControlControlControlPlots"
+pkg"add ControlPlots"
 pkg"add Timers"
 
 using KiteSimulators
