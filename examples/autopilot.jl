@@ -88,6 +88,9 @@ function simulate(integrator, stopped=true)
         if viewer.stop
             sleep(dt)
         else
+            if i == 1
+                integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04)
+            end
             if i > 100
                 dp = KiteControllers.get_depower(ssc)
                 if dp < 0.22 dp = 0.22 end
@@ -296,6 +299,8 @@ if @isdefined __PRECOMPILE__
     MAX_TIME = 30
     play(false)
 else
+    viewer.menu_rel_tol.i_selected[]=2
+    viewer.menu_rel_tol.i_selected[]=1
     play(true)
 end
 stop_()
