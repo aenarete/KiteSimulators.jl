@@ -64,6 +64,7 @@ function init_project()
     cp(joinpath(src_path, "README.md"), joinpath(PATH, "README.md"), force=true)
     chmod(joinpath(PATH, "README.md"), 0o664)
     copy_settings()
+    cp_examples()
 end
 
 end
