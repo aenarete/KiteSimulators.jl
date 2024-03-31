@@ -5,7 +5,7 @@ if ! ("ControlPlots" ∈ keys(Pkg.project().dependencies))
 end
 using Timers; tic()
 
-using KiteControllers, KiteViewers, KiteModels, StatsBase, ControlPlots, NativeFileDialog, LaTeXStrings
+using KiteSimulators, ControlPlots
 using Printf
 import KiteViewers.GLMakie
 
