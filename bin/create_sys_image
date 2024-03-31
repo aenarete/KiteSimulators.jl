@@ -29,16 +29,18 @@ if test -f "Manifest.toml"; then
    mv Manifest.toml Manifest.toml.bak
 fi
 julia --project -e "include(\"./test/update_packages.jl\");"
-julia -e "using Pkg; Pkg.add(\"TestEnv\")"
-julia --project -e "using Pkg; using TestEnv; TestEnv.activate(); Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
+# julia -e "using Pkg; Pkg.add(\"TestEnv\")"
+# julia --project -e "using Pkg; using TestEnv; TestEnv.activate(); Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
 
+echo "--> 1"
 julia --project -e "using Pkg; Pkg.precompile()"
+echo "--> 2"
 julia --project -e "include(\"./test/create_sys_image.jl\");"
 mv kps-image_tmp.so bin/kps-image-${julia_major}.so
-echo "--> 1"
-julia --project -e "using Pkg; try; Pkg.precompile(); catch; println(\"Warning...\"); end"
-echo "--> 2"
-julia --project -J bin/kps-image-${julia_major}.so -e "using ControlPlots, NativeFileDialog"
 echo "--> 3"
+julia --project -e "using Pkg; try; Pkg.precompile(); catch; println(\"Warning...\"); end"
+echo "--> 4"
+julia --project -J bin/kps-image-${julia_major}.so -e "using ControlPlots, NativeFileDialog"
+echo "--> 5"
 julia --project -J bin/kps-image-${julia_major}.so -e "try; using Plots; catch; println(\"Warning when precompiling Plots...\"); end"
 echo "Successfully created system image!"
