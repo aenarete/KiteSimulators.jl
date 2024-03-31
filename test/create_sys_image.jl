@@ -1,6 +1,5 @@
 # activate the test environment if needed
 using Pkg
-Pkg.rm("Plots")
 
 @info "Loading packages ..."
 using KiteSimulators, ControlPlots
