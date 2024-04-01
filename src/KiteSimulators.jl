@@ -12,7 +12,8 @@ using Reexport
 @reexport using Joysticks
 @reexport using Printf
 @reexport using PackageCompiler
-@reexport using LaTeXStrings
+@reexport import LaTeXStrings
+@reexport import LaTeXStrings: @L_str
 @reexport using StatsBase
 @reexport using NativeFileDialog 
 
