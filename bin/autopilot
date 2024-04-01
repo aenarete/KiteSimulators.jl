@@ -2,6 +2,8 @@
 cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 cd ..
 
+export MPLBACKEND=qt5agg
+
 julia_version=$(julia --version | awk '{print($3)}')
 julia_major=${julia_version:0:3}
 if [[ $julia_major == "1.1" ]]; then
