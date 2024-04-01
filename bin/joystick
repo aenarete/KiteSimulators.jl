@@ -3,7 +3,10 @@ cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 cd ..
 
 julia_version=$(julia --version | awk '{print($3)}')
-julia_major=${julia_version:0:3} 
+julia_major=${julia_version:0:3}
+if [[ $julia_major == "1.1" ]]; then
+    julia_major=${julia_version:0:4} 
+fi
 
 echo "Lauching KiteViewer..."
 if test -f "bin/kps-image-${julia_major}.so"; then
