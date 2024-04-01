@@ -7,7 +7,6 @@ using Timers; tic()
 
 using KiteSimulators, ControlPlots
 using Printf
-import KiteViewers.GLMakie
 
 set = deepcopy(se())
 
