@@ -13,7 +13,7 @@ end
 function show_stats(stats::Stats)
     HEIGHT=330
     UPPER_BORDER=20
-    fig = GLMakie.Figure(size = (400, HEIGHT))
+    fig = KiteViewers.GLMakie.Figure(size = (400, HEIGHT))
     if Sys.islinux()
         # sudo apt install ttf-bitstream-vera 
         lin_font="/usr/share/fonts/truetype/ttf-bitstream-vera/VeraMono.ttf"
@@ -26,8 +26,8 @@ function show_stats(stats::Stats)
         font="Courier New"
     end
     function print(lbl::String, value::String; line, font=font)
-        GLMakie.text!(fig.scene, 20, HEIGHT-UPPER_BORDER-line*32; text=lbl, fontsize = 24, space=:pixel)
-        GLMakie.text!(fig.scene, 250, HEIGHT-UPPER_BORDER-line*32; text=value, fontsize = 24, font, space=:pixel)
+        KiteViewers.GLMakie.text!(fig.scene, 20, HEIGHT-UPPER_BORDER-line*32; text=lbl, fontsize = 24, space=:pixel)
+        KiteViewers.GLMakie.text!(fig.scene, 250, HEIGHT-UPPER_BORDER-line*32; text=value, fontsize = 24, font, space=:pixel)
         line +=1    
     end
     line = print("energy:       ", @sprintf("%5.0f Wh", stats.e_mech); line = 1)
@@ -40,6 +40,6 @@ function show_stats(stats::Stats)
     line = print("min az_ro:    ", @sprintf("%5.1f  °", stats.min_az_ro); line)
     line = print("max az_ro:    ", @sprintf("%5.1f  °", stats.max_az_ro); line)
 
-    display(GLMakie.Screen(), fig)
+    display(KiteViewers.GLMakie.Screen(), fig)
     nothing
 end
