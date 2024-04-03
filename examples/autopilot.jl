@@ -320,3 +320,9 @@ nothing
 #     Mean    time per timestep: 3.5648891855434783 ms
 #     Maximum time per timestep: 14.024168999999999 ms
 #     Maximum for t>12s        : 14.024168999999999 ms
+
+# GC disabled, Ryzen 7950X, 4x realtime, DFBDF solver
+# Missed the deadline for 0.0 %. Max time: 25.0 ms
+#     Mean    time per timestep: 0.8060058672826088 ms
+#     Maximum time per timestep: 8.788469000000001 ms
+#     Maximum for t>12s        : 8.231719 ms
