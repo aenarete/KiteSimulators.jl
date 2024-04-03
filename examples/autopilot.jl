@@ -11,6 +11,7 @@ using Printf
 set = deepcopy(se())
 
 # the following values can be changed to match your interest
+set.solver="DFBDF" # DAE solver, IDA or DFBDF
 MAX_TIME::Float64 = 460
 TIME_LAPSE_RATIO  = 4
 SHOW_KITE         = true
@@ -49,16 +50,11 @@ PARKING::Bool = false
 
 steps = 0
 STEPS::Int64 = Int64(MAX_TIME/dt)
-if ! @isdefined T;        const T = zeros(STEPS); end
-if ! @isdefined DELTA_T;  const DELTA_T = zeros(STEPS); end
-if ! @isdefined STEERING; const STEERING = zeros(STEPS); end
-if ! @isdefined DEPOWER_; const DEPOWER_ = zeros(STEPS); end
-LAST_I::Int64=0
 PARTICLES::Int64 = set.segments + 5
 logger::Logger = Logger(PARTICLES, STEPS) 
 
 function simulate(integrator, stopped=true)
-    global LAST_I, logger
+    global logger
     start_time_ns = time_ns()
     clear_viewer(viewer)
     KiteViewers.running[] = ! stopped
@@ -70,6 +66,7 @@ function simulate(integrator, stopped=true)
     j=0; k=0
     GC.enable(true)
     GC.gc()
+    mem_start=Sys.total_memory()/1e9 
     if Sys.total_memory()/1e9 > 24 && MAX_TIME < 500
         GC.enable(false)
     end
@@ -103,34 +100,34 @@ function simulate(integrator, stopped=true)
             v_ro = calc_v_set(ssc)
             #
             t_sim = @elapsed KiteModels.next_step!(kps4, integrator, v_ro=v_ro, dt=dt)
-            sys_state = SysState(kps4)
-            if i <= length(T)
-                T[i] = dt * i
-                if i > 10/dt
-                    sys_state.t_sim  = t_sim * 1000
-                    STEERING[i] = sys_state.steering
-                    DEPOWER_[i] = sys_state.depower
-                    LAST_I=i
-                end
-            end
+            update_sys_state!(sys_state, kps4)
+
             on_new_systate(ssc, sys_state)
             e_mech += (sys_state.force * sys_state.v_reelout)/3600*dt
             sys_state.e_mech = e_mech
             sys_state.sys_state = Int16(ssc.fpp._state)
+            if i > 10
+                sys_state.t_sim = t_sim*1000
+            end
             log!(logger, sys_state)
-            if mod(i, TIME_LAPSE_RATIO) == 0 
+            if TIME_LAPSE_RATIO >= 2
+                ratio = 2
+            else
+                ratio = 1
+            end
+            if mod(i, TIME_LAPSE_RATIO/ratio) == 0 
                 KiteViewers.update_system(viewer, sys_state; scale = 0.04/1.1, kite_scale=6.6)
                 set_status(viewer, String(Symbol(ssc.state)))
-                # turn garbage collection back on if we are short of memory
-                if Sys.free_memory()/1e9 < 2.0
-                    GC.enable(true)
+                # call garbage collector when we are short of memory
+                if Sys.free_memory()/1e9 < 4.0
+                    GC.gc(false)
                 end
-                wait_until(start_time_ns + 1e9*dt, always_sleep=true) 
+                wait_until(start_time_ns + 1e9*dt/ratio, always_sleep=true) 
                 mtime = 0
                 if i > 10/dt 
                     # if we missed the deadline by more than 5 ms
                     mtime = time_ns() - start_time_ns
-                    if mtime > dt*1e9 + 5e6
+                    if mtime > dt*1e9/ratio + 5e6
                         print(".")
                         j += 1
                     end
@@ -148,6 +145,8 @@ function simulate(integrator, stopped=true)
         if KiteViewers.status[] == "Stopped" && i > 10 break end
         if i*dt > MAX_TIME break end
     end
+    mem_used=mem_start-Sys.free_memory()/1e9 
+    println("Maximal memory usage: $(round(mem_used, digits=1)) GB")
     if i > 10/dt
         misses = j/k * 100
         println("\nMissed the deadline for $(round(misses, digits=2)) %. Max time: $(round((max_time*1e-6), digits=1)) ms")
