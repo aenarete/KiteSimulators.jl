@@ -1,4 +1,4 @@
-## Changelog
+# Changelog
 
 ### KiteSimulators v0.3.6 - 2024-04-04
 #### Fixes
