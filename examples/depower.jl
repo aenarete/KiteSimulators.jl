@@ -1,4 +1,4 @@
-using KiteSimulators
+using KiteSimulators, ControlPlots
 
 set_data_path(joinpath(@__DIR__, "..", "data"))
 tic()
@@ -10,7 +10,7 @@ kps4::KPS4 = KPS4(kcu)
 
 # the following values can be changed to match your interest
 dt::Float64 = 0.05
-TIME = 50
+TIME = 45
 TIME_LAPSE_RATIO = 5
 STEPS::Int64 = Int64(round(TIME/dt))
 STATISTIC = false
@@ -102,9 +102,8 @@ stop(viewer)
 if PLOT_PERFORMANCE
     import ControlPlots as plots
     if true
-        # plt=plots.plot(range(dt,TIME,step=dt), time_vec_gc, ylabel="time [%]", xlabel="Simulation time [s]", label="GC time")
-        # plt=plots.plot!(range(dt,TIME,step=dt), time_vec_sim, label="sim_time")
-        # plt=plots.plot!(range(dt,TIME,step=dt), time_vec_sim.+time_vec_gc, label="total_time")
+        plotx(range(dt,TIME,step=dt), time_vec_gc, time_vec_sim, time_vec_sim.+time_vec_gc; 
+              ylabels=["GC time [%]", "sim_time [%]", "total time [%]"], xlabel="time [s]")
     else
         # plt2=plots.plot(range(3*TIME_LAPSE_RATIO*dt,TIME,step=dt*TIME_LAPSE_RATIO), time_vec_tot[4:end],  xlabel="Simulation time [s]", ylabel="time per frame [ms]", legend=false)
     end
