@@ -58,7 +58,7 @@ function init_project()
     test_files = ["create_sys_image.jl", "test_for_precompile.jl", "update_packages.jl"]
     docs_files = ["Installation.md", "PackageInstallation.md", "kite_power_tools.png", "kite_4p.png", "dir_structure.png",
                   "vscode.png", "logging.md", "plotting.md", "2d_plot.png"]
-    settings_files = ["fpc_settings_hydra20.yaml", "fpc_settings.yaml", "fpc_settings_hydra20_426.yaml",
+    settings_files = ["fpc_settings_hydra20.yaml", "fpc_settings.yaml",
                       "fpp_settings_hydra20_426.yaml", "fpp_settings_hydra20.yaml", "fpp_settings.yaml", "gui.yaml",
                       "settings_hydra20.yaml", "settings_hydra20_600.yaml", "settings.yaml",
                       "system_8000.yaml", "system.yaml", 
