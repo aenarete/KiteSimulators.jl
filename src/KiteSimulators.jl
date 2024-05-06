@@ -62,7 +62,8 @@ function init_project()
                       "fpp_settings_hydra20_426.yaml", "fpp_settings_hydra20.yaml", "fpp_settings.yaml", "gui.yaml",
                       "settings_hydra20.yaml", "settings_hydra20_600.yaml", "settings.yaml",
                       "system_8000.yaml", "system.yaml", 
-                      "wc_settings_8000_426.yaml","wc_settings_8000.yaml", "wc_settings.yaml"]
+                      "wc_settings_8000_426.yaml","wc_settings_8000.yaml", "wc_settings.yaml",
+                      "hydra10_951.yml","hydra20_426.yml","hydra20_600.yml"]
     copy_files("bin", bin_files)
     copy_files("test", test_files)
     copy_files("docs", docs_files)
