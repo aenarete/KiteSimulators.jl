@@ -29,16 +29,16 @@ if test -f "Manifest.toml"; then
    mv Manifest.toml Manifest.toml.bak
 fi
 echo "--> 1"
-julia -e "using Pkg; pkg\"activate --temp\"; Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
+julia -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
 
 echo "--> 2"
-julia --project -e "include(\"./test/update_packages.jl\");"
+julia --pkgimages=no --project -e "include(\"./test/update_packages.jl\");"
 
 echo "--> 3"
-julia --project -e "using Pkg; Pkg.precompile()"
+julia  --pkgimages=no --project -e "using Pkg; Pkg.precompile()"
 
 echo "--> 4"
-julia --project -e "include(\"./test/create_sys_image.jl\");"
+julia  --pkgimages=no --project -e "include(\"./test/create_sys_image.jl\");"
 mv kps-image_tmp.so bin/kps-image-${julia_major}.so
 
 echo "--> 5"
