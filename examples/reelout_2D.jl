@@ -16,8 +16,7 @@ se().rel_tol=0.000001
 # end of user parameter section #
 
 if PLOT
-    import Plots as plots
-    include("plot2d.jl")
+    using ControlPlots
 end
 
 v_time = zeros(STEPS)
@@ -43,17 +42,16 @@ function simulate(integrator, steps, plot=false)
         KiteModels.next_step!(kps4, integrator, v_ro = v_ro, dt=dt)
         
         if plot
-            reltime = i*dt
-            if mod(i, 5) == 0
-                p = plot2d(kps4.pos, reltime; zoom=ZOOM, front=FRONT_VIEW, segments=se().segments)
-                display(p)                
+            reltime = i*dt-dt
+            if mod(i, 5) == 1
+                plot2d(kps4.pos, reltime; zoom=ZOOM, front=FRONT_VIEW, segments=se().segments)          
             end
         end
     end
     (integrator.p.iter - start) / steps
 end
 
-integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04, prn=STATISTIC)
+integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.5, prn=STATISTIC)
 kps4.sync_speed = 0.0
 
 if PLOT
@@ -70,6 +68,6 @@ lift, drag = KiteModels.lift_drag(kps4)
 println("lift, drag  [N]: $(round(lift, digits=2)), $(round(drag, digits=2))")
 println("Average number of callbacks per time step: $av_steps")
 
-p1 = plots.plot(v_time, v_speed, ylabel="v_reelout  [m/s]", legend=false)
-p2 = plots.plot(v_time, v_force, ylabel="tether_force [N]", legend=false)
-plots.plot(p1, p2, layout = (2, 1), legend = false)
+# p1 = plots.plot(v_time, v_speed, ylabel="v_reelout  [m/s]", legend=false)
+# p2 = plots.plot(v_time, v_force, ylabel="tether_force [N]", legend=false)
+# plots.plot(p1, p2, layout = (2, 1), legend = false)
