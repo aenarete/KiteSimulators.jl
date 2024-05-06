@@ -1,5 +1,9 @@
 # Changelog
 
+### Unpublished
+#### Changes
+- replace the plotting library Plots with ControlPlots to speed up compilation and to avoid error messages
+
 ### KiteSimulators v0.3.6 - 2024-04-04
 #### Fixes
 - displaying the statistics of a simulation using the menu entry `print_statistics` works again
