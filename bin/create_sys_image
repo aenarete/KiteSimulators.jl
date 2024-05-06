@@ -28,8 +28,7 @@ echo "Updating packages..."
 if test -f "Manifest.toml"; then
    mv Manifest.toml Manifest.toml.bak
 fi
-julia --project -e "using Pkg; Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
-julia --project -e "using Pkg; Pkg.add(\"ControlPlots\"); using ControlPlots"
+julia -e "using Pkg; pkg"activate --temp"; Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
 julia --project -e "include(\"./test/update_packages.jl\");"
 
 echo "--> 1"
