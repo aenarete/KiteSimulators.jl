@@ -1,0 +1,6 @@
+system:
+    sim_settings:     "settings.yaml"  # model and simulator settings
+    wc_settings: "wc_settings.yaml"    # winch controller settings
+    fpc_settings: "fpc_settings.yaml"  # flight path controller settings
+    fpp_settings: "fpp_settings.yaml"  # flight path planner settings
+ 
