@@ -53,7 +53,7 @@ the folder data  and helper scripts in the folder test.
 """
 function init_project()
     copy_settings()
-    if ! isdir(relpath) 
+    if ! isdir("output") 
         mkdir("output")
     end
     bin_files = ["create_sys_image", "create_sys_image.bat", "run_julia", "run_julia.bat", "joystick", "joystick.bat", 
