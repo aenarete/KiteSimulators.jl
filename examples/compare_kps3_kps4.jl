@@ -19,8 +19,7 @@ kps4::KPS4 = KPS4(kcu)
 kps3::KPS3 = KPS3(kcu)
 
 if PLOT
-    import Plots as plots
-    include("plot2d.jl")
+    import ControlPlots as plots
 end
 
 function simulate(s, integrator, steps, plot=false)

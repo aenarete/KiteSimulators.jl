@@ -16,8 +16,7 @@ se().rel_tol=0.000001
 # end of user parameter section #
 
 if PLOT
-    import Plots as plots
-    include("plot2d.jl")
+    import ControlPlots as plots
 end
 
 v_time = zeros(STEPS)
