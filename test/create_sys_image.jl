@@ -11,6 +11,6 @@ PackageCompiler.create_sysimage(
     [:KiteSimulators, :ControlPlots];
     sysimage_path="kps-image_tmp.so",
     include_transitive_dependencies=false,
-    sysimage_build_args="-t 1",
+    # sysimage_build_args="-t 1",
     precompile_execution_file=joinpath("test", "test_for_precompile.jl")
 )
