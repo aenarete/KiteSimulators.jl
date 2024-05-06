@@ -1,0 +1,6 @@
+system:
+    sim_settings: "settings_hydra20.yaml"     # model and simulator settings
+    wc_settings:  "wc_settings_8000_426.yaml"     # winch controller settings
+    fpc_settings: "fpc_settings_hydra20.yaml" # flight path controller settings
+    fpp_settings: "fpp_settings_hydra20_426.yaml" # flight path planner settings
+ 
