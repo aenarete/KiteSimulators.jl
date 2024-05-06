@@ -9,6 +9,7 @@ using KiteSimulators, ControlPlots
 using Printf
 
 set = deepcopy(se())
+set.log_level=0
 
 # the following values can be changed to match your interest
 set.solver="DFBDF" # DAE solver, IDA or DFBDF
