@@ -6,11 +6,11 @@ if ! ("ControlPlots" ∈ keys(Pkg.project().dependencies))
 end
 using Timers; tic()
 
-using KiteControllers, KiteViewers, KiteModels, StatsBase, ControlPlots, NativeFileDialog, LaTeXStrings
+using KiteSimulators
 using Printf, LinearAlgebra
-import KiteViewers.GLMakie
-import KiteViewers.GLMakie.GLFW
-import KiteControllers.YAML
+import KiteSimulators.KiteViewers.GLMakie
+import KiteSimulators.KiteViewers.GLMakie.GLFW
+import KiteSimulators.KiteControllers.YAML
 if false; include("../src/flightpathcontroller.jl"); end
 if false; include("../src/flightpathcalculator2.jl"); end
 if false; include("../src/systemstatecontrol.jl"); end
