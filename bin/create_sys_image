@@ -1,10 +1,12 @@
 #!/bin/bash -eu
 update=true
 if [[ $# -gt 0 ]]; then
-    if [[ $1 != "--update" ]]; then
+    if [[ $1 != "--noupdate" ]]; then
         echo "Invalid parameter! Use:"
         echo "./create_sys_image"
         exit 1
+    else
+        update=false
     fi
 fi
 
@@ -24,15 +26,19 @@ if test -f "kps-image-${julia_major}.so"; then
     mv bin/kps-image-${julia_major}.so bin/kps-image-${julia_major}.so.bak
 fi
 
-echo "Updating packages..."
-if test -f "Manifest.toml"; then
-   mv Manifest.toml Manifest.toml.bak
+if [[ $update == true ]]; then
+    echo "Updating packages..."
+    if test -f "Manifest.toml"; then
+    mv Manifest.toml Manifest.toml.bak
+    fi
 fi
 echo "--> 1"
 julia -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
 
-echo "--> 2"
-julia --pkgimages=no --project -e "include(\"./test/update_packages.jl\");"
+if [[ $update == true ]]; then
+    echo "--> 2"
+    julia --pkgimages=no --project -e "include(\"./test/update_packages.jl\");"
+fi
 
 echo "--> 3"
 julia  --pkgimages=no --project -e "using Pkg; Pkg.precompile()"
