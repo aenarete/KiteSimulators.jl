@@ -3,6 +3,7 @@ using Pkg
 
 @info "Loading packages ..."
 using KiteSimulators, ControlPlots
+Pkg.update()
 
 @info "Creating sysimage ..."
 push!(LOAD_PATH,joinpath(pwd(),"src"))
