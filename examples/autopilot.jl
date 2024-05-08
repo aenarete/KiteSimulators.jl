@@ -1,12 +1,7 @@
 # activate the test environment if needed
-using Pkg
-if ! ("ControlPlots" ∈ keys(Pkg.project().dependencies))
-    using TestEnv; TestEnv.activate()
-    # pkg"add KiteModels#main"
-end
 using Timers; tic()
 
-using KiteSimulators
+using KiteSimulators, ControlPlots
 using Printf, LinearAlgebra
 import KiteSimulators.KiteViewers.GLMakie
 import KiteSimulators.KiteViewers.GLMakie.GLFW
