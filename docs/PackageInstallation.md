@@ -4,6 +4,7 @@ On Linux, it is suggested to first install the plotting Library `Matplotlib`, fo
 ```bash
 sudo apt install python3-matplotlib
 ```
+This is not needed on Windows.
 
 It is suggested that you create a folder for your kite simulators.
 ```bash
@@ -33,12 +34,12 @@ On the command line, enter for Linux:
 cd bin
 ./create_sys_image
 ```
-and for Windows:
+and for Windows, using the "Windows command prompt":
 ```bash
 cd bin
 create_sys_image
 ```
-This will take 6 to 20 minutes but is only required once.
+This will take 10 to 30 minutes but is only required once.
 
 You can now execute Julia on Linux with the commands:
 ```bash
