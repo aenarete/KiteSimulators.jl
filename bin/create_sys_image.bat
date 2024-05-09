@@ -26,8 +26,7 @@ if EXIST "Manifest.toml" (
 )
 
 REM julia --project -e "include(\"./test/update_packages.jl\");"
-julia -e "using Pkg; Pkg.add(\"TestEnv\")"
-julia --project -e "using Pkg; using TestEnv; TestEnv.activate(); Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
+julia --project -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
 julia --project -e "using Pkg; Pkg.precompile()"
 julia --project -e "include(\"./test/create_sys_image.jl\");"
 move kps-image_tmp.so bin\kps-image-%julia_major%.dll
