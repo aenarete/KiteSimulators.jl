@@ -1,33 +1,40 @@
 ## Installation of Julia
 
 ### Windows
-Please download and install Julia as explained at https://julialang.org/downloads/ .
-Choose the 64-bit (installer). Make sure to check the option "Add julia to path" when running the installer.
+Please download and install Julia using `juliaup`. You can try:
+```
+winget install julia -s msstore
+juliaup add 1.10
+juliaup update
+```
+If that doesn't work, look at other options to install `juliaup` at https://github.com/JuliaLang/juliaup .
 
 ### Linux
 
-Copy and past the following line to install the latest stable version of Julia:
+Copy and past the following line to install julia:
 ```
-bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
+curl -fsSL https://install.julialang.org | sh
 ```
-If you want to be able to easily switch between different versions of Julia consider to install
-the Python version of jill, see https://github.com/johnnychen94/jill.py
-```bash
-pip install jill --user -U
-jill install 1.7
+Restart your terminal, and then execute:
 ```
-If you should later install version 1.8 with `jill install 1.8` you can then switch between the versions with `jill switch 1.7` etc.
+juliaup add 1.10
+juliaup update
+```
 
 It is suggested to add the following line to your ```.bashrc``` file:
 ```
 alias jl='./bin/run_julia'
 ```
-This makes it possible to run julia with the shortcut `jl` later.
+This makes it possible to run Julia with the shortcut `jl` later.
 
 ### Mac
-Please download and install Julia as explained at https://julialang.org/downloads/
+Please download and install `juliaup` as explained at https://github.com/JuliaLang/juliaup .
 
-The jill installers will most likely also work on Mac and allow eays switching of different Julia versions (see Linux section).
+Restart your terminal, and then execute:
+```
+juliaup add 1.10
+juliaup update
+```
 
 ## Installation of the IDE VSCode
 It is useful to install the integrated development environment VSCode, even though it is not
