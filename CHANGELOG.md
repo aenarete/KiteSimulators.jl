@@ -1,6 +1,6 @@
 # Changelog
 
-### Not yet released
+###  KiteSimulators v0.3.8 - 2024-05-09
 #### Fixes
 - fix the .bat files needed for Windows using Julia 1.10
 - update the documentation

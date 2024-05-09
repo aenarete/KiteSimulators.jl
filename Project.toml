@@ -1,7 +1,7 @@
 name = "KiteSimulators"
 uuid = "a262fb0b-5671-4fb4-9d61-972db9a18944"
 authors = ["Uwe Fechner <fechner@aenarete.eu> and contributors"]
-version = "0.3.7"
+version = "0.3.8"
 
 [deps]
 AtmosphericModels = "c59cac55-771d-4f45-b14d-1c681463a295"
