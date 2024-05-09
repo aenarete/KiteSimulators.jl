@@ -1,5 +1,10 @@
 # Changelog
 
+### Not yet released
+#### Fixes
+- fix the .bat files needed for Windows using Julia 1.10
+- update the documentation
+
 ### KiteSimulators v0.3.7 - 2024-05-09
 #### Changes
 - replace the plotting library `Plots` with `ControlPlots` to speed up compilation and to avoid error messages
