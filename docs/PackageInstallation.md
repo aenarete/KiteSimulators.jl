@@ -1,6 +1,11 @@
 ## Installation of Julia Kite Power Tools
 
-It is suggested that you create your own folder for your kite simulators.
+On Linux, it is suggested to first install the plotting Library `Matplotlib`, for example on Ubuntu with this command:
+```bash
+sudo apt install python3-matplotlib
+```
+
+It is suggested that you create a folder for your kite simulators.
 ```bash
 mkdir kitesims
 cd kitesims
