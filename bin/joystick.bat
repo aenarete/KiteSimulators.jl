@@ -6,7 +6,7 @@ if %basename%==bin cd ..
 for /f "delims=" %%i in ('julia --version') do set version_string=%%i
 for /f "tokens=3 delims= " %%a in ("%version_string%") do set version=%%a
 
-set julia_major=%version:~0,3%
+set julia_major=%version:~0,4%
 set image=kps-image-%julia_major%.dll
 
 echo Lauching KiteViewer...
