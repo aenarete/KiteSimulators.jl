@@ -1,0 +1,20 @@
+#!/bin/bash -eu
+
+cd ~/repos
+rm -rf julia_tmp
+mkdir julia_tmp
+export JULIA_DEPOT_PATH="~/julia_tmp"
+rm -rf int_test
+mkdir int_test
+cd int_test
+echo "Installing KiteSimulators and ControlPlots..."
+julia --project="." -e "using Pkg; Pkg.update(); pkg\"add KiteSimulators#main\"; Pkg.instantiate(); Pkg.add(\"ControlPlots\")"
+echo "Installing Timers..."
+julia --project -e "using Pkg; Pkg.add(\"Timers\")"
+echo "Instializing the project..."
+julia --project -e "using KiteSimulators; init_project()"
+echo "Creating the system image..."
+./bin/create_sys_image --noupdate
+echo "Running example..."
+julia --project -e "__PRECOMPILE__ = true; using KiteSimulators; include(\"examples/autopilot.jl\")"
+echo "Done."
