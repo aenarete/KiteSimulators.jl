@@ -41,15 +41,28 @@ create_sys_image
 ```
 This will take 10 to 30 minutes but is only required once.
 
-You can now execute Julia on Linux with the commands:
+### Running the KiteApp
+You can now run the KiteApp with the command:
+```
+autopilot
+```
+from the `bin` folder.
+On Linux you need to type:
+```
+./autopilot
+```
+
+### Execute the Julia REPL
+To execute Julia on Linux with the commands:
 ```bash
 cd ..
 ./bin/run_julia
 ```
 and on Windows:
 ```bash
-cd ..
 bin\run_julia
 ```
+
+To quit the Julia REPL, type <CTRL><d> .
 
 Continue with [README](../README.md)
