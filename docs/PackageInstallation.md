@@ -65,6 +65,6 @@ and on Windows:
 bin\run_julia
 ```
 
-To quit the Julia REPL, type <CTRL><d> .
+To quit the Julia REPL, type \<CTRL\>\<d\> .
 
 Continue with [README](../README.md)
