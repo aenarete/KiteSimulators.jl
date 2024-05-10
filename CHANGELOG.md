@@ -2,7 +2,7 @@
 
 ###  KiteSimulators v0.3.9 - 2024-05-10
 #### Fixes
-- all batch files now use `.so` as file ending of the system image instead of `.dll`
+- all batch files now use `.so` as the filename extension of the system image instead of `.dll`
 
 ###  KiteSimulators v0.3.8 - 2024-05-09
 #### Fixes
