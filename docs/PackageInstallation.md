@@ -23,6 +23,10 @@ using KiteSimulators
 init_project()
 exit()
 ```
+#### Tips
+- Create your laptop to a power socket before installing these packages.
+- If you get an error, you might have to download and install https://aka.ms/vs/17/release/vc_redist.x64.exe first and try again.
+
 The commands above create the following directory structure:
 
 <p align="center"><img src="dir_structure.png" width="300" /></p>
