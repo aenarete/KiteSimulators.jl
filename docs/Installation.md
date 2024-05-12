@@ -1,7 +1,8 @@
 ## Installation of Julia
 
 ### Windows
-Please download and install Julia using `juliaup`. You can try:
+Please download and install Julia using `juliaup`. Launch the `Command Prompt` app and type:
+
 ```
 winget install julia -s msstore
 juliaup add 1.10
