@@ -11,7 +11,7 @@
 
 ### KiteSimulators v0.3.7 - 2024-05-09
 #### Changes
-- replace the plotting library `Plots` with `ControlPlots` to speed up compilation and to avoid error messages
+- replace the plotting library `Plots` with `ControlPlots` to speed up compilation and avoid error messages
 - the autopilot example GUI provides now the possibility to load three different projects (well, any project file that has the ending .yml and exists in the data folder)
 - the configuration of the flight path controller and flight path planner happens now using the related .yaml files
 - more diagrams added, statistics dialog extended
