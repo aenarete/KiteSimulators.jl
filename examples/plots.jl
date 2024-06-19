@@ -51,6 +51,15 @@ function plot_control()
     nothing
 end
 
+function plot_control_II()
+    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    sl  = log.syslog
+    display(plotx(log.syslog.time, rad2deg.(sl.azimuth), -rad2deg.(wrap2pi.(sl.heading)), 100*sl.steering, sl.var_12, rad2deg.(sl.course.-pi), rad2deg.(sl.var_09), rad2deg.(sl.var_10), sl.var_06, sl.sys_state;
+            ylabels=["azimuth [°]", "psi [°]", "steering [%]", "c2", "chi", "psi_dot_set", "psi_dot", "ndi_gain", "fpp_state"],
+            fig="fpc", ysize=10))
+    nothing
+end
+
 function plot_winch_control()
     log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
     sl  = log.syslog

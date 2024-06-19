@@ -1,12 +1,12 @@
 fpp_settings:
     log_level:          2      # log level, 0=quiet
-    min_depower:       22      # in percent
-    max_depower:       40
-    parking_depower:   25
-    min_length:        168.5   # meter
-    max_length:        500.0
-    max_height:        500.0
-    beta_set:          24.0    # average elevation angle during reel-out in degrees
+    min_depower:       30.5      # in percent
+    max_depower:       60
+    parking_depower:   30.5
+    min_length:        300   # meter
+    max_length:        600.0
+    max_height:        600.0
+    beta_set:          26.0    # average elevation angle during reel-out in degrees
     w_fig:             36.0    # width of figure of eight in degrees
     psi_dot_max:       3.0     # max turn rate in deg/s
     r_min:             3.0     # minimal turn radius in degrees
@@ -16,5 +16,5 @@ fpp_settings:
     heading_offset_high: 54.0  # dito, for elevation angles > 47.5 degrees
     heading_offset_up: 60.0    # degrees, before finishing the up-turn
     heading_upper_turn: 335    # degrees
-    k_factor:           1.2    # a factor > 1 reduces the width of the intermediate phase
-    corr_vec:  [12.01, 24.02, 36.08, 32.70, 25.40, 19.85, 16.13, 13.55, 11.42, 9.32, 7.38, 5.58, 3.84]
+    k_factor:           1.8    # a factor > 1 reduces the width of the intermediate phase
+    corr_vec: [7.5, 1.0, -0.25, -0.4, -0.55, -1.7, -4.85] 

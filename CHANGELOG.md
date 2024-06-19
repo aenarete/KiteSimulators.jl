@@ -1,5 +1,15 @@
 # Changelog
 
+### Unreleased
+- add control_plots_II diagram
+- the script `autopilot.jl` is logging additional fields
+- update the hydra20 projects, both work fine now
+- add hydra20_926 project with high wind speed
+- bump KiteControllers to 0.2.4
+- bump KiteModels to 0.5.15
+- bump KiteUtils to 0.6.12
+- remove support of Julia 1.9
+
 ###  KiteSimulators v0.3.9 - 2024-05-10
 #### Fixes
 - all batch files now use `.so` as the filename extension of the system image instead of `.dll`

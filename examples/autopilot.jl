@@ -76,7 +76,7 @@ function init(app::KiteApp; init_viewer=false)
     app.ssc = SystemStateControl(app.wcs, app.fcs, app.fpps)
     if init_viewer
         app.viewer= Viewer3D(app.set, app.show_kite; menus=true)
-        app.viewer.menu.options[]=["plot_main", "plot_power", "plot_control", "plot_winch_control", "plot_aerodynamics",
+        app.viewer.menu.options[]=["plot_main", "plot_power", "plot_control", "plot_control_II", "plot_winch_control", "plot_aerodynamics",
                                    "plot_elev_az", "plot_elev_az2", "plot_elev_az3", "plot_side_view", "plot_side_view2", "plot_side_view3", "plot_front_view3", "plot_timing", 
                                    "print_stats", "load logfile", "save logfile"]
         app.viewer.menu_rel_tol.options[]=["0.005","0.001","0.0005","0.0001","0.00005", "0.00001",
@@ -182,7 +182,19 @@ function simulate(integrator, stopped=true)
             sys_state.var_04 = app.ssc.wc.pid2.f_set # set force of lower force controller
             sys_state.var_05 = app.ssc.wc.pid2.v_set_out
             sys_state.var_06 = app.ssc.fpp.fpca.fpc.ndi_gain
-            sys_state.var_07 = app.ssc.fpp.fpca.fpc.chi_set
+            if isnothing(app.ssc.fpp.fpca.fpc.psi_dot_set)
+                sys_state.var_07 = app.ssc.fpp.fpca.fpc.chi_set
+                sys_state.var_10 = NaN
+                sys_state.var_09 = NaN
+            else
+                sys_state.var_07 = NaN
+                sys_state.var_09 = app.ssc.fpp.fpca.fpc.psi_dot_set
+                sys_state.var_10 = app.ssc.fpp.fpca.fpc.est_psi_dot
+            end
+            
+            sys_state.var_11 = app.ssc.fpp.fpca.fpc.est_chi_dot
+            sys_state.var_12 = app.ssc.fpp.fpca.fpc.c2
+            
             sys_state.var_08 = norm(app.kps4.lift_force)/norm(app.kps4.drag_force)
             if i > 10
                 sys_state.t_sim = t_sim*1000
@@ -385,6 +397,8 @@ function do_menu(c)
         plot_power()
     elseif c == "plot_control"
         plot_control()
+    elseif c == "plot_control_II"
+        plot_control_II()
     elseif c == "plot_winch_control"
         plot_winch_control()
     elseif c == "plot_aerodynamics"
