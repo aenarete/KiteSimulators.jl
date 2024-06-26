@@ -50,10 +50,10 @@ You can now run the KiteApp with the command:
 ```
 autopilot
 ```
-from the `bin` folder. Alternatively you can start it with a double-click on the file `autopilot.bat`
+from the `bin` folder. Alternatively, you can start it with a double-click on the file `autopilot.bat`
 in the `bin` folder.
 
-On Linux you need to type:
+On Linux, you need to type:
 ```
 ./autopilot
 ```
