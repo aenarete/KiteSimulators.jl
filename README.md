@@ -71,6 +71,17 @@ Most of the packages have their own documentation. See for example:
 
 and the README files of the other packages, listed below.
 
+## Licence
+This project is licensed under the MIT License. Please see the below WAIVER in association with the license.
+
+## WAIVER
+Technische Universiteit Delft hereby disclaims all copyright interest in the package “KiteSimulators.jl” (simulators for airborne wind energy systems) written by the Author(s).
+
+Prof.dr. H.G.C. (Henri) Werij, Dean of Aerospace Engineering
+
+## Donations
+If you like this software, please consider donating to https://gofund.me/508e041b .
+
 ## See also
 - [Research Fechner](https://research.tudelft.nl/en/publications/?search=wind+Fechner&pageSize=50&ordering=rating&descending=true) for the scientic background of this code
 - the packages [KiteControllers](https://github.com/aenarete/KiteControllers.jl) and [KiteViewers](https://github.com/aenarete/KiteViewers.jl)
