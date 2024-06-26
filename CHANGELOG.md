@@ -7,7 +7,7 @@
 - add hydra20_926 project with high wind speed
 - bump KiteControllers to 0.2.5
 - bump KiteModels to 0.5.16
-- bump KiteUtils to 0.6.13
+- bump KiteUtils to 0.6.16
 - remove support of Julia 1.9
 - add copyright waiver from TU Delft
 
