@@ -5,10 +5,11 @@
 - the script `autopilot.jl` is logging additional fields
 - update the hydra20 projects, both work fine now
 - add hydra20_926 project with high wind speed
-- bump KiteControllers to 0.2.4
-- bump KiteModels to 0.5.15
-- bump KiteUtils to 0.6.12
+- bump KiteControllers to 0.2.5
+- bump KiteModels to 0.5.16
+- bump KiteUtils to 0.6.13
 - remove support of Julia 1.9
+- add copyright waiver from TU Delft
 
 ###  KiteSimulators v0.3.9 - 2024-05-10
 #### Fixes
