@@ -19,8 +19,9 @@ function read_project()
     dict["gui"]["project"]
 end
 
-PROJECT=read_project()
+PROJECT = read_project()
 GLMakie.activate!(title = PROJECT)
+DEFAULT_LOG::String = joinpath("output", "last_sim_log")
 
 function test_observer(plot=true)
     log = load_log("uncorrected")
@@ -264,7 +265,7 @@ function play(stopped=false)
         if ! app.initialized
             init(app)
         end
-        KiteViewers.plot_file[]="last_sim_log"
+        KiteViewers.plot_file[]=DEFAULT_LOG
         on_parking(app.ssc)
         integrator = KiteModels.init_sim!(app.kps4, stiffness_factor=0.5)
         if app.run == 0; toc(); end
@@ -273,11 +274,11 @@ function play(stopped=false)
         app.initialized = false
         stopped = ! app.viewer.sw.active[]
         if app.logger.index > 100
-            KiteViewers.plot_file[]="last_sim_log"
+            KiteViewers.plot_file[]=DEFAULT_LOG
             if app.set.log_level > 0
                 println("Saving log... $(app.logger.index)")
             end
-            save_log(app.logger, "last_sim_log")
+            save_log(app.logger, basename(DEFAULT_LOG); path=dirname(DEFAULT_LOG))
         end
         if @isdefined __PRECOMPILE__
             break

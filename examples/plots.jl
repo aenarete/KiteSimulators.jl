@@ -12,7 +12,13 @@ function plot_timing()
     nothing
 end
 
-fulldir(name) = replace(dirname(name), "~" => homedir())
+function fulldir(name)
+    if occursin("~", name)
+        return replace(dirname(name), "~" => homedir())
+    else
+        return joinpath(pwd(), dirname(name))
+    end
+end
 
 function plot_main()
     log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
