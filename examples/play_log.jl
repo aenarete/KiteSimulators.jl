@@ -5,11 +5,19 @@ kps4::KPS4 = KPS4(kcu)
 
 # the following values can be changed to match your interest
 dt::Float64 = 0.05
-TIME_LAPSE_RATIO = 5      # 1 = realtime, 2..8 faster
-LOG_FILE_NAME = "sim_log" # without extension!
+TIME_LAPSE_RATIO = 5        # 1 = realtime, 2..8 faster
+LOG_FILE = "output/sim_log" # without extension!
 # end of user parameter section #
 
-log=load_log(LOG_FILE_NAME)
+function fulldir(name)
+    if occursin("~", name)
+        return replace(dirname(name), "~" => homedir())
+    else
+        return joinpath(pwd(), dirname(name))
+    end
+end
+
+log=load_log(basename(LOG_FILE); path=fulldir(LOG_FILE))
 
 viewer::Viewer3D = Viewer3D(true)
 
