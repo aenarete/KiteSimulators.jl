@@ -1,5 +1,15 @@
-function plot_timing()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function fulldir(name)
+    if occursin("~", name)
+        return replace(dirname(name), "~" => homedir())
+    else
+        return joinpath(pwd(), dirname(name))
+    end
+end
+
+function plot_timing(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
 
     sl  = log.syslog
     display(ControlPlots.plotx(sl.time, sl.t_sim, 100*sl.steering, 100*sl.depower;
@@ -12,20 +22,10 @@ function plot_timing()
     nothing
 end
 
-function fulldir(name)
-    if occursin("~", name)
-        return replace(dirname(name), "~" => homedir())
-    else
-        return joinpath(pwd(), dirname(name))
+function plot_main(log=nothing) 
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
     end
-end
-
-function plot_main()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
-    plot_main(log)
-end
-
-function plot_main(log) 
     sl  = log.syslog
     display(plotx(log.syslog.time, log.z, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), sl.l_tether, sl.force, 
                   sl.v_reelout, sl.var_01;
@@ -34,8 +34,10 @@ function plot_main(log)
      nothing
 end
 
-function plot_power()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_power(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     sl  = log.syslog
     energy = similar(sl.v_reelout)
     en=0.0
@@ -49,8 +51,10 @@ function plot_power()
     nothing
 end
 
-function plot_control()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_control(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     sl  = log.syslog
     display(plotx(log.syslog.time, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), rad2deg.(sl.heading), sl.force, 100*sl.depower, 100*sl.steering, sl.sys_state, sl.var_01, sl.var_02;
             ylabels=["elevation [°]", "azimuth [°]", "heading [°]", "force [N]", "depower [%]", "steering [%]", "fpp_state", "cycle", "fig8"],
@@ -61,8 +65,10 @@ function plot_control()
     nothing
 end
 
-function plot_control_II()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_control_II(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     sl  = log.syslog
     display(plotx(log.syslog.time, rad2deg.(sl.azimuth), -rad2deg.(wrap2pi.(sl.heading)), 100*sl.steering, sl.var_12, rad2deg.(sl.course.-pi), rad2deg.(sl.var_09), rad2deg.(sl.var_10), sl.var_06, sl.sys_state;
             ylabels=["azimuth [°]", "psi [°]", "steering [%]", "c2", "chi", "psi_dot_set", "psi_dot", "ndi_gain", "fpp_state"],
@@ -70,8 +76,10 @@ function plot_control_II()
     nothing
 end
 
-function plot_winch_control()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_winch_control(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     sl  = log.syslog
     display(plotx(log.syslog.time, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), sl.force, sl.var_04, sl.v_reelout, 100*sl.depower, 100*sl.steering, sl.var_03;
             ylabels=["elevation [°]", "azimuth [°]", "force [N]", "set_force", "v_reelout [m/s]", "depower [%]", "steering [%]", "wc_state"],
@@ -84,8 +92,10 @@ function plot_winch_control()
     nothing
 end
 
-function plot_elev_az()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_elev_az(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     sl  = log.syslog
     display(plotxy(rad2deg.(sl.azimuth), rad2deg.(sl.elevation);
             ylabel="elevation [°]",
@@ -94,8 +104,10 @@ function plot_elev_az()
     nothing
 end
 
-function plot_elev_az2()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_elev_az2(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     sl  = log.syslog
     index=1
     for i in 1:length(sl.var_01)
@@ -111,8 +123,10 @@ function plot_elev_az2()
     nothing
 end
 
-function plot_elev_az3()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_elev_az3(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     sl  = log.syslog
     index=1
     for i in 1:length(sl.var_01)
@@ -128,8 +142,10 @@ function plot_elev_az3()
     nothing
 end
 
-function plot_side_view()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_side_view(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     display(plotxy(log.x, log.z;
     ylabel="pos_x [m]",
     xlabel="height [m]",
@@ -137,8 +153,10 @@ function plot_side_view()
     nothing
 end
 
-function plot_side_view2()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_side_view2(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     index = 1
     sl    = log.syslog
     for i in 1:length(sl.var_01)
@@ -154,8 +172,10 @@ function plot_side_view2()
     nothing
 end
 
-function plot_side_view3()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_side_view3(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     index = 1
     sl    = log.syslog
     for i in 1:length(sl.var_01)
@@ -171,8 +191,10 @@ function plot_side_view3()
     nothing
 end
 
-function plot_front_view3()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_front_view3(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     index = 1
     sl    = log.syslog
     for i in 1:length(sl.var_01)
@@ -188,8 +210,10 @@ function plot_front_view3()
     nothing
 end
 
-function plot_aerodynamics()
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+function plot_aerodynamics(log=nothing)
+    if isnothing(log)
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    end
     sl    = log.syslog
 
     display(plotxy(sl.time, sl.var_08;
