@@ -9,3 +9,4 @@ data/last_sim_log.arrow
 data/*.arrow
 performance.png
 output/last_sim_log.arrow
+output/sim_log.arrow
