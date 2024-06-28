@@ -14,6 +14,7 @@ if [[ $(basename $(pwd)) == "bin" ]]; then
     cd ..
 fi
 export MPLBACKEND=qt5agg
+mkdir -p output
 
 julia_version=$(julia --version | awk '{print($3)}')
 julia_major=${julia_version:0:3}
