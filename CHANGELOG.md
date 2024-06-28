@@ -10,6 +10,8 @@
 - bump KiteUtils to 0.6.16
 - remove support of Julia 1.9
 - add copyright waiver from TU Delft
+- add section kps4_3l to settings files
+- fix the example plot_log.jl
 
 ###  KiteSimulators v0.3.9 - 2024-05-10
 #### Fixes
