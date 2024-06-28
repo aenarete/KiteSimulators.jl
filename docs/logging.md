@@ -10,6 +10,7 @@ A log file with the name `sim_log.arrow` will be created in the data folder. It 
 ### Add logging to your own scripts
 The following functions are needed to add logging to your script:
 ```julia
+LOG_FILE = "output/sim_log"                 # name of the log file without file ending 
 logger = Logger(se().segments + 5, steps)   # create a logger when using the 4 point model
 # logger = Logger(se().segments + 1, steps) # create a logger when using the 1 point model
 
@@ -18,8 +19,9 @@ state = SysState(kps4)
 log!(logger, state)
 
 # save the log file
-save_log(logger) 
+save_log(logger, basename(LOG_FILE); path=dirname(LOG_FILE))
 ```
+If you do not pass a path name to save_log the `data_path` is being used. You can check the data_path using the function `get_data_path()`.
 
 ### Playing a log file in the 3D viewer
 Open the file `examples/play_log.jl` and change the following lines according to your needs:

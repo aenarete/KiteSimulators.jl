@@ -10,13 +10,14 @@ kps4::KPS4 = KPS4(kcu)
 
 # the following values can be changed to match your interest
 dt::Float64 = 0.05
-TIME = 45
+TIME = 38
 TIME_LAPSE_RATIO = 5
 STEPS::Int64 = Int64(round(TIME/dt))
 STATISTIC = false
 SHOW_KITE = true
 PLOT_PERFORMANCE = true
 LOGGING = true
+LOG_FILE = "output/sim_log"
 # end of user parameter section #
 
 if ! @isdefined time_vec_gc; const time_vec_gc = zeros(STEPS); end
@@ -74,7 +75,7 @@ function simulate(integrator, steps)
     end
     misses=j/k * 100
     println("\nMissed the deadline for $(round(misses, digits=2)) %. Max time: $(round((max_time*1e-6), digits=1)) ms")
-    if LOGGING save_log(logger) end
+    if LOGGING save_log(logger, basename(LOG_FILE); path=dirname(LOG_FILE)) end
     (integrator.p.iter - start) / steps
 end
 
