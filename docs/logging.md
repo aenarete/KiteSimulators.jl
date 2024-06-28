@@ -27,9 +27,9 @@ If you do not pass a path name to save_log the `data_path` is being used. You ca
 Open the file `examples/play_log.jl` and change the following lines according to your needs:
 
 ```julia
-TIME_LAPSE_RATIO = 5      # 1 = realtime, 2..10 faster
-LOG_FILE_NAME = "sim_log" # without extension!
-PARTICLES = 7 + 4         # 7 for tether and KCU, 4 for the kite
+TIME_LAPSE_RATIO = 5             # 1 = realtime, 2..10 faster
+LOG_FILE      = "output/sim_log" # without extension!
+PARTICLES = 7 + 4                # 7 for tether and KCU, 4 for the kite
 ```
 Now you can play the log file with the following command:
 
