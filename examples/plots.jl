@@ -22,6 +22,10 @@ end
 
 function plot_main()
     log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
+    plot_main(log)
+end
+
+function plot_main(log) 
     sl  = log.syslog
     display(plotx(log.syslog.time, log.z, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), sl.l_tether, sl.force, 
                   sl.v_reelout, sl.var_01;
