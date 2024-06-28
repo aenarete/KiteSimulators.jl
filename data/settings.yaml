@@ -51,16 +51,30 @@ kite:
 
 kps4:
     width:         5.77     # width of the kite                      [m]
-    alpha_zero:    4.0      # should be 5                      [degrees]
+    alpha_zero:    4.0      # should be 4 .. 10                [degrees]
     alpha_ztip:   10.0      #                                  [degrees]
     m_k:           0.2      # relative nose distance; increasing m_k increases C2 of the turn-rate law
     rel_nose_mass: 0.47     # relative nose mass
     rel_top_mass:  0.4      # mass of the top particle relative to the sum of top and side particles
 
+kps4_3l:
+    radius: 10.0                    # the radius of the circle shape on which the kite lines, viewed 
+                                    #     from the front                                              [m]
+    bridle_center_distance: 2.0     # the distance from point the center bridle connection point of 
+                                    #     the middle line to the kite                                 [m]
+    middle_length:          2.0     # the cord length of the kite in the middle                       [m]
+    tip_length:             1.0     # the cord length of the kite at the tips                         [m]
+    min_steering_line_distance: 4.0 # the distance between the left and right steering bridle         [m]
+                                    #     line connections on the kite that are closest to each other [m]
+    width_3l:               20.0    # width of the kite                                               [m]
+    aero_surfaces:          10      # the number of aerodynamic surfaces to use per mass point        [-]
+    
 bridle:
-    d_line:    2.5         # bridle line diameter                  [mm]
-    l_bridle: 33.4         # sum of the lengths of the bridle lines [m]
-    h_bridle:  4.9         # height of bridle                       [m]
+    d_line:    2.5            # bridle line diameter                                                 [mm]
+    l_bridle: 33.4            # sum of the lengths of the bridle lines                                [m]
+    h_bridle:  4.9            # height of bridle                                                      [m]
+    rel_compr_stiffness: 0.25 # relative compression stiffness of the kite springs                    [-]
+    rel_damping: 6.0          # relative damping of the kite spring (relative to main tether)         [-]
 
 kcu:
     kcu_mass: 8.4                # mass of the kite control unit   [kg]
@@ -79,7 +93,7 @@ tether:
     c_spring: 614600.0     # unit spring constant coefficient [N]
     rho_tether:  724.0     # density of Dyneema           [kg/m³]
     e_tether: 55000000000.0 # axial tensile modulus of Dyneema (M.B. Ruppert) [Pa]
-                           # SK75: 109 to 132 GPa according to data sheet
+                           # SK75: 109 to 132 GPa according to datasheet
 
 winch:
     max_force: 4000        # maximal (nominal) tether force; short overload allowed [N]
