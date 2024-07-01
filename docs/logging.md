@@ -44,7 +44,7 @@ The function `export_log(log_file)` can be used to export a log file to .csv for
 
 Example:
 ```julia
-include("examples/convert.log.jl")
+include("examples/convert_log.jl")
 ```
 This script loads the log file with the name `sim_log.arrow` and exports it to .csv format under the name `sim_log.csv`.
 
