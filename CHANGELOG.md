@@ -1,17 +1,20 @@
 # Changelog
 
 ### Unreleased
+#### Added
 - add control_plots_II diagram
+- add hydra20_926 project with high wind speed
+- add copyright waiver from TU Delft
+- add section kps4_3l to settings files
+#### Changed
 - the script `autopilot.jl` is logging additional fields
 - update the hydra20 projects, both work fine now
-- add hydra20_926 project with high wind speed
 - bump KiteControllers to 0.2.6
 - bump KiteModels to 0.5.16
 - bump KiteUtils to 0.6.16
 - remove support of Julia 1.9
-- add copyright waiver from TU Delft
-- add section kps4_3l to settings files
 - fix the example plot_log.jl
+- update documentation of logging
 
 ###  KiteSimulators v0.3.9 - 2024-05-10
 #### Fixes
