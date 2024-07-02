@@ -4,6 +4,7 @@ set_data_path(joinpath(@__DIR__, "..", "data"))
 tic()
 
 set = se()
+set.zoom=0.00075
 
 kcu::KCU   = KCU(se())
 kps4::KPS4 = KPS4(kcu)
