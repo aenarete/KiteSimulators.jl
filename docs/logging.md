@@ -49,8 +49,7 @@ include("examples/convert_log.jl")
 This script loads the log file with the name `sim_log.arrow` and exports it to .csv format under the name `sim_log.csv`.
 
 ### Reading .arrow files in Python
-It is very easy to read .arrow files and convert them to Pandas dataframes which is a kind of standard data format
-for tabular data in Python.
+It is very easy to read .arrow files and convert them to Pandas DataFrames which is a kind of standard data format for tabular data in Python.
 
 Example:
 ```Python
@@ -58,7 +57,7 @@ import pandas as pd
 import pyarrow as pa
 
 print("Reading arrow file...")
-mmap = pa.memory_map('../data/sim_log.arrow')
+mmap = pa.memory_map('../output/sim_log.arrow')
 
 with mmap as source:
     array = pa.ipc.open_file(source).read_all()
