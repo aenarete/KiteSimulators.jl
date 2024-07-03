@@ -37,7 +37,7 @@ The power is the mechanical power.
 
 The second drop-down menu allows selecting different simulation tolerances. The default is usually a good compromise between accuracy and performance.
 
-The third dropdown menu allows to change the speed of the simulation between reel-time (1x) and 12 times faster than reel-time. Choose a value that suits your needs and that your computer can handle well.
+The third dropdown menu allows to change the speed of the simulation between real-time (1x) and (12x) faster than reel-time. Choose a value that suits your needs and that your computer can handle well.
 
 The fourth dropdown menu allows loading one of the project files that are present in the **data** folder. Saving and editing have not yet been implemented. To save and edit a project file use an editor of your choice.
 
