@@ -6,6 +6,7 @@
 - add hydra20_926 project with high wind speed
 - add copyright waiver from TU Delft
 - add section kps4_3l to settings files
+- add function `fulldir()` to this package
 #### Changed
 - the script `autopilot.jl` is logging additional fields
 - update the hydra20 projects, both work fine now
