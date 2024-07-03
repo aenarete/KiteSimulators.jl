@@ -5,7 +5,7 @@ Meta-package, providing "Julia Kite Power Tools", consisting of the following pa
 
 ## KiteApps for non-programmers
 This package provides two GUI applications that can be used by non-programmers:
-- `autopilot`
+- [autopilot](docs/autopilot.md)
 - `joystick`
 
 The first app can be used to run one of the provided demo simulations, but you can also run your own simulation by copying and modifying the configuration files.
