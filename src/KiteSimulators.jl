@@ -17,7 +17,7 @@ using Reexport
 @reexport using StatsBase
 @reexport using NativeFileDialog 
 
-export cp_examples, init_project
+export cp_examples, init_project, fulldir
 
 """
     cp_examples()
@@ -77,6 +77,21 @@ function init_project()
     chmod(joinpath(PATH, "README.md"), 0o664)
     copy_settings()
     cp_examples()
+end
+
+"""
+    fulldir(name)
+
+Create a fully qualified directory name by
+- replacing ~ with your home directory
+- otherwise (no ~ in name) prepend the name with the current directory
+"""
+function fulldir(name)
+    if occursin("~", name)
+        return replace(dirname(name), "~" => homedir())
+    else
+        return joinpath(pwd(), dirname(name))
+    end
 end
 
 end
