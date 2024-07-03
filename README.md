@@ -8,14 +8,14 @@ This package provides two GUI applications that can be used by non-programmers:
 - `autopilot`
 - `joystick`
 
-The first app can be used to run one of the provided demo-simulations, but you can also run your own simulation by copying and modifying the configuration files.
+The first app can be used to run one of the provided demo simulations, but you can also run your own simulation by copying and modifying the configuration files.
 
 The second app can be used to learn how to steer a kite and how to operate the winch manually using a joystick.
 
 ## Hardware requirements
-A fast computer helps to reduce the installation time, otherwise it works well even on dual core computers with 4G RAM, even 2G RAM might be sufficient. OpenGL is a hard requirement. A dedicated graphics card is useful, but not always required. If you have a Windows laptop please enable the dedicated graphics card in the settings.
+A fast computer helps to reduce the installation time, otherwise, it works well even on dual-core computers with 4G RAM, even 2G RAM might be sufficient. OpenGL is a hard requirement. A dedicated graphics card is useful, but not always required. If you have a Windows laptop please enable the dedicated graphics card in the settings.
 
-The program was tested with a Logitech Extreme 3D pro Joystick, but most likely any Joystick will do. If not, please create an issue on Github. The installation was tested on Windows 10 and Ubuntu 18.04, 20.04, 22.04 and 24.04, but should also work on Mac.
+The program was tested with a "Logitech Extreme 3D pro" Joystick, but most likely any Joystick will do. If not, please create an issue on GitHub. The installation was tested on Windows 10 and Ubuntu 18.04, 20.04, 22.04 and 24.04, but should also work on Mac.
 
 ## Installation
 If you do not have Julia installed yet, please read [Installation](docs/Installation.md).
@@ -45,9 +45,9 @@ To view and modify the example, you can use the command:
 edit("examples/joystick.jl")  # Linux
 edit("examples\\joystick.jl") # Windows
 ```
-The x axis of the Joystick controls steering. By pressing the joystick forward you can depower the kite.
+The x-axis of the Joystick controls steering. By pressing the joystick forward you can depower the kite.
 
-Button 3 starts the reel-out, button 4 the reelin, and button 5 switches to parking mode. With button one you can start the simulation, with button two you can stop it.
+Button 3 starts the reel-out, button 4 the reel-in, and button 5 switches to parking mode. With button one, you can start the simulation, with button two you can stop it.
 
 If you don't have a Joystick, try the following example:
 
@@ -61,7 +61,7 @@ include("examples\\autopilot.jl") # Windows
 You should see that the autopilot starts at 10s and that it is controlling the full power cycle, kite and winch. 
 
 ## Documentation
-- First example, explained: [First Example](docs/first_example.md).  
+- The first example explained: [First Example](docs/first_example.md).  
 - Reading and writing log files: [Logging](docs/logging.md)
 - Plotting results in 2D:  [Plotting](docs/plotting.md)
 
@@ -71,7 +71,7 @@ Most of the packages have their own documentation. See for example:
 
 and the README files of the other packages, listed below.
 
-## Licence
+## License
 This project is licensed under the MIT License. Please see the below WAIVER in association with the license.
 
 ## WAIVER
