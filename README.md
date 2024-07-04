@@ -3,15 +3,6 @@
 Meta-package, providing "Julia Kite Power Tools", consisting of the following packages:
 <p align="center"><img src="https://raw.githubusercontent.com/ufechner7/KiteUtils.jl/main/docs/src/kite_power_tools.png" width="500" /></p>
 
-## KiteApps for non-programmers
-This package provides two GUI applications that can be used by non-programmers:
-- [autopilot](docs/autopilot.md)
-- [joystick](docs/joystick.md)
-
-The first app can be used to run one of the provided demo simulations, but you can also run your own simulation by copying and modifying the configuration files.
-
-The second app can be used to learn how to steer a kite and how to operate the winch manually using a joystick.
-
 ## Hardware requirements
 A fast computer helps to reduce the installation time, otherwise, it works well even on dual-core computers with 4G RAM, and 2G RAM might be sufficient. OpenGL is a hard requirement. A dedicated graphics card is useful, but not always required. If you have a Windows laptop please enable the dedicated graphics card in the settings.
 
@@ -22,7 +13,16 @@ If you do not have Julia installed yet, please read [Installation](docs/Installa
 
 For the installation of this package, please read [Installation of KiteSimulators](docs/PackageInstallation.md)
 
-## Copy and run an example
+## KiteApps for non-programmers
+This package provides two GUI applications that can be used by non-programmers:
+- [autopilot](docs/autopilot.md)
+- [joystick](docs/joystick.md)
+
+The first app can be used to run one of the provided demo simulations, but you can also run your own simulation by copying and modifying the configuration files.
+
+The second app can be used to learn how to steer a kite and how to operate the winch manually using a joystick.
+
+## Copy and run an example for programmers
 From the Julia prompt execute:
 ```julia
 using KiteSimulators
