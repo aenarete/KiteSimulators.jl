@@ -1,12 +1,13 @@
 # Changelog
 
-### Unreleased
+### KiteSimulators v0.3.10 - 2024-07-04
 #### Added
 - add control_plots_II diagram
 - add hydra20_926 project with high wind speed
 - add copyright waiver from TU Delft
 - add section kps4_3l to settings files
 - add function `fulldir()` to this package
+- add documentation page `autopilot.md`
 #### Changed
 - the script `autopilot.jl` is logging additional fields
 - update the hydra20 projects, both work fine now
