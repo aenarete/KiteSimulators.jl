@@ -6,7 +6,7 @@ Meta-package, providing "Julia Kite Power Tools", consisting of the following pa
 ## KiteApps for non-programmers
 This package provides two GUI applications that can be used by non-programmers:
 - [autopilot](docs/autopilot.md)
-- `joystick`
+- [joystick](docs/joystick.md)
 
 The first app can be used to run one of the provided demo simulations, but you can also run your own simulation by copying and modifying the configuration files.
 
@@ -45,9 +45,7 @@ To view and modify the example, you can use the command:
 edit("examples/joystick.jl")  # Linux
 edit("examples\\joystick.jl") # Windows
 ```
-The x-axis of the Joystick controls steering. By pressing the joystick forward you can depower the kite.
-
-Button 3 starts the reel-out, button 4 the reel-in, and button 5 switches to parking mode. With button one, you can start the simulation, with button two you can stop it.
+For details how to use this example see [joystick](docs/joystick.md) .
 
 If you don't have a Joystick, try the following example:
 
@@ -58,7 +56,8 @@ using KiteSimulators
 include("examples/autopilot.jl")  # Linux
 include("examples\\autopilot.jl") # Windows
 ```
-You should see that the autopilot starts at 10s and that it is controlling the full power cycle, kite and winch. 
+You should see that the autopilot starts at 10s and that it is controlling the full power cycle, kite and winch.
+For details how to use this example see [autopilot](docs/autopilot.md) .
 
 ## Documentation
 - The first example explained: [First Example](docs/first_example.md).  
