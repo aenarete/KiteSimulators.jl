@@ -1,5 +1,7 @@
 # Changelog
 
+### Unreleased
+
 ### KiteSimulators v0.3.10 - 2024-07-04
 #### Added
 - add control_plots_II diagram

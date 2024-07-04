@@ -31,6 +31,8 @@ steps = 0
 function simulate(integrator)
     start_time_ns = time_ns()
     clear_viewer(viewer)
+    viewer.stop = false
+    on_parking(ssc)
     i=1; j=0; k=0
     GC.gc()
     max_time = 0
