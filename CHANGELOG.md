@@ -1,6 +1,16 @@
 # Changelog
 
-### Unreleased
+### KiteSimulators v0.3.11 - 2024-07-08
+#### Added
+- add documentation `joystick.md`
+
+#### Changed
+- reduced simulation frequency to 20 Hz as required for Windows
+- reduced default time-lapse to 6x as required for Windows
+- use FAST_EXP instead of EXP law for the hydra20 settings to improve performance
+- smaller font for Windows
+- fix the example `joystick.jl`
+- update README.md
 
 ### KiteSimulators v0.3.10 - 2024-07-04
 #### Added
@@ -19,8 +29,6 @@
 - remove support of Julia 1.9
 - fix the example plot_log.jl
 - update documentation of logging
-- use FAST_EXP instead of EXP law for the hydra20 settings to improve performance
-- smaller font for Windows
 
 ###  KiteSimulators v0.3.9 - 2024-05-10
 #### Fixes
