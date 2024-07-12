@@ -11,8 +11,8 @@ After running this script their is a clean install in the folder `int_test`.
 
 ### Test the demo projects
 Load each of the demo projects and click on RUN.
-- hydra10_951
-- hydra20_426
+- hydra10_951 1375 Wh 4892 W 0.03% losses on Ryzen laptop
+- hydra20_426                0.18% losses on Ryzen laptop
 - hydra20_600
 - hydra20_920
 
