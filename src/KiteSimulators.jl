@@ -75,7 +75,6 @@ function init_project()
     src_path = joinpath(dirname(pathof(@__MODULE__)), "..", PATH)
     cp(joinpath(src_path, "README.md"), joinpath(PATH, "README.md"), force=true)
     chmod(joinpath(PATH, "README.md"), 0o664)
-    copy_settings()
     cp_examples()
 end
 
