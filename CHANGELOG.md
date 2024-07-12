@@ -1,5 +1,13 @@
 # Changelog
 
+### Unpublished
+#### Changed
+- bump KiteControllers to 0.6.7
+#### Added
+- add project hydra10_951
+#### Fixed
+- fix the wind profile for the hydra20 projects
+
 ### KiteSimulators v0.3.11 - 2024-07-08
 #### Added
 - add documentation `joystick.md`
