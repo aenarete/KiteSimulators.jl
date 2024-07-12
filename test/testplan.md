@@ -22,6 +22,7 @@ Verify:
 - that the trajectories are within the acceptable range
 
 Test saving and loading of a log file.
+- save the log file under a new name - FAILS
 
 Test plotting:
 ```
