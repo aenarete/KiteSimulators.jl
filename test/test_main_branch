@@ -16,5 +16,5 @@ julia --project -e "using KiteSimulators; init_project()"
 echo "Creating the system image..."
 ./bin/create_sys_image --noupdate
 echo "Running example..."
-julia --project -e "__PRECOMPILE__ = true; pkg\"add KiteSimulators#main\"; Pkg.instantiate(); using KiteSimulators; include(\"examples/autopilot.jl\")"
+julia --project -e "__PRECOMPILE__ = true; using Pkg; pkg\"add KiteSimulators#main\"; Pkg.instantiate(); using KiteSimulators; include(\"examples/autopilot.jl\")"
 echo "Done."
