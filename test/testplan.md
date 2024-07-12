@@ -7,18 +7,18 @@ Before triggering a new release, do the following:
 cd test
 ./test_main_branch
 ```
-After running this script their is a clean install in the folder `int_test`.
+After running this script there is a clean install in the folder `int_test`.
 
 ### Test the demo projects
 Load each of the demo projects and click on RUN.
-- hydra10_951 1375 Wh 4892 W 0.03% losses on Ryzen laptop
-- hydra20_426                0.18% losses on Ryzen laptop
-- hydra20_600
-- hydra20_920
+- hydra10_951 1375 Wh  4892 W 0.03% losses on Ryzen laptop
+- hydra20_426 1579 Wh  5524 W 0.02% losses on Ryzen laptop
+- hydra20_600 3446 Wh 12507 W 0.02% losses on Ryzen laptop
+- hydra20_920 3005 Wh 10794 W 0.04% losses on Ryzen laptop
 
 Verify:
-- that the frame losses are OK (< 1% on Ryzen 7950X)
-- that the harvested power matches the values above
+- that the frame losses are OK (< 1% on Ryzen 7950X) PASSED
+- that the harvested power matches the values above  PASSED
 - that the trajectories are within the acceptable range
 
 Test saving and loading of a log file.
