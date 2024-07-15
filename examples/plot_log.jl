@@ -1,4 +1,4 @@
-using KiteSimulators, LaTeXStrings
+using KiteSimulators
 using ControlPlots
 
 # the following values can be changed to match your interest

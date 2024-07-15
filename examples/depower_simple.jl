@@ -5,7 +5,7 @@ kps4::KPS4 = KPS4(kcu)
 
 # the following values can be changed to match your interest
 dt::Float64 = 0.05
-TIME = 45
+TIME = 40
 TIME_LAPSE_RATIO = 5
 STEPS::Int64 = Int64(round(TIME/dt))
 # end of user parameter section #
