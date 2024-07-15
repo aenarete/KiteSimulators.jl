@@ -4,12 +4,13 @@ function plot_timing(log=nothing)
     end
 
     sl  = log.syslog
+    dt = sl.time[4]-sl.time[3]
     display(ControlPlots.plotx(sl.time, sl.t_sim, 100*sl.steering, 100*sl.depower;
                                ylabels=["t_sim [ms]", "steering [%]","depower [%]"],
                                fig="timing"))
     println("Mean    time per timestep: $(mean(sl.t_sim)) ms")
     println("Maximum time per timestep: $(maximum(sl.t_sim[10:end])) ms")
-    index = Int64(round(12/app.dt))
+    index = Int64(round(12/dt))
     println("Maximum for t>12s        : $(maximum(sl.t_sim[index:end])) ms")
     nothing
 end
@@ -31,10 +32,11 @@ function plot_power(log=nothing)
         log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
     end
     sl  = log.syslog
+    dt = sl.time[4]-sl.time[3]
     energy = similar(sl.v_reelout)
     en=0.0
     for i in eachindex(energy)
-        en +=  sl.force[i]*sl.v_reelout[i]*app.dt
+        en +=  sl.force[i]*sl.v_reelout[i]*dt
         energy[i] = en
     end
     display(plotx(log.syslog.time, sl.force, sl.v_reelout, sl.force.*sl.v_reelout, energy./3600;
