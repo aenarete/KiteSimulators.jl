@@ -49,6 +49,6 @@ Test plotting using `hydra20_600` project and GUI:
 - depower_simple.jl OK
 - joystick.jl
 - play_log.jl OK
-- plot_log.jl
+- plot_log.jl OK
 - reelout_2D.jl OK
 - reelout_3D.jl OK
