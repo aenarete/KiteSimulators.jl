@@ -24,31 +24,31 @@ Verify:
 Test saving and loading of a log file.
 - save the log file under a new name - PASSED
 
-Test plotting:
+Test plotting using `hydra20_600` project and GUI:
 ```
-# plot_timing(log)
-# plot_power(log)
-# plot_control(log)
-# plot_control_II(log)
-# plot_winch_control(log)
-# plot_elev_az(log)
-# plot_elev_az2(log)
-# plot_elev_az3(log)
-# plot_side_view(log)
-# plot_side_view2(log)
-# plot_side_view3(log)
-# plot_front_view3(log)
-# plot_aerodynamics(log)
+# plot_main(log) OK
+# plot_power(log) OK
+# plot_control(log) OK (two plots)
+# plot_control_II(log) OK
+# plot_winch_control(log) OK (two plots)
+# plot_elev_az(log) OK
+# plot_elev_az2(log) OK
+# plot_elev_az3(log) OK
+# plot_side_view(log) OK
+# plot_side_view2(log) OK
+# plot_side_view3(log) OK
+# plot_front_view3(log) OK
+# plot_timing(log) OK
+# plot_aerodynamics(log) OK
 ```
 
 ### Test the examples
-- compare_kps3_kps4.jl
-- convert_log.jl
-- depower_simple.jl
+- autopilot.jl - run one full example - OK
+- compare_kps3_kps4.jl OK
+- convert_log.jl OK
+- depower_simple.jl OK
 - joystick.jl
-- logging.jl
-- play_log.jl
+- play_log.jl OK
 - plot_log.jl
-- reelout_2D.jl
-- reelout_3D
-- stats.jl
+- reelout_2D.jl OK
+- reelout_3D.jl OK
