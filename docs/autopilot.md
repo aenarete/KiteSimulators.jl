@@ -31,6 +31,8 @@ On the top left of the user interface, you see several drop-down menus. The firs
 The default plot looks like this:
 <p align="center"><img src="https://github.com/aenarete/KiteSimulators.jl/blob/main/docs/main.png?raw=true" width="500" /></p>
 
+You can save a log file using the menu entry `save_log` and load one with the menu entry `load_log`. When saving a log file, please always use the file ending `.arrow`.
+
 If you select the menu entry **print_stats** you can see the statistics of the last three power cycles, for example like this:
 <p align="center"><img src="https://github.com/aenarete/KiteSimulators.jl/blob/main/docs/statistics.png?raw=true" width="500" /></p>
 The power is the mechanical power.
