@@ -336,7 +336,7 @@ function save_log_as()
     @async begin 
         filename = fetch(Threads.@spawn save_file("output"; filterlist="arrow"))
         if filename != ""
-            source = replace(KiteViewers.plot_file[], "~" => homedir())
+            source = replace(KiteViewers.plot_file[], "~" => homedir()) * ".arrow"
             if ! isfile(source)
                 source = joinpath(pwd(), "output", KiteViewers.plot_file[]) * ".arrow"
             end
@@ -371,6 +371,7 @@ function print_stats()
     peak_power = 0.0
     n = 0
     last_full_cycle = maximum(sl.var_01)-1
+    println("Last full cycle: ", last_full_cycle)
     for i in eachindex(sl.force)
         if sl.var_01[i] in 2:last_full_cycle
             av_power += sl.force[i]*sl.v_reelout[i]
