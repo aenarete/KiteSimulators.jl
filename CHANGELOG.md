@@ -1,8 +1,9 @@
 # Changelog
 
-### KiteSimulators v0.3.12 - 2024-07-15
+### KiteSimulators v0.3.12 - 2024-07-16
 #### Changed
 - bump KiteControllers to 0.6.7
+- bump GLMakie to 0.10.5
 #### Added
 - add project hydra10_951
 #### Fixed
