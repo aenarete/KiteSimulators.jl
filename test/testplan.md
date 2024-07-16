@@ -1,5 +1,7 @@
 ## Test plan
 
+Tested: v0.3.12
+
 Before triggering a new release, do the following:
 
 ### Do a clean install
