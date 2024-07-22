@@ -60,6 +60,10 @@ You should see that the autopilot starts at 10s and that it is controlling the f
 For details how to use this example see [autopilot](docs/autopilot.md) .
 
 ## Documentation
+- The apps have there own documentation: [autopilot](docs/autopilot.md) and [joystick](docs/joystick.md)
+
+The following documentation is for programmers:
+
 - The first example explained: [First Example](docs/first_example.md).  
 - Reading and writing log files: [Logging](docs/logging.md)
 - Plotting results in 2D:  [Plotting](docs/plotting.md)
