@@ -1,5 +1,7 @@
 # KiteSimulators
 
+[![DOI](https://zenodo.org/badge/495927613.svg)](https://zenodo.org/doi/10.5281/zenodo.13133226)
+
 Meta-package, providing "Julia Kite Power Tools", consisting of the following packages:
 <p align="center"><img src="https://raw.githubusercontent.com/ufechner7/KiteUtils.jl/main/docs/src/kite_power_tools.png" width="500" /></p>
 
