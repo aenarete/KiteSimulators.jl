@@ -1,4 +1,7 @@
 # Changelog
+### KiteSimulators v0.3.13 - 2024-07-30
+#### Fix
+- freeze KitePodModels at version 0.3.1
 
 ### KiteSimulators v0.3.12 - 2024-07-16
 #### Changed
