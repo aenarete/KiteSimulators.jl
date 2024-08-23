@@ -8,9 +8,9 @@ export JULIA_DEPOT_PATH="~/julia_tmp"
 mkdir int_test
 cd int_test
 echo "Installing KiteSimulators and ControlPlots..."
-julia --project="." -e "using Pkg; pkg\"add KiteSimulators\"; pkg\"add ControlPlots\""
+julia --project="." -e "using Pkg; Pkg.add(\"KiteSimulators\"); Pkg.add(\"ControlPlots\")"
 echo "Installing Timers..."
-julia --project -e "using Pkg; pkg\"add Timers\""
+julia --project -e "using Pkg; Pkg.add(\"Timers\")"
 echo "Instializing the project..."
 julia --project -e "using KiteSimulators; init_project()"
 echo "Creating the system image..."
