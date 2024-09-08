@@ -3,11 +3,13 @@
 #### Changed
 - bump KiteControllers to 0.2.10
 - bump KiteModels to 0.6.6
-- bump KitePodModels to 0.3.3
-The new KiteModel (version 3) allows to define polars that do not depend on the steering input, which makes it easier to define new kites.
 A new kite model was added, that uses three winches at the ground to steer the kite.
+The new KiteModel (version 3) allows to define polars that do not depend on the steering input, which makes it easier to define new kites.
+- bump KitePodModels to 0.3.3
 A simplified KitePodModel was added with a linear relationship between depower setting and depower angle, which makes it easier to define new KCUs.
-A new, torque controlled winch model was added.
+#### Added
+- a new, torque controlled winch model
+- you can now define the diameter and the aerodynamic drag coefficient of the KCU
 #### Fixed
 - changes of the polars had no effect
 - changes of ```max_steering``` had no effect
