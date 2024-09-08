@@ -14,6 +14,8 @@ A new, torque controlled winch model was added.
 #### Braking
 - the function `next_step!` now requires either the parameter `set_speed`, which replaces `v_ro`, or the parameter `set_torque`, depending on the question if you use the `AsynchGenerator` or `TorqueControlledWinch` in the settings
 - the function `init_sim` has the new parameter `delta`. It should be between 0.0 and 0.03 and defines the pre-tension of the tether. The parameter `stiffness_factor` should be between 0.1 and 1.0 and not longer smaller than 0.1.
+- the constructor `FPCSettings` now requires the named parameter `dt`
+- the constructor `SystemStateControl` now requires the named parameter `u_d0` and `u_d`
 
 ### KiteSimulators v0.3.13 - 2024-07-30
 #### Fixed
