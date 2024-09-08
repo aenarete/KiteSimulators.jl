@@ -44,6 +44,7 @@ function simulate(integrator, steps)
             set_depower_steering(kps4.kcu, 0.35, 0.0)    
         end
         t_sim = @elapsed KiteModels.next_step!(kps4, integrator; set_speed=0, dt=dt)
+        iter += kps4.iter
         t_gc = @elapsed GC.gc(false)
         t_show = 0.0
         state = SysState(kps4)

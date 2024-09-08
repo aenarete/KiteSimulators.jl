@@ -24,7 +24,7 @@ v_speed = zeros(STEPS)
 v_force = zeros(STEPS)
 
 function simulate(integrator, steps, plot=false)
-    start = integrator.p.iter
+    iter = 0
     for i in 1:steps
         if PRINT
             lift, drag = KiteModels.lift_drag(kps4)
@@ -39,7 +39,8 @@ function simulate(integrator, steps, plot=false)
         v_time[i] = kps4.t_0
         v_speed[i] = kps4.v_reel_out
         v_force[i] = winch_force(kps4)
-        KiteModels.next_step!(kps4, integrator, v_ro = v_ro, dt=dt)
+        KiteModels.next_step!(kps4, integrator; set_speed = v_ro, dt=dt)
+        iter += kps4.iter
         
         if plot
             reltime = i*dt-dt
@@ -48,7 +49,7 @@ function simulate(integrator, steps, plot=false)
             end
         end
     end
-    (integrator.p.iter - start) / steps
+    iter / steps
 end
 
 integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.5, prn=STATISTIC)
