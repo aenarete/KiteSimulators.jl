@@ -20,8 +20,8 @@ solver:
     abs_tol: 0.0003        # absolute tolerance of the DAE solver [m, m/s]
     rel_tol: 0.0005         # relative tolerance of the DAE solver [-]
     solver: "DFBDF"        # DAE solver, IDA or DFBDF or DImplicitEuler
-    linear_solver: "GMRES" # can be GMRES or Dense or LapackDense (only for IDA)
-    max_order: 4           # maximal order, usually between 3 and 5 (for IDA and DFBDF)
+    linear_solver: "GMRES" # can be GMRES or LapackDense or Dense (only for IDA)
+    max_order: 4           # maximal order, usually between 3 and 5 (IDA and DFBDF)
     max_iter:  200         # max number of iterations of the steady-state-solver
 
 steering:
@@ -96,9 +96,15 @@ tether:
                            # SK75: 109 to 132 GPa according to datasheet
 
 winch:
+    winch_model: "AsyncMachine" # or TorqueControlledMachine
     max_force: 4000        # maximal (nominal) tether force; short overload allowed [N]
-    v_ro_max:  8.0         # maximal reel-out speed                      [m/s]
-    v_ro_min: -8.0         # minimal reel-out speed (=max reel-in speed) [m/s]
+    v_ro_max:  8.0         # maximal reel-out speed                          [m/s]
+    v_ro_min: -8.0         # minimal reel-out speed (=max reel-in speed)     [m/s]
+    drum_radius: 0.1615    # radius of the drum                              [m]
+    gear_ratio: 6.2        # gear ratio of the winch                         [-]   
+    inertia_total: 0.204   # total inertia, as seen from the motor/generator [kgm²]
+    f_coulomb: 122.0       # coulomb friction                                [N]
+    c_vf: 30.6             # coefficient for the viscous friction            [Ns/m]
 
 environment:
     v_wind: 9.51             # wind speed at reference height          [m/s]
@@ -110,7 +116,7 @@ environment:
     rho_0:  1.225            # air density at zero height and 15 °C    [kg/m³]
     alpha:  0.08163          # exponent of the wind profile law
     z0:     0.0002           # surface roughness                       [m]
-    profile_law: 6           # 1=EXP, 2=LOG, 3=EXPLOG, 4=FAST_EXP, 5=FAST_LOG, 6=FAST_EXPLOG
+    profile_law: 3           # 1=EXP, 2=LOG, 3=EXPLOG, 4=FAST_EXP, 5=FAST_LOG, 6=FAST_EXPLOG
     # the following parameters are for calculating the turbulent wind field using the Mann model
     use_turbulence: 0.0      # turbulence intensity relative to Cabauw, NL
     v_wind_gnds: [3.483, 5.324, 8.163] # wind speeds at ref height for calculating the turbulent wind field [m/s]
