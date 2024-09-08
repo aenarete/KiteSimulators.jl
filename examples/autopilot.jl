@@ -1,6 +1,9 @@
 # activate the test environment if needed
 using Timers; tic()
 
+LOG_LIFT_DRAG::Bool = true
+DRAG_CORR::Float64 = 0.93 
+
 using KiteSimulators, ControlPlots
 using Printf, LinearAlgebra
 import KiteSimulators.KiteViewers.GLMakie
@@ -62,19 +65,23 @@ app.next_max_time = app.max_time
 function init(app::KiteApp; init_viewer=false)
     app.max_time = app.next_max_time
     app.kcu   = KCU(app.set)
+    project=(KiteUtils.PROJECT)
     app.kps4 = KPS4(app.kcu)
+    KiteUtils.PROJECT = project
     app.wcs = WCSettings()
     update(app.wcs)
     app.wcs.dt = 1/app.set.sample_freq
     app.dt = app.wcs.dt
-    app.fcs = FPCSettings() 
+    app.fcs = FPCSettings(dt=app.dt) 
     update(app.fcs)
     app.fcs.dt = app.wcs.dt 
     app.fcs.log_level = app.set.log_level
     app.fpps = FPPSettings()
     update(app.fpps)
     app.fpps.log_level = app.set.log_level
-    app.ssc = SystemStateControl(app.wcs, app.fcs, app.fpps)
+    u_d0 = 0.01 * se(project).depower_offset
+    u_d = 0.01 * se(project).depower
+    app.ssc = SystemStateControl(app.wcs, app.fcs, app.fpps; u_d0, u_d)
     if init_viewer
         app.viewer= Viewer3D(app.set, app.show_kite; menus=true)
         app.viewer.menu.options[]=["plot_main", "plot_power", "plot_control", "plot_control_II", "plot_winch_control", "plot_aerodynamics",
@@ -126,6 +133,8 @@ function simulate(integrator, stopped=true)
     if ! stopped
         set_status(app.viewer, "ssParking")
     end
+    rel_side_area = app.set.rel_side_area/100.0  # defined in percent
+    K = 1 - rel_side_area                        # correction factor for the drag
     i=1
     j=0; k=0
     GC.enable(true)
@@ -170,7 +179,7 @@ function simulate(integrator, stopped=true)
             # execute winch controller
             v_ro = calc_v_set(app.ssc)
             #
-            t_sim = @elapsed KiteModels.next_step!(app.kps4, integrator, v_ro=v_ro, dt=app.dt)
+            t_sim = @elapsed KiteModels.next_step!(app.kps4, integrator; set_speed=v_ro, dt=app.dt)
             update_sys_state!(sys_state, app.kps4)
 
             on_new_systate(app.ssc, sys_state)
@@ -195,6 +204,18 @@ function simulate(integrator, stopped=true)
             
             sys_state.var_11 = app.ssc.fpp.fpca.fpc.est_chi_dot
             sys_state.var_12 = app.ssc.fpp.fpca.fpc.c2
+            sys_state.var_13 = app.kps4.alpha_2
+            sys_state.var_14 = app.kps4.alpha_2b
+            if LOG_LIFT_DRAG
+                CL2, CD2 = app.kps4.calc_cl(app.kps4.alpha_2), DRAG_CORR * app.kps4.calc_cd(app.kps4.alpha_2)
+                CL3, CD3 = app.kps4.calc_cl(app.kps4.alpha_3), DRAG_CORR * app.kps4.calc_cd(app.kps4.alpha_3)
+                CL4, CD4 = app.kps4.calc_cl(app.kps4.alpha_4), DRAG_CORR * app.kps4.calc_cd(app.kps4.alpha_4)
+                sys_state.var_15 = CL2
+                sys_state.var_16 = K*(CD2+rel_side_area*(CD3+CD4))
+            else
+                sys_state.var_15 = app.kps4.alpha_3b 
+                sys_state.var_16 = app.kps4.alpha_4b 
+            end
             
             sys_state.var_08 = norm(app.kps4.lift_force)/norm(app.kps4.drag_force)
             if i > 10
@@ -241,9 +262,9 @@ function simulate(integrator, stopped=true)
         if ! isopen(app.viewer.fig.scene) break end
         if KiteViewers.status[] == "Stopped" && i > 10 
             if app.set.log_level > 0
-                @timev KiteModels.next_step!(app.kps4, integrator, v_ro=v_ro, dt=app.dt)
+                @timev KiteModels.next_step!(app.kps4, integrator; set_speed=v_ro, dt=app.dt)
             else
-                KiteModels.next_step!(app.kps4, integrator, v_ro=v_ro, dt=app.dt)
+                KiteModels.next_step!(app.kps4, integrator; set_speed=v_ro, dt=app.dt)
             end
             break 
         end
@@ -305,6 +326,9 @@ function stop_()
     end
     on_stop(app.ssc)
     clear!(app.kps4)
+    if ! isnothing(app.viewer)
+        clear_viewer(app.viewer)
+    end
     clear_viewer(app.viewer)
 end
 

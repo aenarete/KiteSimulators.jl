@@ -39,19 +39,19 @@ depower:
 kite:
     model: "data/kite.obj" # 3D model of the kite
     physical_model: "KPS4" # name of the kite model to use (KPS3 or KPS4)
-    version: 1             # version of the model to use
+    version: 2             # version of the model to use
     mass:  10.58           # kite mass incl. sensor unit [kg]
     area: 20.36            # projected kite area         [m²]
     rel_side_area: 30.6    # relative side area           [%]
     height: 3.15           # height of the kite           [m]
     alpha_cl:  [-180.0, -160.0, -90.0, -20.0, -10.0,  -5.0,  0.0, 20.0, 40.0, 90.0, 160.0, 180.0]
-    cl_list:   [   0.0,  0.565,   0.0,0.0904, 0.15125, 0.167,0.226,1.13, 1.13, 0.0,  -0.565, 0.0]
+    cl_list:   [   0.0,    0.5,   0.0,  0.08, 0.125,  0.15,  0.2,  1.0,  1.0,  0.0,  -0.5,   0.0]
     alpha_cd:  [-180.0, -170.0, -140.0, -90.0, -20.0, 0.0, 20.0, 90.0, 140.0, 170.0, 180.0]
-    cd_list:   [ 0.465,  0.465,  0.465,  0.93, 0.186,0.93,0.186, 0.93, 0.465, 0.465, 0.465]
+    cd_list:   [   0.5,    0.5,    0.5,   1.0,   0.2, 0.1,  0.2,  1.0,   0.5,   0.5,   0.5]
 
 kps4:
     width:         8.16     # width of the kite                      [m]
-    alpha_zero:    9.2      # 4 to 8.8                         [degrees]
+    alpha_zero:    6.75     # 4 to 8.8                         [degrees]
     alpha_ztip:   10.0      #                                  [degrees]
     m_k:           0.2      # relative nose distance; increasing m_k increases C2 of the turn-rate law
     rel_nose_mass: 0.47     # relative nose mass
@@ -70,7 +70,7 @@ kps4_3l:
     aero_surfaces:          10      # the number of aerodynamic surfaces to use per mass point        [-]
     
 bridle:
-    d_line:    2.5         # bridle line diameter                  [mm]
+    d_line:    3.75        # bridle line diameter                  [mm]
     l_bridle: 33.4         # sum of the lengths of the bridle lines [m]
     h_bridle:  4.9         # height of bridle                       [m]
     rel_compr_stiffness: 0.5 # relative compression stiffness of the kite springs
@@ -96,9 +96,15 @@ tether:
                            # SK75: 109 to 132 GPa according to data sheet
 
 winch:
+    winch_model: "AsyncMachine" # or TorqueControlledMachine
     max_force: 8000        # maximal (nominal) tether force; short overload allowed [N]
-    v_ro_max:  8.0         # maximal reel-out speed                      [m/s]
-    v_ro_min: -8.0         # minimal reel-out speed (=max reel-in speed) [m/s]
+    v_ro_max:  8.0         # maximal reel-out speed                          [m/s]
+    v_ro_min: -8.0         # minimal reel-out speed (=max reel-in speed)     [m/s]
+    drum_radius: 0.1615    # radius of the drum                              [m]
+    gear_ratio: 6.2        # gear ratio of the winch                         [-]   
+    inertia_total: 0.204   # total inertia, as seen from the motor/generator [kgm²]
+    f_coulomb: 122.0       # coulomb friction                                [N]
+    c_vf: 30.6             # coefficient for the viscous friction            [Ns/m]
 
 environment:
     v_wind: 6.00             # wind speed at reference height          [m/s]

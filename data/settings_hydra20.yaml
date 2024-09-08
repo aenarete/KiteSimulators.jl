@@ -39,7 +39,7 @@ depower:
 kite:
     model: "data/kite.obj" # 3D model of the kite
     physical_model: "KPS4" # name of the kite model to use (KPS3 or KPS4)
-    version: 1             # version of the model to use
+    version: 2             # version of the model to use
     mass:  10.58           # kite mass incl. sensor unit [kg]
     area: 20.36            # projected kite area         [m²]
     rel_side_area: 30.6    # relative side area           [%]
@@ -51,8 +51,8 @@ kite:
 
 kps4:
     width:         8.16     # width of the kite                      [m]
-    alpha_zero:    9.2      # should be 4 to 10                      [degrees]
-    alpha_ztip:   10.0      #                                        [degrees]
+    alpha_zero:    6.75     # 4 to 8.8                         [degrees]
+    alpha_ztip:   10.0      #                                  [degrees]
     m_k:           0.2      # relative nose distance; increasing m_k increases C2 of the turn-rate law
     rel_nose_mass: 0.47     # relative nose mass
     rel_top_mass:  0.4      # mass of the top particle relative to the sum of top and side particles
@@ -70,7 +70,7 @@ kps4_3l:
     aero_surfaces:          10      # the number of aerodynamic surfaces to use per mass point        [-]
 
 bridle:
-    d_line:    2.5         # bridle line diameter                  [mm]
+    d_line:    3.75        # bridle line diameter                  [mm]
     l_bridle: 33.4         # sum of the lengths of the bridle lines [m]
     h_bridle:  4.9         # height of bridle                       [m]
     rel_compr_stiffness: 0.5 # relative compression stiffness of the kite springs
@@ -96,9 +96,15 @@ tether:
                            # SK75: 109 to 132 GPa according to data sheet
 
 winch:
+    winch_model: "AsyncMachine" # or TorqueControlledMachine
     max_force: 8000        # maximal (nominal) tether force; short overload allowed [N]
-    v_ro_max:  8.0         # maximal reel-out speed                      [m/s]
-    v_ro_min: -8.0         # minimal reel-out speed (=max reel-in speed) [m/s]
+    v_ro_max:  8.0         # maximal reel-out speed                          [m/s]
+    v_ro_min: -8.0         # minimal reel-out speed (=max reel-in speed)     [m/s]
+    drum_radius: 0.1615    # radius of the drum                              [m]
+    gear_ratio: 6.2        # gear ratio of the winch                         [-]   
+    inertia_total: 0.204   # total inertia, as seen from the motor/generator [kgm²]
+    f_coulomb: 122.0       # coulomb friction                                [N]
+    c_vf: 30.6             # coefficient for the viscous friction            [Ns/m]
 
 environment:
     v_wind: 4.26              # wind speed at reference height          [m/s]
