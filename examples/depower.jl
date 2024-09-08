@@ -3,15 +3,18 @@ using KiteSimulators, ControlPlots
 set_data_path(joinpath(@__DIR__, "..", "data"))
 tic()
 
-set = se()
+set = deepcopy(load_settings("system.yaml"))
+
+set.abs_tol=0.0006
+set.rel_tol=0.00001
 set.zoom=0.00075
 
-kcu::KCU   = KCU(se())
+kcu::KCU = KCU(set)
 kps4::KPS4 = KPS4(kcu)
 
 # the following values can be changed to match your interest
 dt::Float64 = 0.05
-TIME = 38
+TIME = 50
 TIME_LAPSE_RATIO = 5
 STEPS::Int64 = Int64(round(TIME/dt))
 STATISTIC = false
@@ -27,8 +30,8 @@ if ! @isdefined time_vec_tot; const time_vec_tot = zeros(div(STEPS, TIME_LAPSE_R
 viewer::Viewer3D = Viewer3D(true)
 
 function simulate(integrator, steps)
-    if LOGGING logger = Logger(se().segments + 5, STEPS) end
-    start = integrator.p.iter
+    if LOGGING logger = Logger(set.segments + 5, STEPS) end
+    iter = 0
     start_time_ns = time_ns()
     j=0; k=0
     KiteViewers.clear_viewer(viewer)
@@ -40,7 +43,7 @@ function simulate(integrator, steps)
         elseif i == 640
             set_depower_steering(kps4.kcu, 0.35, 0.0)    
         end
-        t_sim = @elapsed KiteModels.next_step!(kps4, integrator, dt=dt)
+        t_sim = @elapsed KiteModels.next_step!(kps4, integrator; set_speed=0, dt=dt)
         t_gc = @elapsed GC.gc(false)
         t_show = 0.0
         state = SysState(kps4)
@@ -77,12 +80,12 @@ function simulate(integrator, steps)
     misses=j/k * 100
     println("\nMissed the deadline for $(round(misses, digits=2)) %. Max time: $(round((max_time*1e-6), digits=1)) ms")
     if LOGGING save_log(logger, basename(LOG_FILE); path=dirname(LOG_FILE)) end
-    (integrator.p.iter - start) / steps
+    iter / steps
 end
 
 function play()
     GC.gc(true)
-    integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04, prn=STATISTIC)
+    integrator = KiteModels.init_sim!(kps4; delta=0.0, stiffness_factor=1.0, prn=STATISTIC)
     simulate(integrator, STEPS)
 end
 
