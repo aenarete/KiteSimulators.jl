@@ -4,24 +4,27 @@ using KiteSimulators
 # change this to KPS3 or KPS4
 const Model = KPS4
 
-kcu::KCU = KCU(se())
-if ! @isdefined kps4;   const kps4 = Model(kcu); end
+set = deepcopy(load_settings("system.yaml"))
+kcu::KCU = KCU(set)
+kps4::KPS4 = KPS4(kcu)
 if ! @isdefined js;
     const js = open_joystick();
     const jsaxes = JSState(); 
     const jsbuttons = JSButtonState()
     async_read!(js, jsaxes, jsbuttons)
 end
-wcs = WCSettings(); update(wcs); wcs.dt = 1/se().sample_freq
-fcs::FPCSettings = FPCSettings(); fcs.dt = wcs.dt
+wcs::WCSettings = WCSettings(); wcs.dt = 1/set.sample_freq
+fcs::FPCSettings =  FPCSettings(dt=wcs.dt)
 fpps::FPPSettings = FPPSettings()
-ssc::SystemStateControl = SystemStateControl(wcs, fcs, fpps)
+u_d0 = 0.01 * set.depower_offset
+u_d  = 0.01 * set.depower
+ssc::SystemStateControl = SystemStateControl(wcs, fcs, fpps; u_d0, u_d)
 dt::Float64 = wcs.dt
 
 # the following values can be changed to match your interest
-MAX_TIME::Float64=3600
-TIME_LAPSE_RATIO = 1
-SHOW_KITE = true
+MAX_TIME::Float64 = 3600
+TIME_LAPSE_RATIO  = 1
+SHOW_KITE         = true
 # end of user parameter section #
 
 viewer::Viewer3D = Viewer3D(SHOW_KITE, "WinchON")
@@ -51,7 +54,7 @@ function simulate(integrator)
         end  
         # execute winch controller
         v_ro = calc_v_set(ssc)
-        t_sim = @elapsed KiteModels.next_step!(kps4, integrator, v_ro=v_ro, dt=dt)
+        t_sim = @elapsed KiteModels.next_step!(kps4, integrator; set_speed=v_ro, dt=dt)
         if t_sim < 0.3*dt
             t_gc_tot += @elapsed GC.gc(false)
         end
@@ -79,7 +82,7 @@ function simulate(integrator)
             start_time_ns = time_ns()
             t_gc_tot = 0
         end
-        if viewer.stop break end
+        if ! isopen(viewer.fig.scene) break end
         if i*dt > MAX_TIME break end
         i += 1
     end
