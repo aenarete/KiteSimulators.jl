@@ -4,7 +4,10 @@ using KiteSimulators
 # a. how to create a video
 # b. how to create a performance plot (simulation speed vs time)
 
-kcu::KCU   = KCU(se())
+set = deepcopy(load_settings("system.yaml"))
+set.version = 2
+
+kcu::KCU   = KCU(set)
 kps4::KPS4 = KPS4(kcu)
 
 # the following values can be changed to match your interest
@@ -30,18 +33,20 @@ function update_system2(kps)
 end 
 
 function simulate(integrator, steps; log=false)
-    start = integrator.p.iter
+    iter = 0
     start_time_ns = time_ns()
     time_ = 0.0
     v_ro = 0.0
     acc = 0.1
     clear_viewer(viewer)
+    time_ = 0.0
     for i in 1:steps
         iter = kps4.iter
         if i > 300
             v_ro += acc*dt
         end
-        KiteModels.next_step!(kps4, integrator, v_ro=v_ro, dt=dt)     
+        time_ += @elapsed KiteModels.next_step!(kps4, integrator; set_speed=v_ro, dt=dt)     
+        iter += kps4.iter
         if mod(i, TIME_LAPSE_RATIO) == 0 || i == steps
             if SHOW_VIEWER update_system2(kps4) end
             if log
@@ -54,12 +59,11 @@ function simulate(integrator, steps; log=false)
             time_vec[div(i, TIME_LAPSE_RATIO)]=time_/(TIME_LAPSE_RATIO*dt)*100.0
             time_ = 0.0
         end
-        time_ += (kps4.iter - iter)*1.5e-6
     end
-    (integrator.p.iter - start) / steps
+    iter / steps
 end
 
-integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04, prn=STATISTIC)
+integrator = KiteModels.init_sim!(kps4; delta=0, stiffness_factor=1.0, prn=STATISTIC)
 
 av_steps = simulate(integrator, STEPS, log=SAVE_PNG)
 if PLOT_PERFORMANCE

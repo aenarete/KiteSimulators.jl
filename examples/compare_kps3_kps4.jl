@@ -1,4 +1,4 @@
-using KiteSimulators
+using KiteSimulators, KiteUtils
 
 # the following values can be changed to match your interest
 dt::Float64 = 0.05
@@ -11,7 +11,7 @@ PRINT = false
 STATISTIC = false
 # end of user parameter section #
 
-set = deepcopy(se())
+set = deepcopy(load_settings("system.yaml"))
 set.version = 2
 
 kcu::KCU  = KCU(set)
