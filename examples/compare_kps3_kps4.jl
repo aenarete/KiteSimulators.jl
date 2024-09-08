@@ -18,12 +18,15 @@ kcu::KCU  = KCU(set)
 kps4::KPS4 = KPS4(kcu)
 kps3::KPS3 = KPS3(kcu)
 
+set.version = 2
+
 if PLOT
     using ControlPlots
 end
 
 function simulate(s, integrator, steps, plot=false; fig="")
-    start = integrator.p.iter
+    iter = 0
+    lines, sc, txt = nothing, nothing, nothing
     for i in 1:steps
         if PRINT
             lift, drag = KiteModels.lift_drag(s)
@@ -31,7 +34,8 @@ function simulate(s, integrator, steps, plot=false; fig="")
             println("lift, drag  [N]: $(round(lift, digits=2)), $(round(drag, digits=2))")
         end
 
-        KiteModels.next_step!(s, integrator, dt=dt)
+        KiteModels.next_step!(s, integrator; set_speed=0, dt=dt)
+        iter += s.iter
         
         if plot
             reltime = i*dt-dt
@@ -40,24 +44,33 @@ function simulate(s, integrator, steps, plot=false; fig="")
             end
         end
     end
-    (integrator.p.iter - start) / steps
+    iter / steps
 end
 
-integrator = KiteModels.init_sim!(kps3, stiffness_factor=0.04, prn=STATISTIC)
+integrator = KiteModels.init_sim!(kps3, delta=0, stiffness_factor=1, prn=STATISTIC)
 av_steps = simulate(kps3, integrator, STEPS, true; fig="kps3")
 
 lift, drag = KiteModels.lift_drag(kps3)
 println("KPS3")
 println("lift, drag  [N]: $(round(lift, digits=2)), $(round(drag, digits=2))")
 println("winch_force [N]: $(round(winch_force(kps3), digits=2))")
-println("Average number of callbacks per time step: $av_steps")
+println("Average number of callbacks per time step: $(round(av_steps, digits=2))")
 
 kps4.set.alpha_zero = ALPHA_ZERO
-integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04, prn=STATISTIC)
+integrator = KiteModels.init_sim!(kps4; delta=0, stiffness_factor=1, prn=STATISTIC)
 av_steps = simulate(kps4, integrator, STEPS, true; fig="kps4")
 
 lift, drag = KiteModels.lift_drag(kps4)
 println("KPS4")
 println("lift, drag  [N]: $(round(lift, digits=2)), $(round(drag, digits=2))")
 println("winch_force [N]: $(round(winch_force(kps4), digits=2))")
-println("Average number of callbacks per time step: $av_steps")
+println("Average number of callbacks per time step: $(round(av_steps, digits=2))")
+
+# KPS3
+# lift, drag  [N]: 730.25, 157.31
+# winch_force [N]: 594.89
+# Average number of callbacks per time step: 40.07
+# KPS4
+# lift, drag  [N]: 734.04, 140.91
+# winch_force [N]: 597.31
+# Average number of callbacks per time step: 101.77
