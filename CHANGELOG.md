@@ -1,5 +1,5 @@
 # Changelog
-### KiteSimulators v0.4.0 - 2024-09-09
+### KiteSimulators v0.4.1 - 2024-09-09
 #### Changed
 - the build script now only installs `matplotlib` if it is not yet installed on the system
 - improved the example `joystick.jl` and its documentation
