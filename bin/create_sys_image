@@ -16,12 +16,54 @@ fi
 export MPLBACKEND=qt5agg
 mkdir -p output
 
+if ! command -v juliaup &> /dev/null; then
+    echo "Please install the Julia installer 'juliaup'!"
+    echo "See: https://github.com/JuliaLang/juliaup"
+    exit 1
+fi
+
+juliaup add 1.10
+juliaup default 1.10
+echo "Installing package TestEnv in the global environment!"
+julia --startup-file=no -e "using Pkg; Pkg.add(\"TestEnv\")"
+
+PYTHON_PATH=$(which python3)
+if [ -x "$PYTHON_PATH" ]; then
+    echo "Python is found at $PYTHON_PATH"
+    if $PYTHON_PATH -c "import matplotlib" &> /dev/null; then
+        echo "Matplotlib found. Using existing installation."
+        export PYTHON=$PYTHON_PATH
+    else
+        echo "Matplotlib is not found."
+        read -p "Do you want to install matplotlib with Conda? (y/n): " choice
+        case "$choice" in 
+          y|Y ) 
+            export PYTHON=""
+            ;;
+          n|N ) 
+            echo "Exiting without installing matplotlib."
+            exit 1
+            ;;
+          * ) 
+            echo "Invalid choice. Exiting."
+            exit 1
+            ;;
+        esac
+    fi
+else
+    echo "Python is not found."
+    exit 1
+fi
+
 julia_version=$(julia --version | awk '{print($3)}')
 julia_major=${julia_version:0:3}
 if [[ $julia_major == "1.1" ]]; then
     julia_major=${julia_version:0:4} 
 fi
-# export "PYTHON"=""
+julia --startup-file=no --pkgimages=no --project -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
+if [[ $PYTHON == "" ]]; then
+    julia --startup-file=no --pkgimages=no --project -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"Conda\"); using Conda; Conda.add(\"matplotlib\"); using ControlPlots"
+fi
 
 if test -f "kps-image-${julia_major}.so"; then
     mv bin/kps-image-${julia_major}.so bin/kps-image-${julia_major}.so.bak
@@ -33,21 +75,19 @@ if [[ $update == true ]]; then
     mv Manifest.toml Manifest.toml.bak
     fi
 fi
-echo "--> 1"
-julia -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
 
 if [[ $update == true ]]; then
     echo "--> 2"
-    julia --pkgimages=no --project -e "include(\"./test/update_packages.jl\");"
+    julia --startup-file=no --pkgimages=no --project -e "include(\"./test/update_packages.jl\");"
 fi
 
 echo "--> 3"
-julia  --pkgimages=no --project -e "using Pkg; Pkg.precompile()"
+julia  --startup-file=no --pkgimages=no --project -e "using Pkg; Pkg.precompile()"
 
 echo "--> 4"
-julia  --pkgimages=no --project -e "include(\"./test/create_sys_image.jl\");"
+julia  --startup-file=no --pkgimages=no --project -e "include(\"./test/create_sys_image.jl\");"
 mv kps-image_tmp.so bin/kps-image-${julia_major}.so
 
 echo "--> 5"
-julia --project -J bin/kps-image-${julia_major}.so -e "using ControlPlots"
+julia --startup-file=no --project -J bin/kps-image-${julia_major}.so -e "using ControlPlots"
 echo "Successfully created system image!"
