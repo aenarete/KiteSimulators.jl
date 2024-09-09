@@ -3,6 +3,10 @@ using REPL.TerminalMenus
 function menu()
     options = ["include(\"autopilot.jl\")",
                "include(\"compare_kps3_kps4.jl\")",
+               "include(\"convert_log.jl\")",
+               "include(\"depower_simple.jl\")",
+               "include(\"depower.jl\")",
+               "include(\"joystick.jl\")",                
                "quit"]
     active = true
     while active
