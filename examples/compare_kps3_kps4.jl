@@ -1,4 +1,4 @@
-using KiteSimulators, KiteUtils
+using KiteSimulators
 
 # the following values can be changed to match your interest
 dt::Float64 = 0.05
