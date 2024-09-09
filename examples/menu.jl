@@ -6,7 +6,11 @@ function menu()
                "include(\"convert_log.jl\")",
                "include(\"depower_simple.jl\")",
                "include(\"depower.jl\")",
-               "include(\"joystick.jl\")",                
+               "include(\"joystick.jl\")",
+               "include(\"play_log.jl\")",
+               "include(\"plot_log.jl\")",
+               "include(\"reelout_2D.jl\")",
+               "include(\"reelout_3D.jl\")",             
                "quit"]
     active = true
     while active
