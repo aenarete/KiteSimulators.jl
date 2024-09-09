@@ -61,6 +61,13 @@ include("examples\\autopilot.jl") # Windows
 You should see that the autopilot starts at 10s and that it is controlling the full power cycle, kite and winch.
 For details how to use this example see [autopilot](docs/autopilot.md) .
 
+If you execute:
+```Julia
+using KiteSimulators
+include("examples/menu.jl")
+```
+you get a terminal menu with all available examples.
+
 ## Documentation
 - The apps have there own documentation: [autopilot](docs/autopilot.md) and [joystick](docs/joystick.md)
 
