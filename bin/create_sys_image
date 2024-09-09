@@ -62,7 +62,7 @@ if [[ $julia_major == "1.1" ]]; then
 fi
 julia --startup-file=no --pkgimages=no --project -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
 if [[ $PYTHON == "" ]]; then
-    julia --startup-file=no --pkgimages=no --project -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"Conda\"); using Conda; Conda.add(\"matplotlib\"); using ControlPlots"
+    julia --startup-file=no --pkgimages=no --project -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"Conda\"); using Conda; Conda.add(\"matplotlib\")"
 fi
 
 if test -f "kps-image-${julia_major}.so"; then
