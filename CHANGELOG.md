@@ -1,6 +1,8 @@
 # Changelog
 ### Unreleased
 #### Changed
+- the build script now only installs `matplotlib` if it is not yet installed on the system
+- improved the example `joystick.jl` and its documentation
 - bump KiteControllers to 0.2.10
 - bump KiteModels to 0.6.6  
 A new kite model (KPS4_3L) was added, that uses three winches at the ground to steer the kite.
