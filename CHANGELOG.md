@@ -12,6 +12,7 @@ A simplified KitePodModel was added with a linear relationship between depower s
 #### Added
 - a new, torque controlled winch model
 - you can now define the diameter and the aerodynamic drag coefficient of the KCU
+- plot `aerodynamics`
 #### Fixed
 - changes of the polars had no effect
 - changes of ```max_steering``` had no effect
