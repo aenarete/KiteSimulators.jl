@@ -11,7 +11,12 @@ if ! @isdefined js;
     const js = open_joystick();
     const jsaxes = JSState(); 
     const jsbuttons = JSButtonState()
+end
+try
     async_read!(js, jsaxes, jsbuttons)
+catch e
+    println("Joystick not found. Please connect a joystick and try again.")
+    exit(1)
 end
 wcs::WCSettings = WCSettings(); wcs.dt = 1/set.sample_freq
 fcs::FPCSettings =  FPCSettings(dt=wcs.dt)
