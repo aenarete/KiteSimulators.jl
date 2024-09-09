@@ -1,8 +1,9 @@
 using REPL.TerminalMenus
 
 function menu()
-    options = ["autopilot_ = include(\"autopilot.jl\")",
-           "quit"]
+    options = ["include(\"autopilot.jl\")",
+               "include(\"compare_kps3_kps4.jl\")",
+               "quit"]
     active = true
     while active
         menu = RadioMenu(options, pagesize=8)
