@@ -31,4 +31,4 @@ Clicking the "RUN" button starts the simulation, the STOP button stops it.
 <p align="center"><img src="https://github.com/aenarete/KiteSimulators.jl/blob/main/docs/joystick_buttons.png?raw=true" width="500" /></p>
 The x-axis of the Joystick controls steering, but only when in state ssWinchControl, in state ssParking the parking controller controls the steering. By pressing the joystick forward you can depower the kite.
 
-Button 3 starts the reel-out, button 4 the reel-in, and button 5 switches to parking mode (no reel-in or reel-out). With button one, you can start the simulation, with button two you can stop it.
+Button 1 stops the winch and enables manual operation. Button 3 starts the reel-out, button 4 the reel-in, and button 5 switches to parking mode (no reel-in or reel-out). With button one, you can start the simulation, with button two you can stop it (well, both of them switch to manual operation).
