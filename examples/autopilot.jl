@@ -68,20 +68,17 @@ function init(app::KiteApp; init_viewer=false)
     project=(KiteUtils.PROJECT)
     app.kps4 = KPS4(app.kcu)
     KiteUtils.PROJECT = project
-    app.wcs = WCSettings()
-    update(app.wcs)
+    app.wcs = WCSettings(true; dt=1/app.set.sample_freq)
+    
     app.wcs.dt = 1/app.set.sample_freq
     app.dt = app.wcs.dt
-    app.fcs = FPCSettings(dt=app.dt) 
-    update(app.fcs)
-    app.fcs.dt = app.wcs.dt 
+    app.fcs = FPCSettings(true; dt=app.dt) 
     app.fcs.log_level = app.set.log_level
-    app.fpps = FPPSettings()
-    update(app.fpps)
+    app.fpps = FPPSettings(true)
     app.fpps.log_level = app.set.log_level
     u_d0 = 0.01 * se(project).depower_offset
     u_d = 0.01 * se(project).depower
-    app.ssc = SystemStateControl(app.wcs, app.fcs, app.fpps; u_d0, u_d)
+    app.ssc = SystemStateControl(app.wcs, app.fcs, app.fpps; u_d0, u_d, v_wind=app.set.v_wind)
     if init_viewer
         app.viewer= Viewer3D(app.set, app.show_kite; menus=true)
         app.viewer.menu.options[]=["plot_main", "plot_power", "plot_control", "plot_control_II", "plot_winch_control", "plot_aerodynamics",
@@ -149,6 +146,7 @@ function simulate(integrator, stopped=true)
     sys_state.e_mech = 0
     sys_state.sys_state = Int16(app.ssc.fpp._state)
     e_mech = 0.0
+    last_vel = [0.0, 0.0, 0.0]
     on_new_systate(app.ssc, sys_state)
     KiteViewers.update_system(app.viewer, sys_state; scale = 0.04/1.1, kite_scale=app.set.kite_scale)
     while app.initialized
@@ -170,7 +168,11 @@ function simulate(integrator, stopped=true)
             if i > 100
                 dp = KiteControllers.get_depower(app.ssc)
                 if dp < 0.22 dp = 0.22 end
-                steering = calc_steering(app.ssc)
+                heading = calc_heading(app.kps4; neg_azimuth=true, one_point=false)
+                app.ssc.sys_state.heading = heading
+                app.ssc.sys_state.azimuth = -calc_azimuth(app.kps4)
+                #  steering = calc_steering(app.ssc; heading)
+                steering = -calc_steering(app.ssc)
                 set_depower_steering(app.kps4.kcu, dp, steering)
             end
             if i == 200 && ! app.parking
@@ -180,14 +182,17 @@ function simulate(integrator, stopped=true)
             v_ro = calc_v_set(app.ssc)
             #
             t_sim = @elapsed KiteModels.next_step!(app.kps4, integrator; set_speed=v_ro, dt=app.dt)
-            update_sys_state!(sys_state, app.kps4)
+            sys_state.orient .= calc_orient_quat(app.kps4)
+            sys_state=SysState(app.kps4)
+            acc = (app.kps4.vel_kite - last_vel)/app.dt
+            last_vel = deepcopy(app.kps4.vel_kite)
 
             on_new_systate(app.ssc, sys_state)
             e_mech += (sys_state.force * sys_state.v_reelout)/3600*app.dt
             sys_state.e_mech = e_mech
             sys_state.sys_state = Int16(app.ssc.fpp._state)
-            sys_state.var_01 = app.ssc.fpp.fpca.cycle
-            sys_state.var_02 = app.ssc.fpp.fpca.fig8
+            sys_state.cycle  = app.ssc.fpp.fpca.cycle
+            sys_state.fig_8   = app.ssc.fpp.fpca.fig8
             sys_state.var_03 = get_state(app.ssc.wc) # 0=lower_force_control 1=square_root_control 2=upper_force_control
             sys_state.var_04 = app.ssc.wc.pid2.f_set # set force of lower force controller
             sys_state.var_05 = app.ssc.wc.pid2.v_set_out
@@ -204,18 +209,9 @@ function simulate(integrator, stopped=true)
             
             sys_state.var_11 = app.ssc.fpp.fpca.fpc.est_chi_dot
             sys_state.var_12 = app.ssc.fpp.fpca.fpc.c2
-            sys_state.var_13 = app.kps4.alpha_2
-            sys_state.var_14 = app.kps4.alpha_2b
-            if LOG_LIFT_DRAG
-                CL2, CD2 = app.kps4.calc_cl(app.kps4.alpha_2), DRAG_CORR * app.kps4.calc_cd(app.kps4.alpha_2)
-                CL3, CD3 = app.kps4.calc_cl(app.kps4.alpha_3), DRAG_CORR * app.kps4.calc_cd(app.kps4.alpha_3)
-                CL4, CD4 = app.kps4.calc_cl(app.kps4.alpha_4), DRAG_CORR * app.kps4.calc_cd(app.kps4.alpha_4)
-                sys_state.var_15 = CL2
-                sys_state.var_16 = K*(CD2+rel_side_area*(CD3+CD4))
-            else
-                sys_state.var_15 = app.kps4.alpha_3b 
-                sys_state.var_16 = app.kps4.alpha_4b 
-            end
+            sys_state.acc = norm(acc)
+            sys_state.var_15 = app.kps4.alpha_3b 
+            sys_state.var_16 = app.kps4.alpha_4b 
             
             sys_state.var_08 = norm(app.kps4.lift_force)/norm(app.kps4.drag_force)
             if i > 10
@@ -393,10 +389,9 @@ function print_stats()
     av_power = 0.0
     peak_power = 0.0
     n = 0
-    last_full_cycle = maximum(sl.var_01)-1
-    println("Last full cycle: ", last_full_cycle)
+    last_full_cycle = maximum(sl.cycle)-1
     for i in eachindex(sl.force)
-        if sl.var_01[i] in 2:last_full_cycle
+        if sl.cycle[i] in 2:last_full_cycle
             av_power += sl.force[i]*sl.v_reelout[i]
             n+=1
         end
@@ -427,7 +422,7 @@ function do_menu(c)
     elseif c == "plot_winch_control"
         plot_winch_control()
     elseif c == "plot_aerodynamics"
-        plot_aerodynamics()
+        plot_aerodynamics(LOG_LIFT_DRAG)
     elseif c == "plot_elev_az"
         plot_elev_az()
     elseif c == "plot_elev_az2"
