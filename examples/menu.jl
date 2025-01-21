@@ -1,6 +1,6 @@
 using REPL.TerminalMenus
 
-function menu()
+function menu_main()
     options = ["include(\"autopilot.jl\")",
                "include(\"compare_kps3_kps4.jl\")",
                "include(\"convert_log.jl\")",
@@ -26,4 +26,4 @@ function menu()
     end
 end
 
-menu()
+menu_main()
