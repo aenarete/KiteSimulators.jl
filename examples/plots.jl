@@ -211,8 +211,8 @@ function plot_aerodynamics(log=nothing)
     end
     sl    = log.syslog
 
-    display(plotxy(sl.time, sl.var_08;
-    ylabel="LoD [-]",
-    fig="aerodynamics"))
+    display(plotx(sl.time, sl.var_08, rad2deg.(sl.AoA), sl.acc, rad2deg.(sl.alpha3), rad2deg.(sl.alpha4); 
+            ylabels=["LoD [-]", L"AoA~[°]", L"acc~[m/s^2]", L"\alpha_{3}~[°]", L"\alpha_{4}~[°]"],
+            fig="aerodynamics"))
     nothing
 end
