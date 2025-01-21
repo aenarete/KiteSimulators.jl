@@ -422,7 +422,7 @@ function do_menu(c)
     elseif c == "plot_winch_control"
         plot_winch_control()
     elseif c == "plot_aerodynamics"
-        plot_aerodynamics(LOG_LIFT_DRAG)
+        plot_aerodynamics()
     elseif c == "plot_elev_az"
         plot_elev_az()
     elseif c == "plot_elev_az2"
