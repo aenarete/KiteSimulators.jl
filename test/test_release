@@ -5,6 +5,7 @@ rm -rf int_test
 rm -rf julia_tmp
 mkdir julia_tmp
 export JULIA_DEPOT_PATH="~/julia_tmp"
+export JULIA_PKG_SERVER_REGISTRY_PREFERENCE=eager
 mkdir int_test
 cd int_test
 echo "Installing KiteSimulators and ControlPlots..."
