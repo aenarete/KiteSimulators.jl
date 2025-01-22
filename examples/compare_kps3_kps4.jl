@@ -1,9 +1,9 @@
 using KiteSimulators
 
 # the following values can be changed to match your interest
-dt = 0.05
+dt::Float64 = 0.05
 ALPHA_ZERO = 8.8            # for KPS4
-STEPS = round(0.5*600/dt*0.05)
+STEPS::Int64 = round(0.5*600/dt*0.05)
 PLOT = true
 FRONT_VIEW = false
 ZOOM = true
