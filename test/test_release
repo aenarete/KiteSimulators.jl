@@ -9,7 +9,7 @@ export JULIA_PKG_SERVER_REGISTRY_PREFERENCE=eager
 mkdir int_test
 cd int_test
 echo "Installing KiteSimulators and ControlPlots..."
-julia --project="." -e "using Pkg; pkg\"registry up\"; Pkg.add(\"KiteSimulators\"); Pkg.add(\"ControlPlots\")"
+julia --project="." -e "using Pkg; Pkg.Registry.update(); Pkg.add(\"KiteSimulators\"); Pkg.add(\"ControlPlots\")"
 echo "Installing Timers..."
 julia --project -e "using Pkg; Pkg.add(\"Timers\")"
 echo "Initializing the project..."
