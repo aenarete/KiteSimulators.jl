@@ -1,4 +1,9 @@
 # Changelog
+### KiteSimulators v0.4.2 - 2025-01-22
+#### Changed
+- bump KiteControllers to 0.2.13; this improves the transition between reel-out and reel-in
+- bump KiteModels to 0.6.14; roll, pitch and yaw are in NED reference frame now
+
 ### KiteSimulators v0.4.1 - 2024-09-09
 #### Changed
 - the build script now only installs `matplotlib` if it is not yet installed on the system
