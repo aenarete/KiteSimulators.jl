@@ -1,9 +1,9 @@
 using KiteSimulators
 
 # the following values can be changed to match your interest
-dt::Float64 = 0.05
-ALPHA_ZERO = 8.8 
-STEPS::Int64 = round(600/dt*0.05)
+dt = 0.05
+ALPHA_ZERO = 8.8            # for KPS4
+STEPS = round(0.5*600/dt*0.05)
 PLOT = true
 FRONT_VIEW = false
 ZOOM = true
@@ -40,14 +40,14 @@ function simulate(s, integrator, steps, plot=false; fig="")
         if plot
             reltime = i*dt-dt
             if mod(i, 5) == 1
-                plot2d(s.pos, reltime; zoom=ZOOM, front=FRONT_VIEW, fig)          
+                plot2d(s.pos, reltime; zoom=ZOOM, xlim=(35,55), front=FRONT_VIEW, fig)          
             end
         end
     end
     iter / steps
 end
 
-integrator = KiteModels.init_sim!(kps3, delta=0, stiffness_factor=1, prn=STATISTIC)
+integrator = KiteModels.init_sim!(kps3, delta=0.001, stiffness_factor=0.5, prn=STATISTIC)
 av_steps = simulate(kps3, integrator, STEPS, true; fig="kps3")
 
 lift, drag = KiteModels.lift_drag(kps3)
@@ -57,7 +57,7 @@ println("winch_force [N]: $(round(winch_force(kps3), digits=2))")
 println("Average number of callbacks per time step: $(round(av_steps, digits=2))")
 
 kps4.set.alpha_zero = ALPHA_ZERO
-integrator = KiteModels.init_sim!(kps4; delta=0, stiffness_factor=1, prn=STATISTIC)
+integrator = KiteModels.init_sim!(kps4; delta=0.001, stiffness_factor=1, prn=STATISTIC)
 av_steps = simulate(kps4, integrator, STEPS, true; fig="kps4")
 
 lift, drag = KiteModels.lift_drag(kps4)
