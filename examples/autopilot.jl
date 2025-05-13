@@ -1,7 +1,7 @@
 # activate the test environment if needed
 using Timers; tic()
 
-LOG_LIFT_DRAG::Bool = true
+LOG_LIFT_DRAG::Bool = false
 DRAG_CORR::Float64 = 0.93 
 
 using KiteSimulators, ControlPlots
@@ -149,6 +149,8 @@ function simulate(integrator, stopped=true)
     last_vel = [0.0, 0.0, 0.0]
     on_new_systate(app.ssc, sys_state)
     KiteViewers.update_system(app.viewer, sys_state; scale = 0.04/1.1, kite_scale=app.set.kite_scale)
+    last_yaw = 0.0
+    last_yaw_rate = 0.0
     while app.initialized
         local v_ro
         if app.viewer.stop
@@ -160,7 +162,7 @@ function simulate(integrator, stopped=true)
                 app.particles = app.set.segments + 5
                 app.logger = Logger(app.particles, app.steps)
                 log!(app.logger, sys_state)
-                integrator = KiteModels.init_sim!(app.kps4; delta=0.001, stiffness_factor=1)
+                integrator = KiteModels.init_sim!(app.kps4; delta=0.0005, stiffness_factor=0.5)
             end
             if mod(i, 100) == 0 && app.set.log_level > 0
                 println("Free memory: $(round(Sys.free_memory()/1e9, digits=1)) GB") 
@@ -188,7 +190,7 @@ function simulate(integrator, stopped=true)
             last_vel = deepcopy(app.kps4.vel_kite)
 
             on_new_systate(app.ssc, sys_state)
-            e_mech += (sys_state.force * sys_state.v_reelout)/3600*app.dt
+            e_mech += (sys_state.force[1] * sys_state.v_reelout[1])/3600*app.dt
             sys_state.e_mech = e_mech
             sys_state.sys_state = Int16(app.ssc.fpp._state)
             sys_state.cycle  = app.ssc.fpp.fpca.cycle
@@ -210,8 +212,14 @@ function simulate(integrator, stopped=true)
             sys_state.var_11 = app.ssc.fpp.fpca.fpc.est_chi_dot
             sys_state.var_12 = app.ssc.fpp.fpca.fpc.c2
             sys_state.acc = norm(acc)
-            sys_state.var_15 = app.kps4.alpha_3b 
-            sys_state.var_16 = app.kps4.alpha_4b 
+            if abs((sys_state.yaw - last_yaw) / app.dt ) < 20.0
+                sys_state.var_15 = (sys_state.yaw - last_yaw) / app.dt # yaw rate
+            else
+                sys_state.var_15 = last_yaw_rate
+            end
+            last_yaw = sys_state.yaw
+            last_yaw_rate = sys_state.var_15
+            sys_state.var_16 = app.kps4.side_slip
             
             sys_state.var_08 = norm(app.kps4.lift_force)/norm(app.kps4.drag_force)
             if i > 10
@@ -284,7 +292,7 @@ function play(stopped=false)
         end
         KiteViewers.plot_file[]=DEFAULT_LOG
         on_parking(app.ssc)
-        integrator = KiteModels.init_sim!(app.kps4; delta=0.001, stiffness_factor=1)
+        integrator = KiteModels.init_sim!(app.kps4; delta=0.0005, stiffness_factor=0.5)
         if app.run == 0; toc(); end
         app.run += 1
         simulate(integrator, stopped)
@@ -390,17 +398,19 @@ function print_stats()
     peak_power = 0.0
     n = 0
     last_full_cycle = maximum(sl.cycle)-1
-    for i in eachindex(sl.force)
+    force_ = force(sl)
+    v_reelout_ = v_reelout(sl)
+    for i in eachindex(force_)
         if sl.cycle[i] in 2:last_full_cycle
-            av_power += sl.force[i]*sl.v_reelout[i]
+            av_power += force_[i] * v_reelout_[i]
             n+=1
         end
-        if abs(sl.force[i]*sl.v_reelout[i]) > peak_power
-            peak_power = abs(sl.force[i]*sl.v_reelout[i])
+        if abs(force_[i] * v_reelout_[i]) > peak_power
+            peak_power = abs(force_[i] * v_reelout_[i])
         end
     end
     av_power /= n
-    stats = Stats(sl[end].e_mech, av_power, peak_power, minimum(sl.force[Int64(round(5/app.dt)):end]), maximum(sl.force), 
+    stats = Stats(sl[end].e_mech, av_power, peak_power, minimum(force_[Int64(round(5/app.dt)):end]), maximum(force_), 
                   minimum(lg.z), maximum(lg.z), minimum(rad2deg.(sl.elevation)), maximum(rad2deg.(elev_ro)),
                   minimum(rad2deg.(az_ro)), maximum(rad2deg.(az_ro)))
     show_stats(stats)

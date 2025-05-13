@@ -1,3 +1,16 @@
+function l_tether(sl)
+    hcat(sl.l_tether...)[1,:]
+end
+
+function force(sl)
+    hcat(sl.force...)[1,:]
+end
+
+function v_reelout(sl)
+    hcat(sl.v_reelout...)[1,:]
+end
+
+
 function plot_timing(log=nothing)
     if isnothing(log)
         log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
@@ -20,8 +33,8 @@ function plot_main(log=nothing)
         log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
     end
     sl  = log.syslog
-    display(plotx(log.syslog.time, log.z, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), sl.l_tether, sl.force, 
-                  sl.v_reelout, sl.cycle;
+    display(plotx(log.syslog.time, log.z, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), l_tether(sl), force(sl), 
+    v_reelout(sl), sl.cycle;
         ylabels=["height [m]", "elevation [°]", "azimuth [°]", "length [m]", "force [N]", "v_ro [m/s]", "cycle [-]"],
         yzoom=0.9, fig="main"))
      nothing
@@ -33,14 +46,16 @@ function plot_power(log=nothing)
     end
     sl  = log.syslog
     dt = sl.time[4]-sl.time[3]
-    energy = similar(sl.v_reelout)
+    energy = similar(v_reelout(sl))
     en=0.0
+    v_ro = v_reelout(sl)
+    f_ = force(sl)
     for i in eachindex(energy)
-        en +=  sl.force[i]*sl.v_reelout[i]*dt
+        en +=  f_[i] * v_ro[i] * app.dt
         energy[i] = en
     end
-    display(plotx(log.syslog.time, sl.force, sl.v_reelout, sl.force.*sl.v_reelout, energy./3600;
-            ylabels=["force [N]", L"v_\mathrm{ro}~[m/s]", L"P_\mathrm{m}~[W]", "Energy [Wh]"],
+    display(plotx(log.syslog.time, force(sl), v_reelout(sl), force(sl) .* v_reelout(sl), energy./3600, sl.acc;
+            ylabels=["force [N]", L"v_\mathrm{ro}~[m/s]", L"P_\mathrm{m}~[W]", "Energy [Wh]", "acc [m/s^2]"],
             fig="power"))
     nothing
 end
@@ -50,9 +65,9 @@ function plot_control(log=nothing)
         log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
     end
     sl  = log.syslog
-    display(plotx(log.syslog.time, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), rad2deg.(sl.heading), sl.force, 100*sl.depower, 100*sl.steering, sl.sys_state, sl.cycle, sl.fig_8;
+    display(plotx(log.syslog.time, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), rad2deg.(wrap2pi.(sl.heading)), force(sl), 100*sl.depower, 100*sl.steering, sl.sys_state, sl.cycle, sl.fig_8;
             ylabels=["elevation [°]", "azimuth [°]", "heading [°]", "force [N]", "depower [%]", "steering [%]", "fpp_state", "cycle", "fig8"],
-            fig="control", ysize=10))
+            fig="control", ysize=10, yzoom=0.7))
     sleep(0.05)
     display(plotx(log.syslog.time, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), -rad2deg.(wrap2pi.(sl.heading)), 100*sl.depower, 100*sl.steering, rad2deg.(sl.var_07), sl.var_06, sl.sys_state, sl.cycle;
             ylabels=["elevation [°]", "azimuth [°]", "psi [°]", "depower [%]", "steering [%]", "chi_set", "ndi_gain", "fpp_state", "cycle"],
@@ -76,10 +91,10 @@ function plot_winch_control(log=nothing)
         log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
     end
     sl  = log.syslog
-    display(plotx(log.syslog.time, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), sl.force, sl.var_04, sl.v_reelout, 100*sl.depower, 100*sl.steering, sl.var_03;
+    display(plotx(log.syslog.time, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), force(sl), sl.var_04, v_reelout(sl), 100*sl.depower, 100*sl.steering, sl.var_03;
             ylabels=["elevation [°]", "azimuth [°]", "force [N]", "set_force", "v_reelout [m/s]", "depower [%]", "steering [%]", "wc_state"],
             fig="winch_control", ysize=10))
-    display(plot(log.syslog.time, [sl.v_reelout, sl.var_05];
+    display(plot(log.syslog.time, [v_reelout(sl), sl.var_05];
             labels=["v_reelout", "pid2_v_set_out"],
             ylabel="v_reelout [n/s]",
             xlabel="time [s]",
@@ -210,9 +225,9 @@ function plot_aerodynamics(log=nothing)
         log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
     end
     sl    = log.syslog
+    display(plotx(sl.time, sl.var_08, rad2deg.(sl.AoA), 100*sl.steering, sl.var_15, rad2deg.(sl.var_16); 
+                  ylabels=["LoD [-]", L"AoA~[°]", "steering [%]", "yaw_rate [°/s]", L"side\_slip~[°]"],
+                  fig="aerodynamics"))
 
-    display(plotx(sl.time, sl.var_08, rad2deg.(sl.AoA), sl.acc, rad2deg.(sl.alpha3), rad2deg.(sl.alpha4); 
-            ylabels=["LoD [-]", L"AoA~[°]", L"acc~[m/s^2]", L"\alpha_{3}~[°]", L"\alpha_{4}~[°]"],
-            fig="aerodynamics"))
     nothing
 end
