@@ -14,6 +14,7 @@ for /f "tokens=3 delims= " %%a in ("%version_string%") do set version=%%a
 
 set julia_major=%version:~0,4%
 set image=kps-image-%julia_major%.so
+set NO_MTK=true
 
 set EDITOR="code"
 
