@@ -14,6 +14,8 @@ if [[ $(basename $(pwd)) == "bin" ]]; then
     cd ..
 fi
 export MPLBACKEND=qt5agg
+export NO_MTK=true
+
 mkdir -p output
 
 if ! command -v juliaup &> /dev/null; then
