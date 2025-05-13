@@ -1,4 +1,11 @@
 # Changelog
+### KiteSimulators v0.4.3 - 2025-05-13
+#### Changed
+- bump KiteControllers to 0.2.15
+- bump KiteModels to 0.7.3; new RamAirKite model added, but not yet supported by KiteControllers
+- bump KiteUtils to 0.10.6
+- improve scripts create_sys_image and run_julia
+
 ### KiteSimulators v0.4.2 - 2025-01-22
 #### Changed
 - bump KiteControllers to 0.2.13; this improves the transition between reel-out and reel-in
