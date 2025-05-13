@@ -58,7 +58,7 @@ function init_project()
     end
     bin_files = ["create_sys_image", "create_sys_image.bat", "run_julia", "run_julia.bat", "joystick", "joystick.bat", 
                  "autopilot", "autopilot.bat"]
-    test_files = ["create_sys_image.jl", "test_for_precompile.jl", "update_packages.jl"]
+    test_files = ["create_sys_image.jl", "test_for_precompile.jl"]
     docs_files = ["Installation.md", "PackageInstallation.md", "kite_power_tools.png", "kite_4p.png", "dir_structure.png",
                   "vscode.png", "logging.md", "plotting.md", "main.png"]
     settings_files = ["fpc_settings_hydra20.yaml", "fpc_settings.yaml",
