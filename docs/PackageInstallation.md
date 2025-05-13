@@ -11,6 +11,7 @@ It is suggested that you create a folder for your kite simulators.
 mkdir kitesims
 cd kitesims
 juliaup default 1.10
+julia --startup-file=no -e 'using Pkg; Pkg.add("TestEnv")'
 julia --project=.
 ```
 On the Julia prompt install the package:
@@ -26,8 +27,14 @@ exit()
 ```
 #### Tips
 - Connect your laptop to a power socket before installing these packages.
-- If you get an error, you might have to download and install https://aka.ms/vs/17/release/vc_redist.x64.exe first and try again.
-- If you still get errors, delete any old version with `rm -rf ~/.julia/compiled/v1.10` and try again.
+- If you get an error and using Windows, you might have to download and install https://aka.ms/vs/17/release/vc_redist.x64.exe first and try again.
+- If you still get errors, delete any old version with 
+```bash
+rm -rf ~/.julia/packages
+rm -rf ~/.julia/compiled/v1.10`
+rm *.toml
+```
+and try again.
 
 The commands above create the following directory structure:
 
