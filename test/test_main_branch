@@ -13,7 +13,7 @@ echo "Installing KiteSimulators and ControlPlots..."
 julia --project="." -e "using Pkg; Pkg.update(); pkg\"add KiteSimulators#main\"; Pkg.instantiate(); Pkg.add(\"ControlPlots\")"
 echo "Installing Timers..."
 julia --project -e "using Pkg; Pkg.add(\"Timers\")"
-echo "Instializing the project..."
+echo "Initializing the project..."
 julia --project -e "using KiteSimulators; init_project()"
 echo "Creating the system image..."
 ./bin/create_sys_image --noupdate
