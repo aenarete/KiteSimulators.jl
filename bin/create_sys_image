@@ -15,6 +15,7 @@ if [[ $(basename $(pwd)) == "bin" ]]; then
 fi
 export MPLBACKEND=qt5agg
 export NO_MTK=true
+export JULIA_PKG_SERVER_REGISTRY_PREFERENCE="eager"
 
 mkdir -p output
 
@@ -74,13 +75,22 @@ fi
 if [[ $update == true ]]; then
     echo "Updating packages..."
     if test -f "Manifest.toml"; then
-    mv Manifest.toml Manifest.toml.bak
+        mv Manifest.toml Manifest.toml.bak
+    fi
+    if [[ $julia_major == "1.10" ]]; then
+        if test -f "Manifest-v1.10.toml"; then
+            mv Manifest-v1.10.toml Manifest-v1.10.toml.bak
+        fi
+    else
+        if test -f "Manifest-v1.11.toml"; then
+            mv Manifest-v1.11.toml Manifest-v1.11.toml.bak
+        fi
     fi
 fi
 
 if [[ $update == true ]]; then
     echo "--> 2"
-    julia --startup-file=no --pkgimages=no --project -e "include(\"./test/update_packages.jl\");"
+    julia --startup-file=no --pkgimages=no --project -e "using Pkg; Pkg.Registry.update(); Pkg.update()"
 fi
 
 echo "--> 3"
