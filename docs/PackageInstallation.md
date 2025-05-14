@@ -11,7 +11,7 @@ It is suggested that you create a folder for your kite simulators.
 mkdir kitesims
 cd kitesims
 juliaup default 1.10
-julia --startup-file=no -e 'using Pkg; Pkg.add("TestEnv")'
+julia --startup-file=no -e "using Pkg; Pkg.add(\"TestEnv\")"
 julia --project=.
 ```
 On the Julia prompt install the package:
