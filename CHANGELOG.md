@@ -1,4 +1,12 @@
 # Changelog
+### KiteSimulators v0.4.4 - 2025-07-12
+#### Fixed
+- fixed example `autopilot.jl`
+- bug in scripts `test_release` and `test_main_branch`
+#### Changed
+- bump KiteControllers to 0.2.17
+- bump KiteUtils to 0.10.15
+
 ### KiteSimulators v0.4.3 - 2025-05-13
 #### Changed
 - bump KiteControllers to 0.2.15
