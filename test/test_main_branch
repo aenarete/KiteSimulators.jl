@@ -3,7 +3,7 @@
 cd ~/repos
 rm -rf julia_tmp
 mkdir julia_tmp
-export JULIA_DEPOT_PATH="~/julia_tmp"
+export JULIA_DEPOT_PATH="~/repos/julia_tmp"
 export NO_MTK=true
 export JULIA_PKG_SERVER_REGISTRY_PREFERENCE="eager"
 rm -rf int_test
