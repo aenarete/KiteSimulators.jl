@@ -196,8 +196,8 @@ function simulate(integrator, stopped=true)
             sys_state.cycle  = app.ssc.fpp.fpca.cycle
             sys_state.fig_8   = app.ssc.fpp.fpca.fig8
             sys_state.var_03 = get_state(app.ssc.wc) # 0=lower_force_control 1=square_root_control 2=upper_force_control
-            sys_state.var_04 = app.ssc.wc.pid2.f_set # set force of lower force controller
-            sys_state.var_05 = app.ssc.wc.pid2.v_set_out
+            sys_state.var_04 = app.ssc.wc.lfc.f_set # set force of lower force controller
+            sys_state.var_05 = app.ssc.wc.lfc.v_set_out
             sys_state.var_06 = app.ssc.fpp.fpca.fpc.ndi_gain
             if isnothing(app.ssc.fpp.fpca.fpc.psi_dot_set)
                 sys_state.var_07 = app.ssc.fpp.fpca.fpc.chi_set
