@@ -86,7 +86,7 @@ end
 
 function play()
     GC.gc(true)
-    integrator = KiteModels.init_sim!(kps4; delta=0.0, stiffness_factor=1.0, prn=STATISTIC)
+    integrator = KiteModels.init!(kps4::KPS4; delta=0.0, stiffness_factor=0.01, prn=STATISTIC)
     simulate(integrator, STEPS)
 end
 
