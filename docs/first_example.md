@@ -59,7 +59,7 @@ Then we let the model simulate the next step.
 Finally, after the TIME_LAPSE_RATIO steps we update the display with the function `update_system` and wait for the next time step. The parameter `always_sleep=true` is needed to call the Julia sleep function for at least 1 ms. This allows background processes to run, in this case, it is mainly the background process that updates the screen.
 
 ```julia
-integrator = KiteModels.init_sim!(kps4, stiffness_factor=0.04)
+integrator = init!(kps4, stiffness_factor=0.04)
 simulate(integrator, STEPS)
 
 stop(viewer)

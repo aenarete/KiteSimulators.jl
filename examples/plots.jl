@@ -61,17 +61,11 @@ function plot_timing2()
     nothing
 end
 
-function fulldir(name)
-    if occursin("~", name)
-        return replace(dirname(name), "~" => homedir())
-    else
-        return joinpath(pwd(), dirname(name))
+function plot_main(log=nothing)
+    if log === nothing
+        log_file_exists() || return
+        log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
     end
-end
-
-function plot_main()
-    log_file_exists() || return
-    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
     sl  = log.syslog
     display(plotx(log.syslog.time, log.z, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), l_tether(sl), force(sl), 
     v_reelout(sl), sl.cycle;

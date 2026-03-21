@@ -17,9 +17,9 @@ using Reexport
 @reexport using StatsBase
 @reexport using NativeFileDialog 
 
-# Explicitly export init_sim! and other key functions from KiteModels if not already exported
-using KiteModels: init_sim!, next_step!, lift_drag
-export init_sim!, next_step!, lift_drag, cp_examples, init_project, fulldir
+# Explicitly export init! and other key functions from KiteModels if not already exported
+using KiteModels: init!, next_step!, lift_drag
+export init!, next_step!, lift_drag, cp_examples, init_project, fulldir
 
 """
     cp_examples()

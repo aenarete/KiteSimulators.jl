@@ -35,7 +35,7 @@ function simulate(integrator, steps)
     end
 end
 
-integrator = KiteModels.init!(kps4::KPS4; delta=0.0, stiffness_factor=0.01)
+integrator = init!(kps4::KPS4; delta=0.0, stiffness_factor=0.01)
 simulate(integrator, STEPS)
 
 stop(viewer)
