@@ -6,6 +6,7 @@
 - bump KiteControllers to 0.2.20 - WinchControllers now in a separate package
 - bump ControlPlots to 0.2.14 - much better support of MacOS
 - update the settings files
+- fixed examples to use the new interface, for example `init!` instead of `init_sim!`
 
 ### KiteSimulators v0.4.4 - 2025-07-12
 #### Fixed
