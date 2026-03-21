@@ -12,16 +12,12 @@ end
 LOG_LIFT_DRAG::Bool = false
 DRAG_CORR::Float64 = 0.93 
 
-using KiteViewers
-using ControlPlots, KiteControllers, KiteModels, LaTeXStrings, NativeFileDialog, Statistics
+using KiteSimulators
+using ControlPlots, LaTeXStrings, NativeFileDialog, Statistics
 using LinearAlgebra, Printf
-using KiteViewers: Viewer3D
-import KiteViewers.GLMakie
-import KiteViewers.GLMakie.GLFW
-import KiteControllers.YAML
-if false; include("../src/flightpathcontroller.jl"); end
-if false; include("../src/flightpathcalculator2.jl"); end
-if false; include("../src/systemstatecontrol.jl"); end
+import KiteSimulators.KiteViewers.GLMakie
+import KiteSimulators.KiteViewers.GLMakie.GLFW
+import KiteSimulators.KiteControllers.YAML
 
 function read_project()
     config_file = joinpath(get_data_path(), "gui.yaml")
