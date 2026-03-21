@@ -13,7 +13,7 @@ LOG_LIFT_DRAG::Bool = false
 DRAG_CORR::Float64 = 0.93 
 
 using KiteSimulators
-using ControlPlots, LaTeXStrings, NativeFileDialog, Statistics
+using ControlPlots
 using LinearAlgebra, Printf
 import KiteSimulators.KiteViewers.GLMakie
 import KiteSimulators.KiteViewers.GLMakie.GLFW
