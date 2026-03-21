@@ -2,7 +2,7 @@ system:
     log_file: "data/log_8700W_8ms" # filename without extension  [replay only]
                                    #   use / as path delimiter, even on Windows 
     log_level:      0
-    time_lapse:     6              # relative replay speed
+    time_lapse:    12              # relative replay speed
     sim_time:  1000.0              # simulation time             [sim only]
     segments:       6              # number of tether segments
     sample_freq:   20              # sample frequency in Hz
@@ -11,10 +11,12 @@ system:
     fixed_font: "Liberation Mono"  # name or filepath+filename of alternative fixed pitch font
 
 initial:
-    l_tether: 250.0        # initial tether length       [m]
-    elevation: 70.7        # initial elevation angle   [deg]
-    v_reel_out: 0.0        # initial reel out speed    [m/s]
-    depower:   25.0        # initial depower settings    [%]
+    l_tethers: [330.0]        # initial tether length       [m]
+    elevations: [62.0]        # initial elevation angle   [deg]
+    v_reel_outs: [0.0]        # initial reel out speed    [m/s]
+    depowers:   [25.0]        # initial depower settings    [%]
+    delta: 0.0015             # initial quotient of actual and unstretched tether length    
+    stiffness_factor: 0.01    # relative stiffness of the first round of solving the initial equilibrium
 
 solver:
     abs_tol: 0.0003        # absolute tolerance of the DAE solver [m, m/s]
@@ -23,6 +25,7 @@ solver:
     linear_solver: "GMRES" # can be GMRES or Dense or LapackDense (only for IDA)
     max_order: 4           # maximal order, usually between 3 and 5 (for IDA and DFBDF)
     max_iter:  200         # max number of iterations of the steady-state-solver
+    dtmax:     0.025        # max internal step size of the DAE solver [s]; Inf means no limit
 
 steering:
     c0:       0.0          # steering offset   -0.0032           [-]
