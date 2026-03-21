@@ -25,8 +25,8 @@ if ! command -v juliaup &> /dev/null; then
     exit 1
 fi
 
-juliaup add 1.10
-juliaup default 1.10
+juliaup add 1.11
+juliaup default 1.11
 echo "Installing package TestEnv in the global environment!"
 julia --startup-file=no -e "using Pkg; Pkg.add(\"TestEnv\")"
 
