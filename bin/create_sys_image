@@ -17,6 +17,11 @@ export MPLBACKEND=qt5agg
 export NO_MTK=true
 export JULIA_PKG_SERVER_REGISTRY_PREFERENCE="eager"
 
+if [[ "$(uname -s)" == "Linux" ]]; then
+    export QT_QPA_PLATFORM=xcb
+    export FONTCONFIG_FILE=/etc/fonts/fonts.conf
+fi
+
 mkdir -p output
 
 if ! command -v juliaup &> /dev/null; then
