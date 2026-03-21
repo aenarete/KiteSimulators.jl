@@ -4,6 +4,14 @@ if [[ $(basename $(pwd)) == "bin" ]]; then
     cd ..
 fi
 
+export NO_AT_BRIDGE=1
+export JULIA_PKG_SERVER_REGISTRY_PREFERENCE=eager
+
+if [[ "$(uname -s)" == "Linux" ]]; then
+    export QT_QPA_PLATFORM=xcb
+    export FONTCONFIG_FILE=/etc/fonts/fonts.conf
+fi
+
 export MPLBACKEND=qt5agg
 export NO_MTK=true
 
