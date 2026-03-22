@@ -33,6 +33,7 @@ You are an expert agent for Julia development and the KiteSimulators.jl projectâ
 - ONLY make edits when explicitly requested or when fixing clear bugs
 - DO NOT change the using or import statements of autopilot.jl
 - DO NOT use yield() in GUI scripts
+- ALWAYS make sure that the code is compatible with Windows and MacOS, not just Linux
 
 ## Approach
 
