@@ -1,0 +1,59 @@
+#!/bin/bash
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+
+cd "$REPO_DIR" || exit 1
+
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+	echo "Usage: ./batch_plot [OPTIONS] [PROJECT [COMMAND]]"
+	echo ""
+	echo "Plot the results of a batch simulation from an Arrow log file."
+	echo ""
+	echo "Arguments:"
+	echo "  PROJECT        Project name (e.g. hydra20_426) or full log filename"
+	echo "                 (e.g. batch-hydra20_426) from the output/ directory."
+	echo "                 If omitted, the last selected project is used."
+	echo "  COMMAND        Plot command to run directly without showing the menu"
+	echo "                 (e.g. plot_main, plot_power, plot_control, plot_elev_az)"
+	echo ""
+	echo "Options:"
+	echo "  --list              List all available projects in output/"
+	echo "  --list-commands     List all available plot commands"
+	echo "  --help, -h          Show this help message and exit"
+	echo ""
+	echo "Examples:"
+	echo "  ./batch_plot hydra20_426"
+	echo "  ./batch_plot hydra20_426 plot_main"
+	echo "  ./batch_plot hydra20_426 plot_elev_az"
+	echo "  ./batch_plot --list"
+	echo "  ./batch_plot --list-commands"
+	exit 0
+fi
+
+if [[ "$1" == "--list-commands" ]]; then
+	echo "Available plot commands:"
+	echo "  statistics"
+	echo "  plot_main"
+	echo "  plot_power"
+	echo "  plot_control"
+	echo "  plot_control_II"
+	echo "  plot_winch_control"
+	echo "  plot_aerodynamics"
+	echo "  plot_elev_az"
+	echo "  plot_elev_az2"
+	echo "  plot_elev_az3"
+	echo "  plot_side_view"
+	echo "  plot_side_view2"
+	echo "  plot_side_view3"
+	echo "  plot_front_view3"
+	exit 0
+fi
+
+if [[ "$1" == "--list" ]]; then
+	echo "Available projects:"
+	find "$REPO_DIR/output" -maxdepth 1 -type f -name "batch-*.arrow" -printf "%f\n" | sed 's/^batch-//;s/\.arrow$//' | sort
+	exit 0
+fi
+
+"$REPO_DIR/bin/run_julia" "examples/batch_plot.jl" "$@"
