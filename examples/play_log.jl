@@ -18,13 +18,25 @@ function play(syslog)
     steps = length(syslog.time)
     start_time_ns = time_ns()
     KiteViewers.clear_viewer(viewer)
+    viewer.stop = false
     for i in 1:steps
+        if viewer.stop
+            break
+        end
         if mod(i, TIME_LAPSE_RATIO) == 0 || i == steps
             update_system(viewer, syslog[i]; scale = 0.03, kite_scale=set.kite_scale)
             wait_until(start_time_ns + dt*1e9, always_sleep=true)
             start_time_ns = time_ns()
         end
+        if !isopen(viewer.fig.scene)
+            break
+        end
+        yield()
     end
+end
+
+on(viewer.btn_STOP.clicks) do _
+    stop(viewer)
 end
 
 play(log.syslog)
