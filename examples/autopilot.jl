@@ -70,6 +70,7 @@ app::KiteApp = KiteApp(deepcopy(load_settings(PROJECT)), 0, 0, true, nothing, no
                        nothing, nothing, nothing, nothing, nothing, 0, 0, 0, 0, false, false)
 app.max_time      = app.set.sim_time
 app.next_max_time = app.max_time
+const MENU_REQUEST = Ref{Union{Nothing,String}}(nothing)
 
 function init(app::KiteApp; init_viewer=false)
     app.max_time = app.next_max_time
@@ -163,6 +164,16 @@ function simulate(integrator, stopped=true)
     last_yaw = 0.0
     last_yaw_rate = 0.0
     while app.initialized
+        if Sys.isapple() && MENU_REQUEST[] !== nothing
+            c = MENU_REQUEST[]
+            MENU_REQUEST[] = nothing
+            if is_plot_menu_action(c)
+                app.viewer.stop = true
+                KiteViewers.running[] = false
+                sleep(0.02)
+            end
+            do_menu(c)
+        end
         local v_ro
         if app.viewer.stop
             sleep(app.dt)
@@ -486,6 +497,19 @@ function print_stats()
     show_stats(stats)
 end
 
+function is_plot_menu_action(c::AbstractString)
+    startswith(c, "plot_") || c == "print_stats"
+end
+
+function queue_or_execute_menu_action(c::AbstractString)
+    if Sys.isapple()
+        MENU_REQUEST[] = c
+    else
+        do_menu(c)
+    end
+    nothing
+end
+
 function do_menu(c)
     if isnothing(app.viewer) || !isopen(app.viewer.fig.scene)
         return nothing
@@ -521,18 +545,18 @@ function do_menu(c)
     elseif c == "plot_side_view3"
         plot_side_view3()
     elseif c == "plot_front_view3"
-        plot_front_view3()        
+        plot_front_view3()
     elseif c == "print_stats"
         print_stats()
     end
 end
 
 on(app.viewer.btn_OK.clicks) do _
-    do_menu(app.viewer.menu.selection[])
+    queue_or_execute_menu_action(app.viewer.menu.selection[])
 end
 
 on(app.viewer.menu.selection) do c
-    do_menu(c)
+    queue_or_execute_menu_action(c)
 end
 
 on(app.viewer.menu_rel_tol.selection) do c
@@ -585,7 +609,7 @@ else
     app.viewer.menu_rel_tol.i_selected[]=DEFAULT_TOLERANCE
     play(true)
 end
-if @isdefined __PRECOMPILE__ 
+if __PRECOMPILE__ && !Sys.isapple()
     do_menu(app.viewer.menu.selection[])
     sleep(0.1)   
 end
