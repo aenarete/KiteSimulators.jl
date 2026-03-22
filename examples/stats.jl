@@ -10,11 +10,12 @@ struct Stats
     max_elev_ro::Float64
     min_az_ro::Float64
     max_az_ro::Float64
+    cycles::Int64
 end
 
 function show_stats(stats::Stats)
-    HEIGHT=380
-    UPPER_BORDER=20
+    HEIGHT = 420
+    UPPER_BORDER = 20
     fig = GLMakie.Figure(size = (400, HEIGHT))
     if Sys.islinux()
         # sudo apt install ttf-bitstream-vera 
@@ -43,6 +44,7 @@ function show_stats(stats::Stats)
     line = print("max elev_ro:  ", @sprintf("%5.1f  °", stats.max_elev_ro); line)
     line = print("min az_ro:    ", @sprintf("%5.1f  °", stats.min_az_ro); line)
     line = print("max az_ro:    ", @sprintf("%5.1f  °", stats.max_az_ro); line)
+    line = print("cycles:       ", @sprintf("%5d   ", stats.cycles); line)
 
     display(GLMakie.Screen(), fig)
     nothing

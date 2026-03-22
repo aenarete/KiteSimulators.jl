@@ -117,6 +117,8 @@ function plot_control_II()
 end
 
 function plot_winch_control()
+    log_file_exists() || return
+    log = load_log(basename(KiteViewers.plot_file[]); path=fulldir(KiteViewers.plot_file[]))
     sl  = log.syslog
     display(plotx(log.syslog.time, rad2deg.(sl.elevation), rad2deg.(sl.azimuth), force(sl), sl.var_04, v_reelout(sl), 100*sl.depower, 100*sl.steering, sl.var_03;
             ylabels=["elevation [°]", "azimuth [°]", "force [N]", "set_force", "v_reelout [m/s]", "depower [%]", "steering [%]", "wc_state"],
