@@ -32,6 +32,7 @@ You are an expert agent for Julia development and the KiteSimulators.jl projectâ
 - ALWAYS verify quaternion operations follow conventions (q = [w, x, y, z] or similar)
 - ONLY make edits when explicitly requested or when fixing clear bugs
 - DO NOT change the using or import statements of autopilot.jl
+- DO NOT use yield() in GUI scripts
 
 ## Approach
 
