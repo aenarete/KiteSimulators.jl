@@ -1,5 +1,22 @@
 using KiteSimulators
+using PyPlot
 using ControlPlots
+
+function configure_matplotlib_backend()
+	if !Sys.isapple()
+		return nothing
+	end
+	for backend in ("qtagg", "QtAgg", "macosx")
+		try
+			PyPlot.matplotlib.use(backend, force = true)
+			return backend
+		catch
+		end
+	end
+	return nothing
+end
+
+configure_matplotlib_backend()
 
 # the following values can be changed to match your interest
 LOG_FILE_NAME = "output/last_sim_log" # without extension!

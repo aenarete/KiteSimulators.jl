@@ -71,6 +71,20 @@ app::KiteApp = KiteApp(deepcopy(load_settings(PROJECT)), 0, 0, true, nothing, no
 app.max_time      = app.set.sim_time
 app.next_max_time = app.max_time
 
+function is_plot_menu_action(c::AbstractString)
+    startswith(c, "plot_") || c == "print_stats"
+end
+
+function run_plot_menu_action(c::AbstractString)
+    script = joinpath(@__DIR__, "menu_plot_action.jl")
+    project = normpath(joinpath(@__DIR__, ".."))
+    log_file = KiteViewers.plot_file[]
+    cmd = addenv(`$(Base.julia_cmd()) --project=$project $script $c $log_file $(string(app.dt)) $(string(app.set.time_lapse))`,
+                 "KITE_LOG_LIFT_DRAG" => string(LOG_LIFT_DRAG))
+    run(cmd; wait=false)
+    nothing
+end
+
 function init(app::KiteApp; init_viewer=false)
     app.max_time = app.next_max_time
     app.kcu   = KCU(app.set)
@@ -448,8 +462,8 @@ function show_stats(stats::Stats)
     line = print("max az_ro:    ", @sprintf("%5.1f  °", stats.max_az_ro); line)
     line = print("cycles:       ", @sprintf("%5d   ", stats.cycles); line)
 
-    display(GLMakie.Screen(), fig)
-    nothing
+    display(fig)
+    fig
 end
 
 function print_stats()
@@ -490,49 +504,19 @@ function do_menu(c)
     if isnothing(app.viewer) || !isopen(app.viewer.fig.scene)
         return nothing
     end
+    if is_plot_menu_action(c)
+        run_plot_menu_action(c)
+        return nothing
+    end
     if c == "save logfile"
         save_log_as()
     elseif c == "load logfile"
         select_log()
-    elseif c == "plot_timing"
-        plot_timing()
-    elseif c == "plot_power"
-        plot_power()
-    elseif c == "plot_control"
-        plot_control()
-    elseif c == "plot_control_II"
-        plot_control_II()
-    elseif c == "plot_winch_control"
-        plot_winch_control()
-    elseif c == "plot_aerodynamics"
-        plot_aerodynamics(LOG_LIFT_DRAG)
-    elseif c == "plot_elev_az"
-        plot_elev_az()
-    elseif c == "plot_elev_az2"
-        plot_elev_az2()
-    elseif c == "plot_elev_az3"
-        plot_elev_az3()
-    elseif c == "plot_main"
-        plot_main()
-    elseif c == "plot_side_view"
-        plot_side_view()
-    elseif c == "plot_side_view2"
-        plot_side_view2()
-    elseif c == "plot_side_view3"
-        plot_side_view3()
-    elseif c == "plot_front_view3"
-        plot_front_view3()        
-    elseif c == "print_stats"
-        print_stats()
     end
 end
 
 on(app.viewer.btn_OK.clicks) do _
     do_menu(app.viewer.menu.selection[])
-end
-
-on(app.viewer.menu.selection) do c
-    do_menu(c)
 end
 
 on(app.viewer.menu_rel_tol.selection) do c
@@ -585,7 +569,7 @@ else
     app.viewer.menu_rel_tol.i_selected[]=DEFAULT_TOLERANCE
     play(true)
 end
-if @isdefined __PRECOMPILE__ 
+if __PRECOMPILE__ && !Sys.isMacOS()
     do_menu(app.viewer.menu.selection[])
     sleep(0.1)   
 end

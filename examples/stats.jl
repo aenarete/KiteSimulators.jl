@@ -46,6 +46,6 @@ function show_stats(stats::Stats)
     line = print("max az_ro:    ", @sprintf("%5.1f  °", stats.max_az_ro); line)
     line = print("cycles:       ", @sprintf("%5d   ", stats.cycles); line)
 
-    display(GLMakie.Screen(), fig)
-    nothing
+    display(fig)
+    fig
 end
