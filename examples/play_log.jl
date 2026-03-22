@@ -6,7 +6,7 @@ kps4::KPS4 = KPS4(kcu)
 
 # the following values can be changed to match your interest
 dt::Float64 = 0.05
-TIME_LAPSE_RATIO = 5        # 1 = realtime, 2..8 faster
+TIME_LAPSE_RATIO = 5        # 1 = realtime, 2..24 faster
 LOG_FILE = "output/last_sim_log" # without extension!
 # end of user parameter section #
 
