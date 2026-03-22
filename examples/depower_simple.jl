@@ -32,6 +32,9 @@ function simulate(integrator, steps)
             wait_until(start_time_ns + dt*1e9, always_sleep=true)
             start_time_ns = time_ns()
         end
+        if i == 1
+            bring_viewer_to_front()
+        end
     end
 end
 

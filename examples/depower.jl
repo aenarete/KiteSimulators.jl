@@ -76,6 +76,9 @@ function simulate(integrator, steps)
         time_vec_gc[i]=t_gc/dt*100.0
         time_vec_sim[i]=t_sim/dt*100.0
         # if viewer.stop break end
+        if i == 1
+            bring_viewer_to_front()
+        end
     end
     misses=j/k * 100
     println("\nMissed the deadline for $(round(misses, digits=2)) %. Max time: $(round((max_time*1e-6), digits=1)) ms")
