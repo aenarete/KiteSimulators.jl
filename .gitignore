@@ -19,3 +19,4 @@ examples/Manifest-v1.11.toml
 test/Manifest-v1.11.toml
 Manifest-v1.11.toml
 output/
+bin/kps-image-1.12.so
