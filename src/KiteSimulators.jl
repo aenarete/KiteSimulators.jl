@@ -59,7 +59,7 @@ function init_project()
         mkdir("output")
     end
     bin_files = ["create_sys_image", "create_sys_image.bat", "run_julia", "run_julia.bat", "joystick", "joystick.bat", 
-                 "autopilot", "autopilot.bat"]
+                 "autopilot", "autopilot.bat", "batch_pilot", "batch_pilot.bat", "batch_plot", "batch_plot.bat"]
     test_files = ["create_sys_image.jl", "test_for_precompile.jl"]
     docs_files = ["Installation.md", "PackageInstallation.md", "kite_power_tools.png", "kite_4p.png", "dir_structure.png",
                   "vscode.png", "logging.md", "plotting.md", "main.png"]
