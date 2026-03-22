@@ -189,6 +189,34 @@ fi
 echo "--> 3"
 julia  --startup-file=no --project -e "using Pkg; Pkg.precompile()"
 
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    echo
+    echo "Installing QtAgg dependencies for PyPlot on macOS..."
+    julia -e '
+using Pkg
+
+for pkg in ["PyCall", "PyPlot", "Conda"]
+    if Base.find_package(pkg) === nothing
+        Pkg.add(pkg)
+    end
+end
+
+if get(ENV, "PYTHON", nothing) != ""
+    ENV["PYTHON"] = ""
+    Pkg.build("PyCall")
+end
+
+using Conda
+Conda.add("matplotlib")
+Conda.add("pyqt")
+
+Pkg.build("PyPlot")
+
+println("Installed matplotlib + pyqt in Conda.jl environment.")
+println("QtAgg should now be available for matplotlib/PyPlot.jl.")
+'
+fi
+
 echo "--> 4"
 julia  --startup-file=no --project -e "include(\"./test/create_sys_image.jl\");"
 mv kps-image_tmp.so bin/kps-image-${julia_major}.so
