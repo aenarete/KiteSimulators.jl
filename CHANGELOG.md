@@ -1,5 +1,6 @@
-# Changelog
-### KiteSimulators v0.4.5 - 2026-03-21
+## Changelog
+
+### KiteSimulators v0.4.5 - 2026-03-22
 #### Changed
 - use Julia 1.11 as default
 - bump KiteModels to 0.11.5 - much faster simulation speed
@@ -7,6 +8,10 @@
 - bump ControlPlots to 0.2.14 - much better support of MacOS
 - update the settings files
 - fixed examples to use the new interface, for example `init!` instead of `init_sim!`
+- update script `create_sys_image`; it now offers a dialog to select the Julia version
+#### Added
+- add script `bin/install`
+
 
 ### KiteSimulators v0.4.4 - 2025-07-12
 #### Fixed
