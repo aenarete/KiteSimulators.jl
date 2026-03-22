@@ -8,7 +8,7 @@ Please download and install Julia using `juliaup`. Launch the `Command Prompt` a
 
 ```
 winget install julia -s msstore
-juliaup add 1.10
+juliaup add 1.11
 juliaup update
 ```
 If that doesn't work, download https://install.julialang.org/Julia.appinstaller and double-click on the downloaded file to install it.
@@ -29,7 +29,7 @@ curl -fsSL https://install.julialang.org | sh
 ```
 Restart your terminal, and then execute:
 ```
-juliaup add 1.10
+juliaup add 1.11
 juliaup update
 ```
 
@@ -49,7 +49,7 @@ Please download and install `juliaup` as explained at https://github.com/JuliaLa
 
 Restart your terminal, and then execute:
 ```
-juliaup add 1.10
+juliaup add 1.11
 juliaup update
 ```
 

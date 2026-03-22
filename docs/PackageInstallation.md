@@ -13,6 +13,7 @@ It is suggested that you create a folder for your kite simulators.
 ```bash
 mkdir kitesims
 cd kitesims
+juliaup add 1.11           # only if not already installed
 juliaup default 1.11
 julia --startup-file=no -e "using Pkg; Pkg.add(\"TestEnv\")"
 julia --project=.
