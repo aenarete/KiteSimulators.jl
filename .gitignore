@@ -13,3 +13,4 @@ output/last_sim_log.csv
 Manifest-v1.11.toml.bak
 bin/kps-image-1.11.so
 .JETLSConfig.toml
+Manifest-v1.12.toml
