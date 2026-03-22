@@ -13,6 +13,8 @@
 - create_sys_image now also works with only 16 GB RAM (or 8GB + 8GB swap file)
 #### Added
 - add script `bin/install`
+- add script `bin/batch_pilot`
+- add script `bin/batch_plot`
 
 
 ### KiteSimulators v0.4.4 - 2025-07-12
