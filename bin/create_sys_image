@@ -130,9 +130,9 @@ julia_major=${julia_version:0:3}
 if [[ $julia_major == "1.1" ]]; then
     julia_major=${julia_version:0:4} 
 fi
-julia --startup-file=no --pkgimages=no --project -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
+julia --startup-file=no --project -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"PyCall\"); Pkg.build(\"PyCall\")"
 if [[ $PYTHON == "" ]]; then
-    julia --startup-file=no --pkgimages=no --project -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"Conda\"); using Conda; Conda.add(\"matplotlib\")"
+    julia --startup-file=no --project -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"Conda\"); using Conda; Conda.add(\"matplotlib\")"
 fi
 
 if test -f "kps-image-${julia_major}.so"; then
@@ -157,14 +157,14 @@ fi
 
 if [[ $update == true ]]; then
     echo "--> 2"
-    julia --startup-file=no --pkgimages=no --project -e "using Pkg; Pkg.Registry.update(); Pkg.update()"
+    julia --startup-file=no --project -e "using Pkg; Pkg.Registry.update(); Pkg.update()"
 fi
 
 echo "--> 3"
-julia  --startup-file=no --pkgimages=no --project -e "using Pkg; Pkg.precompile()"
+julia  --startup-file=no --project -e "using Pkg; Pkg.precompile()"
 
 echo "--> 4"
-julia  --startup-file=no --pkgimages=no --project -e "include(\"./test/create_sys_image.jl\");"
+julia  --startup-file=no --project -e "include(\"./test/create_sys_image.jl\");"
 mv kps-image_tmp.so bin/kps-image-${julia_major}.so
 
 echo "--> 5"
