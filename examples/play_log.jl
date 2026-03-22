@@ -31,7 +31,6 @@ function play(syslog)
         if !isopen(viewer.fig.scene)
             break
         end
-        yield()
     end
 end
 
