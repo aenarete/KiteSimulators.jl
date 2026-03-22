@@ -15,13 +15,7 @@ fi
 export MPLBACKEND=qt5agg
 export NO_MTK=true
 
-if command -v nproc &> /dev/null; then
-    FAST_CORES=$(($(nproc) / 2 - 1))
-else
-    FAST_CORES=3 # default value
-fi
-
-GCT="--gcthreads=$FAST_CORES,1"
+GCT="--gcthreads=1,0"
 
 julia_version=$(julia --version | awk '{print($3)}')
 julia_major=${julia_version:0:3} 
@@ -33,9 +27,9 @@ fi
 
 if test -f "bin/kps-image-${julia_major}.so"; then
     echo "Found system image!"
-    julia -J  bin/kps-image-${julia_major}.so -t $FAST_CORES,1 $GCT --project
+    julia -J  bin/kps-image-${julia_major}.so -t 1 $GCT --project
 else
-    julia --project -t $FAST_CORES,1 $GCT
+    julia --project -t 1 $GCT
     # julia --project
 fi
 
