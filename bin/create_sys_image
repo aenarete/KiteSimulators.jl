@@ -218,7 +218,8 @@ println("QtAgg should now be available for matplotlib/PyPlot.jl.")
 fi
 
 echo "--> 4"
-julia  --startup-file=no --project -e "include(\"./test/create_sys_image.jl\");"
+export MPLBACKEND=agg
+julia  --startup-file=no --project -t 1 -e "include(\"./test/create_sys_image.jl\");"
 mv kps-image_tmp.so bin/kps-image-${julia_major}.so
 
 echo "--> 5"
