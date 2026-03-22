@@ -34,9 +34,9 @@ fi
 if test -f "bin/kps-image-${julia_major}.so"; then
     echo "Found system image!"
     if [[ -n "$SCRIPT" ]]; then
-        julia -J  bin/kps-image-${julia_major}.so -t 1 $GCT --project "$SCRIPT" "$@"
+        julia -J  bin/kps-image-${julia_major}.so -t 1,1 $GCT --project "$SCRIPT" "$@"
     else
-        julia -J  bin/kps-image-${julia_major}.so -t 1 $GCT --project
+        julia -J  bin/kps-image-${julia_major}.so -t 1,1 $GCT --project
     fi
 else
     if [[ -n "$SCRIPT" ]]; then
