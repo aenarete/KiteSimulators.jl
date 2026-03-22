@@ -590,7 +590,9 @@ if @isdefined __PRECOMPILE__
     sleep(0.1)   
 end
 stop_()
-KiteViewers.GLMakie.closeall()
+if !__PRECOMPILE__
+    KiteViewers.GLMakie.closeall()   
+end
 
 GC.enable(true)
 nothing
