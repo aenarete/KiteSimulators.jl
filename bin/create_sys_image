@@ -135,6 +135,9 @@ if [[ $PYTHON == "" ]]; then
     julia --startup-file=no --project -e "using Pkg; Pkg.activate(temp=true); Pkg.add(\"Conda\"); using Conda; Conda.add(\"matplotlib\")"
 fi
 
+# create a logfile for the sysimage creation process
+./bin/batch_pilot hydra20_600
+
 if test -f "kps-image-${julia_major}.so"; then
     mv bin/kps-image-${julia_major}.so bin/kps-image-${julia_major}.so.bak
 fi
