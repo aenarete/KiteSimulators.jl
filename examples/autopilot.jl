@@ -364,9 +364,29 @@ on(app.viewer.menu_time_lapse.selection) do _;
     app.set.time_lapse=parse(Int64, val)
 end
 
+# GTK3 (used by NativeFileDialog on Linux) prints warnings directly to fd 2;
+# redirect at the OS level to suppress them during file dialogs.
+function without_gtk_warnings(f)
+    if !Sys.islinux()
+        return f()
+    end
+    old_fd = ccall(:dup, Cint, (Cint,), 2)
+    null_fd = ccall(:open, Cint, (Cstring, Cint), "/dev/null", 1)
+    ccall(:dup2, Cint, (Cint, Cint), null_fd, 2)
+    ccall(:close, Cint, (Cint,), null_fd)
+    try
+        return f()
+    finally
+        ccall(:dup2, Cint, (Cint, Cint), old_fd, 2)
+        ccall(:close, Cint, (Cint,), old_fd)
+    end
+end
+
 function select_log()
     @async begin 
-        filename = fetch(Threads.@spawn pick_file("output"; filterlist="arrow"))
+        filename = without_gtk_warnings() do
+            pick_file("output"; filterlist="arrow")
+        end
         if filename != ""
             short_filename = replace(filename, homedir() => "~")
             KiteViewers.plot_file[] = short_filename
@@ -376,7 +396,9 @@ end
 
 function save_log_as()
     @async begin 
-        filename = fetch(Threads.@spawn save_file("output"; filterlist="arrow"))
+        filename = without_gtk_warnings() do
+            save_file("output"; filterlist="arrow")
+        end
         if filename != ""
             source = replace(KiteViewers.plot_file[], "~" => homedir()) * ".arrow"
             if ! isfile(source)
@@ -525,7 +547,9 @@ on(app.viewer.menu_project.i_selected) do _
     sel = app.viewer.menu_project.selection[]
     if sel == "Open..."
         @async begin 
-            filename = fetch(Threads.@spawn pick_file("data"; filterlist="yml"))
+            filename = without_gtk_warnings() do
+                pick_file("data"; filterlist="yml")
+            end
             if filename != ""
                 PROJECT = basename(filename)
                 GLFW.SetWindowTitle(app.viewer.screen.glscreen, PROJECT)
