@@ -1,0 +1,33 @@
+#!/bin/bash
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+
+cd "$REPO_DIR" || exit 1
+
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+	echo "Usage: batch_pilot [OPTIONS] [PROJECT]"
+	echo ""
+	echo "Run a batch simulation for the given kite project configuration."
+	echo ""
+	echo "Arguments:"
+	echo "  PROJECT        Name of the project config file (without .yml extension)"
+	echo "                 from the data/ directory (e.g. hydra20_426)"
+	echo ""
+	echo "Options:"
+	echo "  --list         List all available project configurations"
+	echo "  --help, -h     Show this help message and exit"
+	echo ""
+	echo "Examples:"
+	echo "  batch_pilot hydra20_426"
+	echo "  batch_pilot --list"
+	exit 0
+fi
+
+if [[ "$1" == "--list" ]]; then
+	echo "Available projects:"
+	find "$REPO_DIR/data" -maxdepth 1 -type f -name "*.yml" -printf "%f\n" | sort
+	exit 0
+fi
+
+"$REPO_DIR/bin/run_julia" "examples/batch_pilot.jl" "$@"
