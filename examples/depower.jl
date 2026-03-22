@@ -1,4 +1,6 @@
-using KiteSimulators, ControlPlots
+using KiteSimulators, ControlPlots, Timers
+
+using KiteSimulators.KiteUtils: set_data_path
 
 set_data_path(joinpath(@__DIR__, "..", "data"))
 tic()
@@ -46,12 +48,11 @@ function simulate(integrator, steps)
         t_sim = @elapsed KiteModels.next_step!(kps4, integrator; set_speed=0, dt=dt)
         iter += kps4.iter
         t_gc = @elapsed GC.gc(false)
-        t_show = 0.0
         state = SysState(kps4)
 
         if LOGGING log!(logger, state) end
         if mod(i, TIME_LAPSE_RATIO) == 0 || i == steps
-            t_show = @elapsed update_system(viewer, state; scale = 0.08, kite_scale=3.0)
+            update_system(viewer, state; scale = 0.08, kite_scale=3.0)
             end_time_ns = time_ns()
             wait_until(start_time_ns + dt*1e9, always_sleep=false)
             mtime = 0
@@ -63,8 +64,6 @@ function simulate(integrator, steps)
                     j += 1
                 end
                 k +=1
-            else
-                t_show = 0.0
             end
             if mtime > max_time
                 max_time = mtime
@@ -90,7 +89,7 @@ function play()
     simulate(integrator, STEPS)
 end
 
-on(viewer.btn_PLAY.clicks) do c
+on(viewer.btn_PLAY.clicks) do _
     if viewer.stop
         @async begin
             play()
@@ -98,7 +97,7 @@ on(viewer.btn_PLAY.clicks) do c
         end
     end
 end
-on(viewer.btn_STOP.clicks) do c
+on(viewer.btn_STOP.clicks) do _
    stop(viewer)
 end
 
