@@ -2,7 +2,7 @@
 
 ### KiteSimulators v0.4.6 - 2026-03-22
 #### Changed
-- first version tested on and improved for MacOS
+- first version tested on and fixed for MacOS
 - use Julia 1.11 as default
 - bump KiteModels to 0.11.5 - much faster simulation speed
 - bump KiteControllers to 0.2.20 - WinchControllers now in a separate package
