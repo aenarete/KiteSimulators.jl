@@ -25,11 +25,25 @@ else
     GCT=""
 fi
 
+SCRIPT=""
+if [[ $# -gt 0 ]]; then
+    SCRIPT="$1"
+    shift
+fi
+
 if test -f "bin/kps-image-${julia_major}.so"; then
     echo "Found system image!"
-    julia -J  bin/kps-image-${julia_major}.so -t 1 $GCT --project
+    if [[ -n "$SCRIPT" ]]; then
+        julia -J  bin/kps-image-${julia_major}.so -t 1 $GCT --project "$SCRIPT" "$@"
+    else
+        julia -J  bin/kps-image-${julia_major}.so -t 1 $GCT --project
+    fi
 else
-    julia --project -t 1 $GCT
+    if [[ -n "$SCRIPT" ]]; then
+        julia --project -t 1 $GCT "$SCRIPT" "$@"
+    else
+        julia --project -t 1 $GCT
+    fi
     # julia --project
 fi
 
