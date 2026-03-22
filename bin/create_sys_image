@@ -1,14 +1,41 @@
 #!/bin/bash -eu
-update=true
-if [[ $# -gt 0 ]]; then
-    if [[ $1 != "--noupdate" ]]; then
-        echo "Invalid parameter! Use:"
-        echo "./create_sys_image"
-        exit 1
-    else
-        update=false
-    fi
-fi
+
+# Parse command-line arguments
+_skip_dialog=false
+update=false
+
+show_help() {
+    cat << 'EOF'
+Usage: bin/create_sys_image [OPTIONS]
+
+Options:
+  -h, --help      Show this help message
+  -y, --yes       Skip the Julia version dialog and use the default version
+
+Examples:
+  bin/create_sys_image      # Interactive mode (asks for Julia version)
+  bin/create_sys_image --yes # Use default Julia version without prompting
+
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        -y|--yes)
+            _skip_dialog=true
+            shift
+            ;;
+        *)
+            echo "Error: Unknown option '$1'"
+            show_help
+            exit 1
+            ;;
+    esac
+done
 
 if [[ $(basename $(pwd)) == "bin" ]]; then
     cd ..
@@ -39,25 +66,31 @@ else
     _default_choice=1
     _default_julia="1.11"
 fi
-echo "Which Julia version do you want to use?"
-echo "  1) Julia 1.11"
-echo "  2) Julia 1.12"
-read -rp "Enter 1 or 2 [default: ${_default_choice}]: " _julia_choice
-case "${_julia_choice}" in
-    1)
-        _desired_julia="1.11"
-        ;;
-    2)
-        _desired_julia="1.12"
-        ;;
-    "")
-        _desired_julia="${_default_julia}"
-        ;;
-    *)
-        echo "Invalid choice: '${_julia_choice}'. Please enter 1 or 2."
-        exit 1
-        ;;
-esac
+
+if [[ $_skip_dialog == false ]]; then
+    echo "Which Julia version do you want to use?"
+    echo "  1) Julia 1.11"
+    echo "  2) Julia 1.12"
+    read -rp "Enter 1 or 2 [default: ${_default_choice}]: " _julia_choice
+    case "${_julia_choice}" in
+        1)
+            _desired_julia="1.11"
+            ;;
+        2)
+            _desired_julia="1.12"
+            ;;
+        "")
+            _desired_julia="${_default_julia}"
+            ;;
+        *)
+            echo "Invalid choice: '${_julia_choice}'. Please enter 1 or 2."
+            exit 1
+            ;;
+    esac
+else
+    _desired_julia="${_default_julia}"
+    echo "Using default Julia version: ${_desired_julia}"
+fi
 echo "Using Julia ${_desired_julia}..."
 juliaup add "${_desired_julia}"
 juliaup default "${_desired_julia}"
