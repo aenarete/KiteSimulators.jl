@@ -31,19 +31,12 @@ if [[ $# -gt 0 ]]; then
     shift
 fi
 
+PLOT_THREADS="-t 1"
+
 if test -f "bin/kps-image-${julia_major}.so"; then
     echo "Found system image!"
-    if [[ -n "$SCRIPT" ]]; then
-        julia -J  bin/kps-image-${julia_major}.so -t 1,1 $GCT --project "$SCRIPT" "$@"
-    else
-        julia -J  bin/kps-image-${julia_major}.so -t 1,1 $GCT --project
-    fi
+    julia -J  bin/kps-image-${julia_major}.so $PLOT_THREADS $GCT --project "$SCRIPT" "$@"
 else
-    if [[ -n "$SCRIPT" ]]; then
-        julia --project -t 1 $GCT "$SCRIPT" "$@"
-    else
-        julia --project -t 1 $GCT
-    fi
-    # julia --project
+    julia --project $PLOT_THREADS $GCT "$SCRIPT" "$@"
 fi
 
