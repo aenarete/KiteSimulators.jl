@@ -59,6 +59,9 @@ function simulate(integrator, steps; log=false)
             time_vec[div(i, TIME_LAPSE_RATIO)]=time_/(TIME_LAPSE_RATIO*dt)*100.0
             time_ = 0.0
         end
+        if i == 1
+            bring_viewer_to_front()
+        end
     end
     iter / steps
 end
