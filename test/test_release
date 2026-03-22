@@ -15,7 +15,7 @@ julia --project -e "using Pkg; Pkg.add(\"Timers\")"
 echo "Initializing the project..."
 julia --project -e "using KiteSimulators; init_project()"
 echo "Creating the system image..."
-./bin/create_sys_image
+./bin/create_sys_image -y
 echo "Running example..."
 julia --project -e "__PRECOMPILE__ = true; using KiteSimulators; include(\"examples/autopilot.jl\")"
 echo "Done."
