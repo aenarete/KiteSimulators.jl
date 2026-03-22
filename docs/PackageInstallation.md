@@ -49,7 +49,8 @@ The commands above create the following directory structure:
 
 <p align="center"><img src="dir_structure.png" width="300" /></p>
 
-It is suggested that you now create a Julia image that contains a compiled version of all the packages.
+It is suggested that you now create a Julia image that contains a compiled version of all the packages. Before doing
+that, close all other programs to make sure you have enough RAM (16GB RAM or 8GB + 8GB swap file is needed).
 
 On the command line, enter for Linux:
 

@@ -1,6 +1,6 @@
 ## Changelog
 
-### KiteSimulators v0.4.5 - 2026-03-22
+### KiteSimulators v0.4.6 - 2026-03-22
 #### Changed
 - use Julia 1.11 as default
 - bump KiteModels to 0.11.5 - much faster simulation speed
@@ -9,6 +9,7 @@
 - update the settings files
 - fixed examples to use the new interface, for example `init!` instead of `init_sim!`
 - update script `create_sys_image`; it now offers a dialog to select the Julia version
+- create_sys_image now also works with only 16 GB RAM (or 8GB + 8GB swap file)
 #### Added
 - add script `bin/install`
 
