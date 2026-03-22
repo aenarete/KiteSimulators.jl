@@ -107,11 +107,7 @@ play()
 stop(viewer)
 if PLOT_PERFORMANCE
     import ControlPlots as plots
-    if true
-        p = plotx(range(dt,TIME,step=dt), time_vec_gc, time_vec_sim, time_vec_sim.+time_vec_gc; 
-                  ylabels=["GC time [%]", "sim_time [%]", "total time [%]"], xlabel="time [s]")
-        display(p)
-    else
-        # plt2=plots.plot(range(3*TIME_LAPSE_RATIO*dt,TIME,step=dt*TIME_LAPSE_RATIO), time_vec_tot[4:end],  xlabel="Simulation time [s]", ylabel="time per frame [ms]", legend=false)
-    end
+    p = plotx(range(dt,TIME,step=dt), time_vec_gc, time_vec_sim, time_vec_sim.+time_vec_gc; 
+                ylabels=["GC time [%]", "sim_time [%]", "total time [%]"], xlabel="time [s]")
+    display(p)
 end
