@@ -13,11 +13,14 @@ It is suggested that you create a folder for your kite simulators.
 ```bash
 mkdir kitesims
 cd kitesims
-juliaup add 1.11           # only if not already installed
+juliaup add 1.11
 juliaup default 1.11
 julia --startup-file=no -e "using Pkg; Pkg.add(\"TestEnv\")"
 julia --project=.
 ```
+
+You can copy-and-paste these commands into your terminal window. On windows, the key <SHIFT><INS> can be used,
+on Linux <CTRL><SHIFT><INS>.
 
 On the Julia prompt install the package:
 
