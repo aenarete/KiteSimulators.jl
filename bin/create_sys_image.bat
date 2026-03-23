@@ -33,7 +33,6 @@ if "%julia_major%"=="1.1" (
     set julia_major=%version:~0,4%
 )
 
-mkdir output
 if not exist output mkdir output
 
 echo Installing package TestEnv in the global environment!
@@ -62,6 +61,7 @@ julia --startup-file=no --project -e "using Pkg; Pkg.precompile()"
 REM Create system image
 echo.
 echo Creating system image...
+set MPLBACKEND=agg
 julia --startup-file=no --project -t 1 -e "include(\"./test/create_sys_image.jl\");"
 if exist kps-image_tmp.so (
     move kps-image_tmp.so "bin\kps-image-%julia_major%.so"
