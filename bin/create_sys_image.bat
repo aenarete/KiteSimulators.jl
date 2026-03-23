@@ -58,10 +58,25 @@ echo.
 echo Precompiling packages...
 julia --startup-file=no --project -e "using Pkg; Pkg.precompile()"
 
+REM Check memory and limit threads if needed
+echo.
+echo Checking system memory on Windows...
+for /f "delims=" %%i in ('powershell.exe -Command "(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1MB"') do set totalmem=%%i
+for /f "delims=." %%i in ("%totalmem%") do set totalmem=%%i
+if "%totalmem%"=="" (
+    echo Warning: Could not determine system memory. Using one thread for sysimage compilation.
+    set JULIA_IMAGE_THREADS=1
+) else if %totalmem% LSS 27000 (
+    echo Warning: Less than 27GB of memory detected. Using only one thread for sysimage compilation.
+    set JULIA_IMAGE_THREADS=1
+)
+
 REM Create system image
 echo.
 echo Creating system image...
 set MPLBACKEND=agg
+
+
 julia --startup-file=no --project -t 1 -e "include(\"./test/create_sys_image.jl\");"
 if exist kps-image_tmp.so (
     move kps-image_tmp.so "bin\kps-image-%julia_major%.so"
