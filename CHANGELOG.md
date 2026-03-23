@@ -1,6 +1,6 @@
 ## Changelog
 
-### KiteSimulators v0.4.6 - 2026-03-23
+### KiteSimulators v0.4.7 - 2026-03-23
 #### Changed
 - first version tested on and fixed for MacOS
 - use Julia 1.11 as default
