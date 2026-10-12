@@ -2,6 +2,11 @@
 
 [![DOI](https://zenodo.org/badge/495927613.svg)](https://zenodo.org/doi/10.5281/zenodo.13133226)
 
+> [!WARNING]
+> ## ⚠️ DEPRECATED ⚠️
+> **This package is deprecated and no longer actively maintained.**
+> Please use [KiteControllers.jl](https://github.com/OpenSourceAWE/KiteControllers.jl) instead.
+
 Meta-package, providing "Julia Kite Power Tools", consisting of the following packages:
 <p align="center"><img src="https://raw.githubusercontent.com/ufechner7/KiteUtils.jl/main/docs/src/kite_power_tools.png" width="500" /></p>
 
@@ -96,6 +101,6 @@ If you like this software, please consider donating to https://gofund.me/508e041
 
 ## See also
 - [Research Fechner](https://research.tudelft.nl/en/publications/?search=wind+Fechner&pageSize=50&ordering=rating&descending=true) for the scientic background of this code
-- the packages [KiteControllers](https://github.com/aenarete/KiteControllers.jl) and [KiteViewers](https://github.com/aenarete/KiteViewers.jl)
-- The packages [KiteModels](https://github.com/ufechner7/KiteModels.jl) and [WinchModels](https://github.com/aenarete/WinchModels.jl) and [KitePodModels](https://github.com/aenarete/KitePodModels.jl) and [AtmosphericModels](https://github.com/aenarete/AtmosphericModels.jl)
+- the packages [KiteControllers](https://github.com/OpenSourceAWE/KiteControllers.jl) and [KiteViewers](https://github.com/OpenSourceAWE/KiteViewers.jl)
+- The packages [KiteModels](https://github.com/OpenSourceAWE/KiteModels.jl) and [WinchModels](https://github.com/aenarete/WinchModels.jl) and [KitePodModels](https://github.com/OpenSourceAWE/KitePodModels.jl) and [AtmosphericModels](https://github.com/OpenSourceAWE/AtmosphericModels.jl)
 - the package [KiteUtils](https://github.com/ufechner7/KiteUtils.jl) 
