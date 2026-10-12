@@ -5,7 +5,7 @@
 > [!WARNING]
 > ## ⚠️ DEPRECATED ⚠️
 > **This package is deprecated and no longer actively maintained.**
-> Please use [KiteControllers.jl](https://github.com/OpenSourceAWE/KiteControllers.jl) instead.
+> Please use [KiteControllers.jl](https://github.com/OpenSourceAWE/KiteControllers.jl) or [KiteModels.jl](https://github.com/OpenSourceAWE/KiteModels.jl) instead.
 
 Meta-package, providing "Julia Kite Power Tools", consisting of the following packages:
 <p align="center"><img src="https://raw.githubusercontent.com/ufechner7/KiteUtils.jl/main/docs/src/kite_power_tools.png" width="500" /></p>
